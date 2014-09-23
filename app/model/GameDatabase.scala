@@ -37,10 +37,8 @@ object GameDatabase {
    * @return
    */
   def getGame(uuid: String) : Game = {
-     val game = grater[Game].asObject(
-       collection.findOne(MongoDBObject("uuid" -> uuid))
-     )
-     game
+    val dbObj = new MongoDBObject(collection.findOne(MongoDBObject("uuid" -> uuid)).get)
+    grater[Game].asObject(dbObj)
   }
 
 
