@@ -18,12 +18,12 @@ object GameDatabase {
   val db = mongoClient("Chess-Online")
   val collection = db("Games")
 
-  def addGame(game: Game): Game ={
-      try {
-        collection.insert(game)
-        game
-      }catch{
-        case ex: Exception => null
-      }
+  def addGame(game: Game): Object ={
+    try {
+      collection.insert(game)
+    }catch{
+      case ex: Exception => ex
+    }
+    game
   }
 }
