@@ -1,0 +1,9 @@
+body {
+    background-color: #0000AA;
+}
+
+td {
+   width:50px;
+   height:50px;
+   background-color: #ff0000;
+}
