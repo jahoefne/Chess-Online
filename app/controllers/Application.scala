@@ -9,8 +9,7 @@ object Application extends Controller {
     Ok(views.html.index("Your new application is ready."))
   }
 
-
-  def board = Action {
+  def newGame = Action {
     Ok(views.html.index("Your new application is ready."))
   }
 
