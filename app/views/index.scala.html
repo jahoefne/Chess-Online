@@ -2,21 +2,19 @@
 
 <html>
 <head>
+    <!-- Load Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
 </head>
 <body>
 
-<!-- Generate the board -->
-<table>
-   @for(x <- 1 to 8){
-     <tr>
-     @for(y <- 1 to 8){
-         <td></td>
-     }
-     </tr>
-   }
-</table>
+<h1>Welcome to Chess online</h1>
 
+<button type="button" class="btn btn-default btn-lg">New Game!</button>
 
 </body>
 </html>
