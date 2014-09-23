@@ -1,7 +1,13 @@
+@brightOrDarkField(x: Int, y: Int) = @{
+  if((x+y) % 2 == 0){
+    "dark"
+  }else{
+    "bright"
+  }
+}
+
 <html>
 <head>
-
-
     <!-- Load jQuery -->
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <!-- Load Bootstrap -->
@@ -16,12 +22,11 @@
 </head>
 <body>
 
-<!-- Generate the board -->
 <table>
     @for(x <- 1 to 8){
     <tr>
         @for(y <- 1 to 8){
-        <td onClick="game.clickedField(@x,@y)"></td>
+            <td class="@brightOrDarkField(x,y)" onClick="game.clickedField(@x,@y)"></td>
         }
     </tr>
     }
