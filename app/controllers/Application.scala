@@ -1,6 +1,7 @@
 package controllers
 
 import model.{Game, GameDatabase}
+import play.api._
 import play.api.mvc._
 
 object Application extends Controller {
@@ -9,17 +10,26 @@ object Application extends Controller {
     Ok(views.html.index())
   }
 
+  /**
+   * Create a new game instance
+   * @return
+   */
   def newGame = Action {
     val uuid = java.util.UUID.randomUUID.toString
 
     GameDatabase.addGame(Game(uuid)) match {
-      case game: Game =>  // render new game view
+      case game: Game => Redirect(routes.Application.game(uuid))
       case _ => InternalServerError
     }
-    Ok(views.html.index())
   }
 
-
-
+  /**
+   * Access existing game instance
+   * @param uuid
+   * @return
+   */
+  def game(uuid: String) = Action {
+      Ok(views.html.index())
+  }
 
 }
