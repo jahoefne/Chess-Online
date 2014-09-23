@@ -29,7 +29,7 @@ object Application extends Controller {
    * @return
    */
   def game(uuid: String) = Action {
-      Ok(views.html.index())
+      Ok(views.html.game())
   }
 
 }
