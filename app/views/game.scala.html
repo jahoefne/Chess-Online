@@ -1,3 +1,6 @@
+@(uuid:String)
+
+<!-- Function to determine whether a field has to be bright or dark coloured -->
 @brightOrDarkField(x: Int, y: Int) = @{
   if((x+y) % 2 == 0){
     "dark"
@@ -20,7 +23,8 @@
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
 
 </head>
-<body>
+<body class="text-center">
+<h1>Your turn!</h1>
 
 <table>
     @for(x <- 1 to 8){

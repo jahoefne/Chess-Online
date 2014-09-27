@@ -7,11 +7,30 @@ import com.novus.salat._
 import com.novus.salat.global._
 import controller.GameController
 import play.api.Play.current
+import play.api.Logger
 
 import scala.collection.mutable
 
-
+/**
+ * Contains a Cache and a Connection to the MongoDB
+ * Responsible for persisting GameState and keeping the
+ * database-load low
+ */
 object GameRepository {
+
+  val log = Logger(this getClass() getName())
+
+  /**
+   * Stores a UUID->GameController Mapping in RAM
+   */
+  object Cache {
+    var map = new mutable.HashMap[String, GameController]
+    def isInCache(uuid: String) : Boolean = map contains uuid
+    def getController(uuid: String) : GameController = map.get(uuid).get
+    def addToCache(uuid: String, controller: GameController) = map += (uuid -> controller)
+    def removeFromCache(uuid: String) = map -= uuid
+  }
+
 
   /**
    * Loads the game from Cache or if necessary from DB
@@ -22,7 +41,7 @@ object GameRepository {
   }
 
   /**
-   * Save the game State to Database and remove from Cache
+   * Save the game State to Database and update Cache
    */
   def setGame(uuid: String, controller: GameController) = {
     Cache.addToCache(uuid, controller)
@@ -31,20 +50,6 @@ object GameRepository {
 
   def removeFromCache(uuid: String) = Cache.removeFromCache(uuid)
 
-  /**
-   * Stores a UUID->GameController Mapping in RAM
-   */
-  object Cache {
-    var map = new mutable.HashMap[String, GameController]
-
-    def isInCache(uuid: String) : Boolean = map contains uuid
-
-    def getController(uuid: String) : GameController = map.get(uuid).get
-
-    def addToCache(uuid: String, controller: GameController) = map + (uuid -> controller)
-
-    def removeFromCache(uuid: String) = map - uuid
-  }
 
   /**
    * Connection to the Database
@@ -53,14 +58,6 @@ object GameRepository {
     val mongoClient = MongoClient("127.0.0.1", 27017)
     val db = mongoClient("Chess-Online")
     val collection = db("Games")
-
-    /**
-     * Custom Context to make Salat work
-     */
-    implicit val ctx = new Context {
-      val name = "PlaySalatContext"
-    }
-    ctx.registerClassLoader(current.classloader)
 
     /**
      * Loads a GameState, based on a uuid from the Database
@@ -83,9 +80,19 @@ object GameRepository {
         val update = grater[GameState].asDBObject(state)
         collection.update(query, update, upsert = true)
       } catch {
-        case ex: Exception => ex
+        case ex: Exception =>
+          log.error(ex.toString)
+          ex
       }
-      uuid
     }
+
+    /**
+     * Custom Context to make Salat work
+     */
+    implicit val ctx = new Context {
+      val name = "PlaySalatContext"
+    }
+    ctx.registerClassLoader(current.classloader)
+
   }
 }
