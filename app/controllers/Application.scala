@@ -33,8 +33,14 @@ object Application extends Controller {
    * @return
    */
   def game(uuid: String) = Action {
-    println(uuid)
     Ok(views.html.game(uuid))
   }
 
+
+  /**
+   * Websocket for controlling the game
+   */
+  def socket(uuid: String) = {
+
+  }
 }
