@@ -2,14 +2,16 @@ package controllers
 
 import controller.GameController
 import model.{GameState, GameRepository}
+import play.api.libs.json.JsValue
 import play.api.mvc._
+import play.api.Play.current
 
 object Application extends Controller {
 
-/*  def socket = WebSocket.acceptWithActor[String, String] { request => out =>
-    WebSocketActor.props(out)
-  }*/
-
+  /**
+   * Landing Page
+   * @return
+   */
   def index = Action {
     Ok(views.html.index())
   }
@@ -36,11 +38,14 @@ object Application extends Controller {
     Ok(views.html.game(uuid))
   }
 
-
   /**
-   * Websocket for controlling the game
+   * WebSocket for controlling the game
    */
-  def socket(uuid: String) = {
-
+  def socket (uuid: String) = WebSocket.acceptWithActor[String, String] {
+    request =>
+      out => {
+        WebSocketStore.Store.add(uuid, out)
+        WebSocketStore.Socket.ChessWebSocketActor.props(out)
+      }
   }
 }
