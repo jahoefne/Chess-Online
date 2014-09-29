@@ -17,10 +17,10 @@ var game = {
 
     onOpen: function(){
         console.log(this.socket);
-        this.socket.send("Hello");
+        var message = { type: "GetGame", uuid: window._global_uuid }
+        this.send(message);
     },
 
-     //  this.socket.send("abc");
     onClose: function(event){
          console.log("Close:",event);
     },
@@ -29,6 +29,10 @@ var game = {
     },
     onMessage: function(event){
         console.log("Got Message:",event);
+    },
+
+    send: function(msg){
+        this.socket.send(JSON.stringify(msg));
     }
 
 

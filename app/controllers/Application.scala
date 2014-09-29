@@ -2,6 +2,7 @@ package controllers
 
 import controller.GameController
 import model.{GameState, GameRepository}
+import org.json4s._
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.Play.current
@@ -41,7 +42,7 @@ object Application extends Controller {
   /**
    * WebSocket for controlling the game
    */
-  def socket (uuid: String) = WebSocket.acceptWithActor[String, String] {
+  def socket (uuid: String) = WebSocket.acceptWithActor[JsValue, JsValue] {
     request =>
       out => {
         WebSocketStore.Store.add(uuid, out)

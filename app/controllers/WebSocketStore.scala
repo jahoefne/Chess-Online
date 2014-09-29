@@ -1,10 +1,9 @@
 package controllers
 
 import akka.actor.{Actor, Props, ActorRef}
-import play.api.libs.json.JsValue
-
+import model.{GameState, GameRepository}
+import play.api.libs.json._
 import scala.collection.mutable
-
 /**
  * User: Jan Moritz Hoefner
  * Date: 28/09/14
@@ -23,25 +22,37 @@ object WebSocketStore {
     def remove(uuid: String) = map -= uuid
   }
 
-  def sendMessage(uuid: String) ={
-     Store.getSocket(uuid) ! "Hello!"
+/*  def sendMessage(uuid: String) ={
+    Store.getSocket(uuid) ! "Hello!"
   }
-
+*/
   /**
    * Defines the WebsocketActor + Companion
    */
   object Socket {
     class ChessWebSocketActor(out: ActorRef) extends Actor {
+
       def receive = {
-        case msg: String =>  out ! ("I received your message: " + msg)
-        case msg: JsValue =>
-          out ! ("I received your message: " + msg)
+        case msg: JsValue => (msg \ "type").as[String] match {
+          /**
+           * Return the gameState as Json
+           */
+          case "GetGame" =>  {
+            val uuid = (msg \ "uuid").as[String]
+            val controller = GameRepository.getGame(uuid)
+            val gameState = GameState.fromGameController(controller, uuid)
+            out !  Json.toJson(gameState)
+          }
+
+          case _ => out ! "Error parsing incoming Json"
+        }
+
+        case _ => out ! "No Message Type supplied!"
       }
     }
+
     object ChessWebSocketActor {
       def props(out: ActorRef) = Props(new ChessWebSocketActor(out))
     }
-
   }
-
 }
