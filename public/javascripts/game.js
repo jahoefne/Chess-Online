@@ -24,15 +24,31 @@ var game = {
     onClose: function(event){
          console.log("Close:",event);
     },
+
     onError: function(event){
         console.log("Error:",event);
     },
+
     onMessage: function(event){
-        console.log("Got Message:",event);
+       console.log(event);
+       if(event && event.data){
+        var msg = JSON.parse(event.data);
+        this.updateField(msg);
+       }
     },
 
     send: function(msg){
         this.socket.send(JSON.stringify(msg));
+    },
+
+    updateField: function(msg){
+        $( ".field" ).each(function(i) {
+
+        var x = Math.floor(i/8);
+        var y = i%8;
+        console.log(x,":",y)
+          $( this ).text(figures[msg.field[y][x]])
+        });
     }
 
 

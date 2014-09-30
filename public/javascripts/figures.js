@@ -1,0 +1,14 @@
+var figures = new Array();
+figures[-1] = "\u265F";
+figures[-2] = "\u265C";
+figures[-3] = "\u265E";
+figures[-4] = "\u265D";
+figures[-5] = "\u265B";
+figures[-6] = "\u265A";
+figures[0] = "";
+figures[1] = "\u2659";
+figures[2] = "\u2656";
+figures[3] = "\u2658";
+figures[4] = "\u2657";
+figures[5] = "\u2655";
+figures[6] = "\u2654";
