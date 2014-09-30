@@ -2,12 +2,10 @@ package model
 
 import com.mongodb.casbah.MongoClient
 import com.mongodb.casbah.commons.MongoDBObject
-
 import com.novus.salat._
-import com.novus.salat.global._
 import controller.GameController
-import play.api.Play.current
 import play.api.Logger
+import play.api.Play.current
 
 import scala.collection.mutable
 
@@ -25,7 +23,7 @@ object GameRepository {
    */
   object Cache {
     var map = new mutable.HashMap[String, GameController]
-    def isInCache(uuid: String) : Boolean = map contains uuid
+    def isInCache(uuid: String) : Boolean = false//map contains uuid
     def getController(uuid: String) : GameController = map.get(uuid).get
     def addToCache(uuid: String, controller: GameController) = map += (uuid -> controller)
     def removeFromCache(uuid: String) = map -= uuid
@@ -64,7 +62,7 @@ object GameRepository {
      */
     def loadGame(uuid: String): GameController = {
       val dbObj = new MongoDBObject(collection.findOne(MongoDBObject("uuid" -> uuid)).get)
-      val controller = GameState.toGameController(grater[GameState].asObject(dbObj))
+      val controller = GameState.toGameController(dbObj)
       Cache addToCache(uuid, controller)
       controller
     }
@@ -77,22 +75,12 @@ object GameRepository {
       try {
         val query = MongoDBObject("uuid" -> uuid)
         val state = GameState.fromGameController(Cache.getController(uuid), uuid)
-        val update = grater[GameState].asDBObject(state)
-        collection.update(query, update, upsert = true)
+        collection.update(query, state, upsert = true)
       } catch {
         case ex: Exception =>
           log.error(ex.toString)
           ex
       }
     }
-
-    /**
-     * Custom Context to make Salat work
-     */
-    implicit val ctx = new Context {
-      val name = "PlaySalatContext"
-    }
-    ctx.registerClassLoader(current.classloader)
-
   }
 }

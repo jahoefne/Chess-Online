@@ -38,6 +38,7 @@ object WebSocketStore {
            * Return the gameState as Json
            */
           case "GetGame" =>  {
+            println("GetGame")
             val uuid = (msg \ "uuid").as[String]
             val controller = GameRepository.getGame(uuid)
             val gameState = GameState.fromGameController(controller, uuid)

@@ -1,5 +1,7 @@
 package model
 
+import com.mongodb.{BasicDBList, DBObject}
+import com.mongodb.casbah.commons.{MongoDBList, MongoDBObject}
 import controller.GameController
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
@@ -13,13 +15,11 @@ case class GameState(uuid: String,
                      whiteOrBlack: Byte,
                      gameOver: Boolean)
 
-object GameState{
-
-
+object GameState {
   /**
    * Extract game state out of a GameController
    */
-  def fromGameController(c: GameController, uuid: String) : GameState = new GameState(
+  def fromGameController(c: GameController, uuid: String): GameState = new GameState(
     uuid,
     c.getField.getField,
     c.getCheck,
@@ -34,6 +34,9 @@ object GameState{
     state.check,
     new Field(state.field, state.whiteOrBlack))
 
+  /**
+   * Convert GameState to Json
+   */
   implicit val gameStateWrites = new Writes[GameState] {
     def writes(c: GameState): JsValue = {
       Json.obj(
@@ -44,5 +47,26 @@ object GameState{
         "gameOver" -> c.gameOver
       )
     }
+  }
+
+  implicit def toDBObject(s: GameState) = MongoDBObject(
+    "uuid" -> s.uuid,
+    "field" -> s.field,
+    "check" -> s.check,
+    "whiteOrBlack" -> s.whiteOrBlack,
+    "gameOver" -> s.gameOver
+  )
+
+  implicit def toGameState(in: MongoDBObject) : GameState = {
+      val arr : Array[Array[Int]] =
+        for( e <- in.as[MongoDBList]("field").toArray)
+          yield for (x <- e.asInstanceOf[BasicDBList].toArray) yield x.asInstanceOf[Int]
+    GameState(
+      in.as[String]("uuid"),
+      arr,
+      in.as[Boolean]("check"),
+      in.as[Int]("whiteOrBlack").asInstanceOf[Byte],
+      in.as[Boolean]("gameOver")
+    )
   }
 }
