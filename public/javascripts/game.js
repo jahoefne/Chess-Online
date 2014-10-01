@@ -17,7 +17,9 @@ var game = {
 
     onOpen: function(){
         console.log(this.socket);
-        var message = { type: "GetGame", uuid: window._global_uuid }
+        var message = { type: "GetGame" }
+        var message = { type: "GetRole" }
+
         this.send(message);
     },
 
@@ -31,10 +33,14 @@ var game = {
 
     onMessage: function(event){
        console.log(event);
-       if(event && event.data){
-        var msg = JSON.parse(event.data);
-        this.updateField(msg);
-       }
+       var msg = JSON.parse(event.data);
+       switch(msg.type){
+        case "Role":
+            alert(msg.role);
+            break;
+        default:
+            break;
+       };
     },
 
     send: function(msg){

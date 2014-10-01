@@ -25,6 +25,20 @@ case class ActiveGame(uuid: String,
   def setBlack(p: Player) = this.copy(black = p, users = p :: users)
   def addSpectator(p: Player) = this.copy(users = p :: users)
 
+  /**
+   * Which role does the play with playerID have,
+   * black player, white player or spectator
+   */
+  def getRole(playerID: UUID) = {
+    val role = playerID match{
+      case white.uuid => "white player"
+
+      case black.uuid => "black player"
+      case _  => "spectator"
+    }
+    Json.obj("type" -> "Role", "role" -> role)
+  }
+
   def addPlayer(p: Player) : ActiveGame = {
     white match {
       case null =>
@@ -45,37 +59,38 @@ object ActiveGame{
    * Convert ActiveGame to Json
    */
   implicit val activeGameWrites = new Writes[ActiveGame] {
-    def writes(c: ActiveGame): JsValue = {
-      Json.obj(
-        "uuid" -> c.uuid,
-        "field" -> c.control.getField.getField,
-        "check" -> c.control.getCheck,
-        "whiteOrBlack" -> c.control.getField.getWhiteOrBlack.toInt,
-        "gameOver" -> c.control.isGameOver
-      )
-    }
+    def writes(c: ActiveGame): JsValue = Json.obj(
+      "type" -> "ActiveGame",
+      "whiteID" -> c.white.uuid.toString,
+      "blackID" -> c.black.uuid.toString,
+      "uuid" -> c.uuid,
+      "field" -> c.control.getField.getField,
+      "check" -> c.control.getCheck,
+      "whiteOrBlack" -> c.control.getField.getWhiteOrBlack.toInt,
+      "gameOver" -> c.control.isGameOver
+    )
   }
-//
-//  /**
-//   * Convert to MongoDBDBObject (only store relevant data)
-//   */
-//  implicit def toMongoDBObject(s: ActiveGame) = MongoDBObject(
-//    "uuid" -> s.uuid,
-//    "field" -> s.control.getField.getField,
-//    "check" -> s.control.getCheck,
-//    "whiteOrBlack" -> s.control.getField.getWhiteOrBlack,
-//    "gameOver" -> s.control.isGameOver
-//  )
-//
-//  /**
-//   * Convert from MongoDBObject to ActiveGame
-//   */
-//  implicit def toActiveGame(in: MongoDBObject) =  GameState(
-//      in.as[String]("uuid"),
-//      for( e <- in.as[MongoDBList]("field").toArray)
-//      yield for (x <- e.asInstanceOf[BasicDBList].toArray) yield x.asInstanceOf[Int],
-//      in.as[Boolean]("check"),
-//      in.as[Int]("whiteOrBlack").asInstanceOf[Byte],
-//      in.as[Boolean]("gameOver")
-//    )
-  }
+  //
+  //  /**
+  //   * Convert to MongoDBDBObject (only store relevant data)
+  //   */
+  //  implicit def toMongoDBObject(s: ActiveGame) = MongoDBObject(
+  //    "uuid" -> s.uuid,
+  //    "field" -> s.control.getField.getField,
+  //    "check" -> s.control.getCheck,
+  //    "whiteOrBlack" -> s.control.getField.getWhiteOrBlack,
+  //    "gameOver" -> s.control.isGameOver
+  //  )
+  //
+  //  /**
+  //   * Convert from MongoDBObject to ActiveGame
+  //   */
+  //  implicit def toActiveGame(in: MongoDBObject) =  GameState(
+  //      in.as[String]("uuid"),
+  //      for( e <- in.as[MongoDBList]("field").toArray)
+  //      yield for (x <- e.asInstanceOf[BasicDBList].toArray) yield x.asInstanceOf[Int],
+  //      in.as[Boolean]("check"),
+  //      in.as[Int]("whiteOrBlack").asInstanceOf[Byte],
+  //      in.as[Boolean]("gameOver")
+  //    )
+}
