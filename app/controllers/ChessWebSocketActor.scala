@@ -18,26 +18,25 @@ class ChessWebSocketActor(out: ActorRef,
       /**
        * Return the current game state
        */
-      case "GetGame" => out !  Json.toJson(ActiveGameStore.getActiveGame(gameID))
+      case "GetGame" => out !  ActiveGameStore.getActiveGame(gameID)
 
-      case "GetRole" => out ! ActiveGameStore.getActiveGame(gameID).getRole(playerID)
+      case "GetRole" => out ! Json.obj(
+        "type" -> "Role",
+        "role" -> ActiveGameStore.
+          getActiveGame(gameID).getRole(playerID))
 
 
       /**
        * Move figure at src to tgt
        */
-      case "Move" =>
-        println("Move")
-        val uuid = (msg \ "uuid").as[String]
+      case "Move" => val uuid = (msg \ "uuid").as[String]
 
       /**
        * Get possible moves for a field x
        */
       case "PossibleMoves" => println("PossibleMoves")
 
-
-
-      case _ => out ! "Error parsing incoming Json"
+      case _ => out ! "Unknown Json"
     }
 
     case _ => out ! "No Message Type supplied!"

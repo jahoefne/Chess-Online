@@ -10,7 +10,6 @@ object Application extends Controller {
 
   /**
    * Landing Page
-   * @return
    */
   def index = Action {
     Ok(views.html.index())
@@ -18,7 +17,6 @@ object Application extends Controller {
 
   /**
    * Create a new game instance
-   * @return
    */
   def newGame = Action {
     val gameUUID = java.util.UUID.randomUUID.toString
@@ -28,15 +26,13 @@ object Application extends Controller {
 
   /**
    * Access existing game instance
-   * @param uuid
-   * @return
    */
   def game(uuid: String) = Action {
     Ok(views.html.game(uuid))
   }
 
   /**
-   * WebSocket for controlling the game
+   * Create websocket for game: uuid
    */
   def socket (uuid: String) = WebSocket.acceptWithActor[JsValue, JsValue] {
     request =>

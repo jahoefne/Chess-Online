@@ -4,6 +4,7 @@ import scala.collection.mutable
 
 /**
  * Contains a Map of UUID -> ActiveGame
+ * to make ActiveGame instances accessible for new users by uuid
  */
 object ActiveGameStore {
   var map = new mutable.HashMap[String, ActiveGame]

@@ -11,11 +11,21 @@ import play.api.libs.json.{Json, Writes, JsValue}
  * this class is immutable, state changing operations return a reference on a new object
  */
 case class Player(uuid: UUID, out: ActorRef)
+
+/**
+ * Represents an active game instance
+ * @param uuid     id of the game
+ * @param control  controller of the game
+ * @param white    white player
+ * @param black    black player
+ * @param users    list of all users, white player + black player + spectators
+ */
 case class ActiveGame(uuid: String,
                       control: GameController,
                       white: Player,
                       black: Player,
-                      users: List[Player]) {
+                      users: List[Player]
+                       ) {
 
   def move(src: Point, dst: Point) = control.move(src, dst)
   def getPossibleMoves(p: Point) = control.getPossibleMoves(p)
@@ -30,13 +40,11 @@ case class ActiveGame(uuid: String,
    * black player, white player or spectator
    */
   def getRole(playerID: UUID) = {
-    val role = playerID match{
-      case white.uuid => "white player"
-
-      case black.uuid => "black player"
-      case _  => "spectator"
-    }
-    Json.obj("type" -> "Role", "role" -> role)
+     playerID match {
+       case white.uuid => "white player"
+       case black.uuid => "black player"
+       case _ => "spectator"
+     }
   }
 
   def addPlayer(p: Player) : ActiveGame = {
@@ -56,13 +64,12 @@ case class ActiveGame(uuid: String,
 
 object ActiveGame{
   /**
-   * Convert ActiveGame to Json
+   * Convert ActiveGame to Json, formatted as message for the client
+   * only the for the client necessary vals are being included.
    */
   implicit val activeGameWrites = new Writes[ActiveGame] {
     def writes(c: ActiveGame): JsValue = Json.obj(
       "type" -> "ActiveGame",
-      "whiteID" -> c.white.uuid.toString,
-      "blackID" -> c.black.uuid.toString,
       "uuid" -> c.uuid,
       "field" -> c.control.getField.getField,
       "check" -> c.control.getCheck,
@@ -70,6 +77,10 @@ object ActiveGame{
       "gameOver" -> c.control.isGameOver
     )
   }
+
+  //
+  // Partial code to serialize/desirialize to/from MongoDBObjects
+  // removed for now, because it's dependend on the still changing model classes
   //
   //  /**
   //   * Convert to MongoDBDBObject (only store relevant data)
