@@ -1,8 +1,5 @@
 package model
 
-import akka.actor.ActorRef
-import controller.GameController
-
 import scala.collection.mutable
 
 /**

@@ -50,8 +50,6 @@ var game = {
           $( this ).text(figures[msg.field[y][x]])
         });
     }
-
-
 };
 
 // Init the Game-JS after the document is ready
