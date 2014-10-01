@@ -1,7 +1,7 @@
 package controllers
 
 import controller.GameController
-import model.{GameState, GameRepository}
+import model.{WSStore, GameState, GameRepository}
 import org.json4s._
 import play.api.libs.json.JsValue
 import play.api.mvc._
@@ -45,8 +45,8 @@ object Application extends Controller {
   def socket (uuid: String) = WebSocket.acceptWithActor[JsValue, JsValue] {
     request =>
       out => {
-        WebSocketStore.Store.add(uuid, out)
-        WebSocketStore.Socket.ChessWebSocketActor.props(out)
+        WSStore.add(uuid, out)
+        WebSocketController.Socket.ChessWebSocketActor.props(out)
       }
   }
 }

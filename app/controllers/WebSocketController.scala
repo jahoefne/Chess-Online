@@ -1,6 +1,7 @@
 package controllers
 
 import akka.actor.{Actor, Props, ActorRef}
+import controller.GameController
 import model.{GameState, GameRepository}
 import play.api.libs.json._
 import scala.collection.mutable
@@ -9,23 +10,12 @@ import scala.collection.mutable
  * Date: 28/09/14
  * Time: 12:17
  */
-object WebSocketStore {
+object WebSocketController {
 
-  /**
-   * Keeps a Map of UUID -> ActorRef in the RAM
-   */
-  object Store {
-    var map = new mutable.HashMap[String, ActorRef]
-    def has(uuid: String) : Boolean = map contains uuid
-    def getSocket(uuid: String) : ActorRef = map.get(uuid).get
-    def add(uuid: String, ref: ActorRef) = map += (uuid -> ref)
-    def remove(uuid: String) = map -= uuid
-  }
-
-/*  def sendMessage(uuid: String) ={
-    Store.getSocket(uuid) ! "Hello!"
-  }
-*/
+  /*  def sendMessage(uuid: String) ={
+      Store.getSocket(uuid) ! "Hello!"
+    }
+  */
   /**
    * Defines the WebsocketActor + Companion
    */
