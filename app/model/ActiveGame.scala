@@ -4,7 +4,7 @@ import java.awt.Point
 import akka.actor.ActorRef
 import controller.GameController
 import java.util.UUID
-import play.api.libs.json.{Json, Writes, JsValue}
+import play.api.libs.json.{Json, JsValue}
 
 /**
  * Represents an ActiveGame
@@ -60,23 +60,16 @@ case class ActiveGame(uuid: String,
         }
     }
   }
-}
 
-object ActiveGame{
-  /**
-   * Convert ActiveGame to Json, formatted as message for the client
-   * only the for the client necessary vals are being included.
-   */
-  implicit val activeGameWrites = new Writes[ActiveGame] {
-    def writes(c: ActiveGame): JsValue = Json.obj(
+  def toJson : JsValue = Json.obj(
       "type" -> "ActiveGame",
-      "uuid" -> c.uuid,
-      "field" -> c.control.getField.getField,
-      "check" -> c.control.getCheck,
-      "whiteOrBlack" -> c.control.getField.getWhiteOrBlack.toInt,
-      "gameOver" -> c.control.isGameOver
+      "uuid" -> this.uuid,
+      "field" -> this.control.getField.getField,
+      "check" -> this.control.getCheck,
+      "whiteOrBlack" -> this.control.getField.getWhiteOrBlack.toInt,
+      "gameOver" -> this.control.isGameOver
     )
-  }
+}
 
   //
   // Partial code to serialize/desirialize to/from MongoDBObjects
@@ -104,4 +97,3 @@ object ActiveGame{
   //      in.as[Int]("whiteOrBlack").asInstanceOf[Byte],
   //      in.as[Boolean]("gameOver")
   //    )
-}
