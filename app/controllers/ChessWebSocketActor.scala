@@ -3,7 +3,7 @@ package controllers
 import java.util.UUID
 
 import akka.actor.{Actor, Props, ActorRef}
-import model.ActiveGameStore
+import model.{ActiveGame, ActiveGameStore}
 import play.api.libs.json._
 
 /**
@@ -18,12 +18,12 @@ class ChessWebSocketActor(out: ActorRef,
       /**
        * Return the current game state
        */
-      case "GetGame" => out !  ActiveGameStore.getActiveGame(gameID)
+
+      case "GetGame" => out ! ActiveGameStore.getActiveGame(gameID).toJson
 
       case "GetRole" => out ! Json.obj(
         "type" -> "Role",
-        "role" -> ActiveGameStore.
-          getActiveGame(gameID).getRole(playerID))
+        "role" -> ActiveGameStore.getActiveGame(gameID).getRole(playerID))
 
 
       /**
