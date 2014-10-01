@@ -25,5 +25,4 @@ object WSStore {
     def getSocket(uuid: String) : ActorRef = map.get(uuid).get
     def add(uuid: String, ref: ActorRef) = map += (uuid -> ref)
     def remove(uuid: String) = map -= uuid
-  }
 }
