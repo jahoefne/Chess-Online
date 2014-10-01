@@ -16,7 +16,7 @@ class ChessWebSocketActor(out: ActorRef,
   def receive = {
     case msg: JsValue => (msg \ "type").as[String] match {
       /**
-       * Return the gameState as Json
+       * Return the current game state
        */
       case "GetGame" =>
         println("GetGame")
@@ -24,9 +24,20 @@ class ChessWebSocketActor(out: ActorRef,
         val activeGame = ActiveGameStore.getActiveGame(uuid)
         out !  Json.toJson(activeGame)
 
+
+      /**
+       * Move figure at src to tgt
+       */
       case "Move" =>
         println("Move")
         val uuid = (msg \ "uuid").as[String]
+
+      /**
+       * Get possible moves for a field x
+       */
+      case "PossibleMoves" =>
+        println("PossibleMoves")
+
 
 
 
