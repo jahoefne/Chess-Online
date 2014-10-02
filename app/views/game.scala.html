@@ -27,13 +27,13 @@
 
 </head>
 <body class="text-center">
-<h1>Your turn!</h1>
+<h1 id="header-bar">Wait</h1>
 
 <table class="text-center" style="font-size:30pt;">
     @for(x <- 1 to 8){
     <tr>
         @for(y <- 1 to 8){
-            <td class="@brightOrDarkField(x,y) field" onClick="game.clickedField(@x,@y)"></td>
+            <td id="@x:@y" class="@brightOrDarkField(x,y) field" onClick="game.clickedField(@x,@y)"></td>
         }
     </tr>
     }
