@@ -27,7 +27,11 @@ case class ActiveGame(uuid: String,
                       users: List[Player]
                        ) {
 
-  def move(src: Point, dst: Point) = control.move(src, dst)
+  def move(src: Point, dst: Point) = {
+    control.move(src, dst);
+    broadCastMsg(this.toJson)
+  }
+
   def getPossibleMoves(p: Point) = control.getPossibleMoves(p)
   def broadCastMsg(msg: JsValue) = for (player <- users) player.out ! msg
   def switchPlayers() =  this.copy(white=this.black, black = this.white)

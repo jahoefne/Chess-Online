@@ -5,26 +5,36 @@ var game = {
 
     yourTurn: false,
     clicked: null,
+    clickedX: null,
+    clickedY: null,
+
     possibleMoves: [],
 
     clickedField: function(x,y){
-
-     if(this.clicked!=null){
-         this.clicked.removeClass("highlight");
-         this.clicked = null;
-     }
-     for(var i =0; i<this.possibleMoves.length; i++){
-         this.possibleMoves[i].removeClass("highlight");
-     }
-     this.possibleMoves.length = 0;
-
-     this.clicked = $("#"+x+""+y);
-     this.clicked.addClass("highlight");
-     console.log(this.clicked);
-     var message = {type: "PossibleMoves", x: x, y: y};
-     this.sendMessage(message);
-     this.yourTurn = false;
+         if(this.clicked!=null){
+             this.clicked.removeClass("highlight");
+             this.clicked = null;
+             this.move(this.clickedX,this.clickedY, x,y);
+         }
+         for(var i =0; i<this.possibleMoves.length; i++){
+             this.possibleMoves[i].removeClass("highlight");
+         }
+         this.clickedX = x;
+         this.clickedY = y;
+         this.possibleMoves.length = 0;
+         this.clicked = $("#"+x+""+y);
+         this.clicked.addClass("highlight");
+         console.log(this.clicked);
+         var message = {type: "PossibleMoves", x: x, y: y};
+         this.sendMessage(message);
+         this.yourTurn = false;
     },
+
+    move: function(srcX, srcY, dstX, dstY){
+        var msg = {type:"Move", srcX: srcX, srcY: srcY, dstX:dstX, dstY:dstY}
+        this.sendMessage(msg);
+    },
+
 
     init: function() {
         this.socket = new WebSocket(this.uri);

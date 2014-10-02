@@ -26,7 +26,13 @@ class ChessWebSocketActor(out: ActorRef,
         "role" -> ActiveGameStore.getActiveGame(gameID).getRole(playerID))
 
       /** Move figure at src to tgt */
-      case "Move" => val uuid = (msg \ "uuid").as[String]
+      case "Move" =>
+        val srcX = (msg \ "srcX").as[Int]
+        val srcY = (msg \ "srcY").as[Int]
+        val dstX = (msg \ "dstX").as[Int]
+        val dstY = (msg \ "dstY").as[Int]
+        ActiveGameStore.getActiveGame(gameID).move(new Point(srcX,srcY), new Point(dstX,dstY))
+
 
       /** Get possible moves for a field x */
       case "PossibleMoves" =>
