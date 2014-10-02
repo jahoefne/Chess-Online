@@ -47,6 +47,7 @@ case class ActiveGame(uuid: String,
      }
   }
 
+
   def addPlayer(p: Player) : ActiveGame = {
     white match {
       case null =>
@@ -61,6 +62,10 @@ case class ActiveGame(uuid: String,
     }
   }
 
+ // TODO: implement
+ // def removePlayer(playerID: UUID) =
+
+
   def toJson : JsValue = Json.obj(
       "type" -> "ActiveGame",
       "uuid" -> this.uuid,
@@ -71,8 +76,8 @@ case class ActiveGame(uuid: String,
     )
 }
 
-  //
-  // Partial code to serialize/desirialize to/from MongoDBObjects
+  // TODO:
+  // Partial code to serialize/deserialize to/from MongoDBObjects
   // removed for now, because it's dependend on the still changing model classes
   //
   //  /**
