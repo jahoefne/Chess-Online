@@ -1,5 +1,4 @@
 var game = {
-
     socket: null,
     uri: "ws://" + window.location.host + "/socket/" + window._global_uuid,
 
@@ -15,6 +14,10 @@ var game = {
              this.clicked.removeClass("highlight");
              this.clicked = null;
              this.move(this.clickedX,this.clickedY, x,y);
+             for(var i =0; i<this.possibleMoves.length; i++){
+                          this.possibleMoves[i].removeClass("highlight");
+                      }
+             return;
          }
          for(var i =0; i<this.possibleMoves.length; i++){
              this.possibleMoves[i].removeClass("highlight");
