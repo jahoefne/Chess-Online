@@ -1,21 +1,27 @@
 table{
     margin: auto;
-    width:480px;
-    height:480px;
+    border-spacing: 2px;
+    border-collapse: separate;
+    font-size:30pt;
+}
+
+body {
+    background:#f0f0f0;
 }
 
 td {
     width:60px;
     height:60px;
-    border: solid 1px;
+    border-radius: 5px;
+    border: solid 1px #00BFFF;
 }
 
 td.bright{
-  background-color:#E6E4D8;
+  background-color:#fbfbfb;
 }
 
 td.dark{
-   background-color:#663300;
+  background-color:#c0c0c0;
 }
 
 .jumbotron {height:100%;}
