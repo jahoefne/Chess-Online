@@ -4,21 +4,19 @@ var game = {
     uri: "ws://" + window.location.host + "/socket/" + window._global_uuid,
 
     yourTurn: false,
+
+
     clicked: null,
+    possibleMoves: [],
 
     clickedField: function(x,y){
-       /* if(this.clicked == null){
-            this.clicked = event.target;
-            console.log(this.clicked);
-            var message = {type: "PossibleMoves", x: x, y: y};
-            this.sendMessage(message);
-        }   */
-
-      /* TODO: get possible moves and highlight the fields,
-               if one of the fields is clicked, call move
-      */
+     this.clicked = null;
+     this.clicked = $("#"+x+""+y);
+     this.clicked.css("background-color","red");
+     console.log(this.clicked);
+     var message = {type: "PossibleMoves", x: x, y: y};
+     this.sendMessage(message);
      this.yourTurn = false;
-      //console.log(x+","+y);
     },
 
     init: function() {
@@ -57,6 +55,21 @@ var game = {
             this.updateField(msg);
             break;
 
+        case "PossibleMoves":
+            console.log(msg);
+            for(var x=0; x < this.possibleMoves.length; x++){
+               //this.possibleMoves[x].css("");
+            }
+            this.possibleMoves.length=0;
+
+            for(var i=0; i < msg.moves.length; i++){
+                this.possibleMoves[i] = $("#"+msg.moves[i][0]+""+msg.moves[i][1]);
+                console.log(msg.moves[i]);
+                this.possibleMoves[i].css("background-color", "blue");
+            }
+
+            break;
+
         case "YourTurn":
             this.yourTurn = true;
             $("#header-bar").text("Your turn!");
@@ -82,7 +95,7 @@ var game = {
         var x = Math.floor(i/8);
         var y = i%8;
         console.log(x,":",y)
-          $( this ).text(figures[msg.field[y][x]])
+          $( this ).text(figures[msg.field[x][y]])
         });
     }
 };

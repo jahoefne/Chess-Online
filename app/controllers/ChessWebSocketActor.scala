@@ -1,5 +1,6 @@
 package controllers
 
+import java.awt.Point
 import java.util.UUID
 
 import akka.actor.{Actor, Props, ActorRef}
@@ -28,7 +29,20 @@ class ChessWebSocketActor(out: ActorRef,
       case "Move" => val uuid = (msg \ "uuid").as[String]
 
       /** Get possible moves for a field x */
-      case "PossibleMoves" => println("PossibleMoves")
+      case "PossibleMoves" =>
+        println("PossibleMoves")
+        val x = (msg \ "x").as[Int]
+        val y = (msg \ "y").as[Int]
+        println(x+":"+y)
+        val moves =
+          for(p: Point <- ActiveGameStore.getActiveGame(gameID).getPossibleMoves(new Point(x,y)))
+             yield Array[Int](p.x,p.y)
+
+        println(moves.toString)
+
+        out ! Json.obj("type" -> "PossibleMoves",
+          "moves" -> moves
+        )
 
       case _ => out ! "Unknown Json"
     }
