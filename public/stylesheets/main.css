@@ -24,4 +24,7 @@ td.dark{
   background-color:#c0c0c0;
 }
 
+td.highlight{
+    background-color:#00abff;
+}
 .jumbotron {height:100%;}

@@ -4,15 +4,22 @@ var game = {
     uri: "ws://" + window.location.host + "/socket/" + window._global_uuid,
 
     yourTurn: false,
-
-
     clicked: null,
     possibleMoves: [],
 
     clickedField: function(x,y){
-     this.clicked = null;
+
+     if(this.clicked!=null){
+         this.clicked.removeClass("highlight");
+         this.clicked = null;
+     }
+     for(var i =0; i<this.possibleMoves.length; i++){
+         this.possibleMoves[i].removeClass("highlight");
+     }
+     this.possibleMoves.length = 0;
+
      this.clicked = $("#"+x+""+y);
-     this.clicked.css("background-color","red");
+     this.clicked.addClass("highlight");
      console.log(this.clicked);
      var message = {type: "PossibleMoves", x: x, y: y};
      this.sendMessage(message);
@@ -57,15 +64,10 @@ var game = {
 
         case "PossibleMoves":
             console.log(msg);
-            for(var x=0; x < this.possibleMoves.length; x++){
-               //this.possibleMoves[x].css("");
-            }
-            this.possibleMoves.length=0;
-
             for(var i=0; i < msg.moves.length; i++){
                 this.possibleMoves[i] = $("#"+msg.moves[i][0]+""+msg.moves[i][1]);
                 console.log(msg.moves[i]);
-                this.possibleMoves[i].css("background-color", "blue");
+                this.possibleMoves[i].addClass("highlight");
             }
 
             break;
@@ -91,11 +93,10 @@ var game = {
 
     updateField: function(msg){
         $( ".field" ).each(function(i) {
-
-        var x = Math.floor(i/8);
-        var y = i%8;
-        console.log(x,":",y)
-          $( this ).text(figures[msg.field[x][y]])
+            var x = Math.floor(i/8);
+            var y = i%8;
+            console.log(x,":",y)
+            $( this ).text(figures[msg.field[x][y]])
         });
     }
 };
