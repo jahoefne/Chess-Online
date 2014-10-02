@@ -3,8 +3,22 @@ var game = {
     socket: null,
     uri: "ws://" + window.location.host + "/socket/" + window._global_uuid,
 
+    yourTurn: false,
+    clicked: null,
+
     clickedField: function(x,y){
-        console.log(x+","+y);
+       /* if(this.clicked == null){
+            this.clicked = event.target;
+            console.log(this.clicked);
+            var message = {type: "PossibleMoves", x: x, y: y};
+            this.sendMessage(message);
+        }   */
+
+      /* TODO: get possible moves and highlight the fields,
+               if one of the fields is clicked, call move
+      */
+     this.yourTurn = false;
+      //console.log(x+","+y);
     },
 
     init: function() {
@@ -24,7 +38,7 @@ var game = {
     },
 
     onClose: function(event){
-         console.log("Close:",event);
+        console.log("Close:",event);
     },
 
     onError: function(event){
@@ -42,6 +56,10 @@ var game = {
         case "ActiveGame":
             this.updateField(msg);
             break;
+
+        case "YourTurn":
+            this.yourTurn = true;
+            $("#header-bar").text("Your turn!");
 
         default:
             break;
