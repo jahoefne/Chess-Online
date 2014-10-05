@@ -1,10 +1,9 @@
 package controllers
 
 import java.awt.Point
-import java.util.UUID
-
 import akka.actor.{Actor, Props, ActorRef}
 import model.ActiveGameStore
+import play.api.Logger
 import play.api.libs.json._
 
 /**
@@ -13,6 +12,7 @@ import play.api.libs.json._
 class ChessWebSocketActor(out: ActorRef,
                           playerID: String,
                           gameID: String) extends Actor {
+  val log = Logger(this getClass() getName())
 
   def receive = {
     case msg: JsValue => (msg \ "type").as[String] match {
@@ -31,12 +31,13 @@ class ChessWebSocketActor(out: ActorRef,
         val srcY = (msg \ "srcY").as[Int]
         val dstX = (msg \ "dstX").as[Int]
         val dstY = (msg \ "dstY").as[Int]
+        log.info("Move "+srcX +":"+srcY+" -> "+dstX+":"+dstY)
         ActiveGameStore.getActiveGame(gameID).move(new Point(srcX,srcY), new Point(dstX,dstY))
 
 
       /** Get possible moves for a field x */
       case "PossibleMoves" =>
-        println("PossibleMoves")
+        log.info("PossibleMoves")
         val x = (msg \ "x").as[Int]
         val y = (msg \ "y").as[Int]
         println(x+":"+y)
@@ -62,13 +63,11 @@ class ChessWebSocketActor(out: ActorRef,
    * Socket was closed from the client
    */
   override def postStop() = {
-    println("Websocket closed from client")
+    log.info("Websocket closed from client")
     ActiveGameStore.add(
       gameID,
       ActiveGameStore.getActiveGame(gameID).removePlayer(playerID))
-
-      ActiveGameStore.getActiveGame(gameID).broadCastMsg(ActiveGameStore.getActiveGame(gameID).toJson)
-    // TODO: remove player from activeGame
+    ActiveGameStore.getActiveGame(gameID).broadCastMsg(ActiveGameStore.getActiveGame(gameID).toJson)
   }
 }
 
