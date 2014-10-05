@@ -34,8 +34,8 @@ case class ActiveGame(uuid: String,
   def getPossibleMoves(p: Point) = control.getPossibleMoves(p)
   def broadCastMsg(msg: JsValue) = for (player <- users) player.out ! msg
   def switchPlayers() =  this.copy(white=this.black, black = this.white)
-  def setWhite(p: Player) = this.copy(white = Option(p), users = p :: users)
-  def setBlack(p: Player) = this.copy(black = Option(p), users = p :: users)
+  def setWhite(p: Player) = this.copy(white = Option(p), users = p :: users); broadCastMsg(this.toJson)
+  def setBlack(p: Player) = this.copy(black = Option(p), users = p :: users); broadCastMsg(this.toJson)
   def addSpectator(p: Player) = this.copy(users = p :: users)
 
   /**

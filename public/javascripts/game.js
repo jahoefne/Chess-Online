@@ -76,6 +76,12 @@ var game = {
         case "ActiveGame":
             this.updateField(msg);
 
+            if(msg.white == "" || msg.black == ""){
+                $("#header-bar").text("Waiting for other player!");
+                return;
+            }
+
+
             // check if it's our turn
             if(this.playerID == msg.white && msg.whiteOrBlack > 0  // we are white player and it's our turn
                 || this.playerID == msg.black && msg.whiteOrBlack < 0 ){  // we are black player and it's our turn
