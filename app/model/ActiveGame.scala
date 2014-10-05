@@ -28,7 +28,7 @@ case class ActiveGame(uuid: String,
                        ) {
 
   def move(src: Point, dst: Point) = {
-    control.move(src, dst);
+    control.move(src, dst)
     broadCastMsg(this.toJson)
   }
 
@@ -75,6 +75,8 @@ case class ActiveGame(uuid: String,
       "uuid" -> this.uuid,
       "field" -> this.control.getField.getField,
       "check" -> this.control.getCheck,
+      "white" -> white.uuid.toString,
+      "black" -> black.uuid.toString,
       "whiteOrBlack" -> this.control.getField.getWhiteOrBlack.toInt,
       "gameOver" -> this.control.isGameOver
     )
