@@ -11,27 +11,29 @@ var game = {
     possibleMoves: [],
 
     clickedField: function(x,y){
-         if(this.clicked!=null){
-             this.clicked.removeClass("highlight");
-             this.clicked = null;
-             this.move(this.clickedX,this.clickedY, x,y);
+        if(this.yourTurn){
+             if(this.clicked!=null){
+                 this.clicked.removeClass("highlight");
+                 this.clicked = null;
+                 this.move(this.clickedX,this.clickedY, x,y);
+                 for(var i =0; i<this.possibleMoves.length; i++){
+                              this.possibleMoves[i].removeClass("highlight");
+                          }
+                 return;
+             }
              for(var i =0; i<this.possibleMoves.length; i++){
-                          this.possibleMoves[i].removeClass("highlight");
-                      }
-             return;
+                 this.possibleMoves[i].removeClass("highlight");
+             }
+             this.clickedX = x;
+             this.clickedY = y;
+             this.possibleMoves.length = 0;
+             this.clicked = $("#"+x+""+y);
+             this.clicked.addClass("highlight");
+             console.log(this.clicked);
+             var message = {type: "PossibleMoves", x: x, y: y};
+             this.sendMessage(message);
+             this.yourTurn = false;
          }
-         for(var i =0; i<this.possibleMoves.length; i++){
-             this.possibleMoves[i].removeClass("highlight");
-         }
-         this.clickedX = x;
-         this.clickedY = y;
-         this.possibleMoves.length = 0;
-         this.clicked = $("#"+x+""+y);
-         this.clicked.addClass("highlight");
-         console.log(this.clicked);
-         var message = {type: "PossibleMoves", x: x, y: y};
-         this.sendMessage(message);
-         this.yourTurn = false;
     },
 
     move: function(srcX, srcY, dstX, dstY){
@@ -74,10 +76,18 @@ var game = {
 
         case "ActiveGame":
             this.updateField(msg);
-            console.log(msg.whiteOrBlack);
-            console.log(this.playerID);
-            console.log(msg.white);
-            console.log(msg.black);
+
+            // check if it's our turn
+            if(this.playerID == msg.white && msg.whiteOrBlack > 0  // we are white player and it's our turn
+                || this.playerID == msg.black && msg.whiteOrBlack < 0 ){  // we are black player and it's our turn
+                this.yourTurn = true;
+                 $("#header-bar").text("Your turn!");
+
+            }else{
+                 this.yourTurn = false;
+                 $("#header-bar").text("");
+            }
+
             break;
 
         case "PossibleMoves":
@@ -88,10 +98,6 @@ var game = {
                 this.possibleMoves[i].addClass("highlight");
             }
             break;
-
-
-        // turn indicator
-        //  $("#header-bar").text("Your turn!");
 
         default:
             break;
