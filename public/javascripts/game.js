@@ -1,12 +1,13 @@
 var game = {
     socket: null,
-    uri: "ws://" + window.location.host + "/socket/" + window._global_uuid,
+    uri: "ws://" + window.location.host + "/socket/" + window._global_uuid + "/"+ window._global_playerID,
+
+    playerID: window._global_playerID,
 
     yourTurn: false,
     clicked: null,
     clickedX: null,
     clickedY: null,
-
     possibleMoves: [],
 
     clickedField: function(x,y){
@@ -73,6 +74,10 @@ var game = {
 
         case "ActiveGame":
             this.updateField(msg);
+            console.log(msg.whiteOrBlack);
+            console.log(this.playerID);
+            console.log(msg.white);
+            console.log(msg.black);
             break;
 
         case "PossibleMoves":
@@ -82,12 +87,11 @@ var game = {
                 console.log(msg.moves[i]);
                 this.possibleMoves[i].addClass("highlight");
             }
-
             break;
 
-        case "YourTurn":
-            this.yourTurn = true;
-            $("#header-bar").text("Your turn!");
+
+        // turn indicator
+        //  $("#header-bar").text("Your turn!");
 
         default:
             break;

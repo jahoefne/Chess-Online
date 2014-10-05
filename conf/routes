@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index
 GET     /game/new                   controllers.Application.newGame
 GET     /game/:uuid                 controllers.Application.game(uuid: String)
-GET     /socket/:uuid               controllers.Application.socket(uuid: String)
+GET     /socket/:uuid/:playerID     controllers.Application.socket(uuid: String, playerID: String)
 
 
 # Map static resources from the /public folder to the /assets URL path

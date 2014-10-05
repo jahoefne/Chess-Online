@@ -46,7 +46,8 @@ class ChessWebSocketActor(out: ActorRef,
 
         println(moves.toString)
 
-        out ! Json.obj("type" -> "PossibleMoves",
+        out ! Json.obj(
+          "type" -> "PossibleMoves",
           "moves" -> moves
         )
 
