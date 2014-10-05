@@ -11,7 +11,7 @@ import play.api.libs.json._
  * Defines the WebSocketActor + Companion
  */
 class ChessWebSocketActor(out: ActorRef,
-                          playerID: UUID,
+                          playerID: String,
                           gameID: String) extends Actor {
 
   def receive = {
@@ -68,6 +68,6 @@ class ChessWebSocketActor(out: ActorRef,
 }
 
 object ChessWebSocketActor {
-  def props(out: ActorRef, playerID: UUID, gameID: String) =
+  def props(out: ActorRef, playerID: String, gameID: String) =
     Props(new ChessWebSocketActor(out, playerID, gameID))
 }
