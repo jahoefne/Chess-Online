@@ -32,7 +32,6 @@ var game = {
              console.log(this.clicked);
              var message = {type: "PossibleMoves", x: x, y: y};
              this.sendMessage(message);
-             this.yourTurn = false;
          }
     },
 
@@ -81,11 +80,11 @@ var game = {
             if(this.playerID == msg.white && msg.whiteOrBlack > 0  // we are white player and it's our turn
                 || this.playerID == msg.black && msg.whiteOrBlack < 0 ){  // we are black player and it's our turn
                 this.yourTurn = true;
-                 $("#header-bar").text("Your turn!");
+                 $("#header-bar").text("It's your turn!");
 
             }else{
                  this.yourTurn = false;
-                 $("#header-bar").text("");
+                 $("#header-bar").text("Please wait.");
             }
 
             break;
