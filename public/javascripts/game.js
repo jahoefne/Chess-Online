@@ -87,6 +87,11 @@ var game = {
                  $("#header-bar").text("Please wait.");
             }
 
+            if(msg.gameOver){
+                $("#header-bar").text("Game over");
+                this.yourTurn = false;
+            }
+
             break;
 
         case "PossibleMoves":
