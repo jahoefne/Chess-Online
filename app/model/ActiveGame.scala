@@ -52,6 +52,16 @@ case class ActiveGame(uuid: String,
     }
   }
 
+  def removePlayer(pID: String): ActiveGame ={
+    val w = white.getOrElse(Player("",null))
+    val b = black.getOrElse(Player("", null))
+
+    pID match {
+      case w.uuid => this.copy(white = Option(null))
+      case b.uuid => this.copy(black = Option(null))
+      case _ => this // this.copy(users = users.)
+    }
+  }
 
   def addPlayer(p: Player) : ActiveGame = {
     if(! white.isDefined){

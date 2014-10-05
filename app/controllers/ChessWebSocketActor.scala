@@ -42,7 +42,7 @@ class ChessWebSocketActor(out: ActorRef,
         println(x+":"+y)
         val moves =
           for(p: Point <- ActiveGameStore.getActiveGame(gameID).getPossibleMoves(new Point(x,y)))
-             yield Array[Int](p.x,p.y)
+          yield Array[Int](p.x,p.y)
 
         println(moves.toString)
 
@@ -62,7 +62,12 @@ class ChessWebSocketActor(out: ActorRef,
    * Socket was closed from the client
    */
   override def postStop() = {
-     println("Websocket closed from client")
+    println("Websocket closed from client")
+    ActiveGameStore.add(
+      gameID,
+      ActiveGameStore.getActiveGame(gameID).removePlayer(playerID))
+
+      ActiveGameStore.getActiveGame(gameID).broadCastMsg(ActiveGameStore.getActiveGame(gameID).toJson)
     // TODO: remove player from activeGame
   }
 }
