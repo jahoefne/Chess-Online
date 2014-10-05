@@ -1,14 +1,5 @@
 @(gameUUID:String, playerUUID:String)
 
-<!-- Function to determine whether a field has to be bright or dark coloured -->
-@brightOrDarkField(x: Int, y: Int) = @{
-  if((x+y) % 2 == 0){
-    "dark"
-  }else{
-    "bright"
-  }
-}
-
 <html>
 <head>
     <script src="@routes.Assets.at("javascripts/deps/jquery-2.1.1.min.js")"></script>
@@ -33,7 +24,15 @@
     @for(x <- 0 to 7){
     <tr>
         @for(y <- 0 to 7){
-            <td id="@x@y" class="@brightOrDarkField(x,y) field" onClick="game.clickedField(@x,@y)"></td>
+            <td id="@x@y" class=
+
+                @if((x+y) % 2 == 0){
+                    "dark field"
+                }else{
+                    "bright field"
+                }
+
+              onClick="game.clickedField(@x,@y)"></td>
         }
     </tr>
     }
