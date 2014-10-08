@@ -12,14 +12,15 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background:#f0f0f0;
+    background:#4c5052;
+    font: white;
 }
 
 td {
     width:60px;
     height:60px;
     border-radius: 5px;
-    border: solid 1px #00BFFF;
+    border: solid 2px #A0CFFF;
 }
 
 td.bright{
@@ -34,3 +35,7 @@ td.highlight{
     background-color:#00abff;
 }
 .jumbotron {height:100%;}
+
+#error{
+    color:red;
+}

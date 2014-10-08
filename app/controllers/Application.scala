@@ -23,7 +23,11 @@ object Application extends Controller {
   /** Access existing game instance */
   def game(uuid: String) = Action {
     val playerID = java.util.UUID.randomUUID().toString
-    Ok(views.html.game(uuid, playerID))
+    if(ActiveGameStore.has(uuid)) {
+      Ok(views.html.game(uuid, playerID))
+    }else{
+      Ok(views.html.error("The requested game does not exist, please create a:"))
+    }
   }
 
   /** Create websocket for game: uuid */

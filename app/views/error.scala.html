@@ -1,0 +1,21 @@
+@(message: String)
+<html>
+<head>
+    <!-- Load Bootstrap -->
+    <script src="@routes.Assets.at("javascripts/deps/jquery-2.1.1.min.js")"></script>
+    <link rel="stylesheet" href="@routes.Assets.at("javascripts/deps/bootstrap.min.css")" />
+    <script src="@routes.Assets.at("javascripts/deps/bootstrap.min.js")"></script>
+
+    <!-- Load Our Css -->
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
+</head>
+
+<body>
+<div class="jumbotron text-center">
+    <h1 id="error">Error:</h1>
+    <h1>&#9820;&#9819;&#9822;&#9818;</h1>
+    <p id="error">@message</p>
+    <p><a class="btn-primary btn-lg" role="button" href="./game/new">New Game!</a></p>
+</div>
+</body>
+</html>
