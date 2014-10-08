@@ -95,6 +95,10 @@ case class ActiveGame(uuid: String,
   )
 
 }
+
+/**
+ * Companion for MongoDB conversion
+ */
 object ActiveGame{
 
   /**
@@ -117,17 +121,12 @@ object ActiveGame{
       in.as[Boolean]("gameOver"),
       in.as[Boolean]("check"),
       new Field(
+        // reconstruct out field Array (there is no automatic converter for Multidimensional arrays
         for (e <- in.as[MongoDBList]("field").toArray)
         yield for (x <- e.asInstanceOf[BasicDBList].toArray) yield x.asInstanceOf[Int],
         in.as[Int]("whiteOrBlack").asInstanceOf[Byte]
       )
     )
-    ActiveGame(
-      in.as[String]("uuid"),
-      controller,
-      Option(null),
-      Option(null),
-      List()
-    )
+    ActiveGame(in.as[String]("uuid"), controller,Option(null),Option(null),List())
   }
 }
