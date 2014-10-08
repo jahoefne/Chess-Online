@@ -2,6 +2,8 @@ package model
 
 import java.awt.Point
 import akka.actor.ActorRef
+import com.mongodb.BasicDBList
+import com.mongodb.casbah.commons.{MongoDBList, MongoDBObject}
 import controller.GameController
 import play.api.libs.json.{Json, JsValue}
 
@@ -28,14 +30,22 @@ case class ActiveGame(uuid: String,
 
   def move(src: Point, dst: Point) = {
     control.move(src, dst)
+    ActiveGameStore.add(uuid, this)
     broadCastMsg(this.toJson)
   }
 
   def getPossibleMoves(p: Point) = control.getPossibleMoves(p)
+
   def broadCastMsg(msg: JsValue) = for (player <- users) player.out ! msg
-  def switchPlayers() =  this.copy(white=this.black, black = this.white)
-  def setWhite(p: Player) = this.copy(white = Option(p), users = p :: users); broadCastMsg(this.toJson)
-  def setBlack(p: Player) = this.copy(black = Option(p), users = p :: users); broadCastMsg(this.toJson)
+
+  def switchPlayers() = this.copy(white = this.black, black = this.white)
+
+  def setWhite(p: Player) = this.copy(white = Option(p), users = p :: users);
+  broadCastMsg(this.toJson)
+
+  def setBlack(p: Player) = this.copy(black = Option(p), users = p :: users);
+  broadCastMsg(this.toJson)
+
   def addSpectator(p: Player) = this.copy(users = p :: users)
 
   /**
@@ -52,8 +62,8 @@ case class ActiveGame(uuid: String,
     }
   }
 
-  def removePlayer(pID: String): ActiveGame ={
-    val w = white.getOrElse(Player("",null))
+  def removePlayer(pID: String): ActiveGame = {
+    val w = white.getOrElse(Player("", null))
     val b = black.getOrElse(Player("", null))
 
     pID match {
@@ -63,17 +73,17 @@ case class ActiveGame(uuid: String,
     }
   }
 
-  def addPlayer(p: Player) : ActiveGame = {
-    if(! white.isDefined){
+  def addPlayer(p: Player): ActiveGame = {
+    if (!white.isDefined) {
       setWhite(p)
-    } else if(! black.isDefined){
+    } else if (!black.isDefined) {
       setBlack(p)
     } else {
       addSpectator(p)
     }
   }
 
-  def toJson : JsValue = Json.obj(
+  def toJson: JsValue = Json.obj(
     "type" -> "ActiveGame",
     "uuid" -> this.uuid,
     "field" -> this.control.getField.getField,
@@ -83,31 +93,41 @@ case class ActiveGame(uuid: String,
     "whiteOrBlack" -> this.control.getField.getWhiteOrBlack.toInt,
     "gameOver" -> this.control.isGameOver
   )
-}
 
-// TODO:
-// Partial code to serialize/deserialize to/from MongoDBObjects
-// removed for now, because it's dependend on the still changing model classes
-//
-//  /**
-//   * Convert to MongoDBDBObject (only store relevant data)
-//   */
-//  implicit def toMongoDBObject(s: ActiveGame) = MongoDBObject(
-//    "uuid" -> s.uuid,
-//    "field" -> s.control.getField.getField,
-//    "check" -> s.control.getCheck,
-//    "whiteOrBlack" -> s.control.getField.getWhiteOrBlack,
-//    "gameOver" -> s.control.isGameOver
-//  )
-//
-//  /**
-//   * Convert from MongoDBObject to ActiveGame
-//   */
-//  implicit def toActiveGame(in: MongoDBObject) =  GameState(
-//      in.as[String]("uuid"),
-//      for( e <- in.as[MongoDBList]("field").toArray)
-//      yield for (x <- e.asInstanceOf[BasicDBList].toArray) yield x.asInstanceOf[Int],
-//      in.as[Boolean]("check"),
-//      in.as[Int]("whiteOrBlack").asInstanceOf[Byte],
-//      in.as[Boolean]("gameOver")
-//    )
+}
+object ActiveGame{
+
+  /**
+   * Convert to MongoDBObject
+   * @return
+   */
+  implicit def toMongoDBObject(s: ActiveGame) = MongoDBObject(
+    "uuid" -> s.uuid,
+    "field" -> s.control.getField.getField,
+    "check" -> s.control.getCheck,
+    "whiteOrBlack" -> s.control.getField.getWhiteOrBlack,
+    "gameOver" -> s.control.isGameOver
+  )
+
+  /**
+   * Convert from MongoDBObject to ActiveGame
+   */
+  implicit def toActiveGame(in: MongoDBObject) : ActiveGame = {
+    val controller = new GameController(
+      in.as[Boolean]("gameOver"),
+      in.as[Boolean]("check"),
+      new Field(
+        for (e <- in.as[MongoDBList]("field").toArray)
+        yield for (x <- e.asInstanceOf[BasicDBList].toArray) yield x.asInstanceOf[Int],
+        in.as[Int]("whiteOrBlack").asInstanceOf[Byte]
+      )
+    )
+    ActiveGame(
+      in.as[String]("uuid"),
+      controller,
+      Option(null),
+      Option(null),
+      List()
+    )
+  }
+}

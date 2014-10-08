@@ -8,8 +8,23 @@ import scala.collection.mutable
  */
 object ActiveGameStore {
   var map = new mutable.HashMap[String, ActiveGame]
-  def has(uuid: String) : Boolean = map contains uuid
-  def getActiveGame(uuid: String) : ActiveGame = map.get(uuid).get
-  def add(uuid: String, ref: ActiveGame) = map += (uuid -> ref)
+
+  def has(uuid: String) : Boolean = map.contains(uuid) || GameDB.exists(uuid)
+
+  def getActiveGame(uuid: String) : ActiveGame = {
+    if(map.contains(uuid)) {
+      map.get(uuid).get
+    }else{
+      val game = GameDB.loadGame(uuid)
+      this.add(uuid, game)
+      game
+    }
+  }
+
+  def add(uuid: String, ref: ActiveGame) = {
+    GameDB.saveGame(uuid, ref)
+    map += (uuid -> ref)
+  }
+
   def remove(uuid: String) = map -= uuid
 }
