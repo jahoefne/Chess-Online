@@ -37,4 +37,10 @@ object Application extends Controller {
       ActiveGameStore.add(uuid, activeGame)
       ChessWebSocketActor.props(out, playerID , uuid)
   }
+
+  /** Return a list of all game instances */
+  def gameList() = Action {
+    Ok(views.html.gameList(GameDB.getGameList()))
+  }
+
 }

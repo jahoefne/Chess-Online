@@ -1,0 +1,6 @@
+@(gameList: List[String])
+
+
+@for(game <- gameList){
+   <a href="/game/@game">@game</a><br>
+}

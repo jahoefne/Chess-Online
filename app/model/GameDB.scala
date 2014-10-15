@@ -27,8 +27,7 @@ object GameDB {
       val dbObj = new MongoDBObject(collection.findOne(MongoDBObject("uuid" -> uuid)).get)
       true
     }catch{
-      case ex: Exception =>
-        false
+      case ex: Exception => false
     }
   }
 
@@ -46,4 +45,7 @@ object GameDB {
         ex
     }
   }
+
+  def getGameList() =
+    for (obj <-  collection.find().toList) yield ActiveGame.toActiveGame(new MongoDBObject(obj)).uuid
 }

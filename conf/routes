@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /game/new                   controllers.Application.newGame
+GET     /game/list                  controllers.Application.gameList
 GET     /game/:uuid                 controllers.Application.game(uuid: String)
 GET     /socket/:uuid/:playerID     controllers.Application.socket(uuid: String, playerID: String)
 
