@@ -3,7 +3,8 @@ table{
     border-spacing: 0px;
     border-collapse: separate;
     font-size:30pt;
-    border: solid 2px #000000;
+    border: ridge 2px #222;
+    box-shadow: 10px 10px 15px #999;
 }
 
 body {
