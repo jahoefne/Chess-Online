@@ -33,8 +33,7 @@ object Application extends Controller {
   /** Create websocket for game: uuid */
   def socket (uuid: String, playerID: String) = WebSocket.acceptWithActor[JsValue, JsValue] {
     request => out =>
-      val activeGame =  ActiveGameStore.getActiveGame(uuid).addPlayer(new Player(playerID, out))
-      ActiveGameStore.add(uuid, activeGame)
+      ActiveGameStore.add(uuid, ActiveGameStore.getActiveGame(uuid).addPlayer(new Player(playerID, out)))
       ChessWebSocketActor.props(out, playerID , uuid)
   }
 
