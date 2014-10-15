@@ -1,6 +1,20 @@
 @(gameList: List[String])
 
+<html>
+<head>
+    <link rel="stylesheet" href="@routes.Assets.at("javascripts/deps/bootstrap.min.css")" />
+    <script src="@routes.Assets.at("javascripts/deps/bootstrap.min.js")"></script>
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
+</head>
+
+<ul class="list-group">
 
 @for(game <- gameList){
-   <a href="/game/@game">@game</a><br>
+<li class="list-group-item"> <a href="/game/@game">@game</a>
+    <span class="badge">delete</span>
+</li>
 }
+</ul>
+
+</html>
