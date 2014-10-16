@@ -5,24 +5,22 @@ import model._
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.Play.current
+import java.util.UUID
 
 object Application extends Controller {
-
   /** Landing Page */
-  def index = Action {
-    Ok(views.html.index())
-  }
+  def index = Action(Ok(views.html.index()))
 
   /** Create a new game instance */
   def newGame = Action {
-    val gameUUID = java.util.UUID.randomUUID.toString
-    ActiveGameStore.add(gameUUID, ActiveGame(gameUUID, new GameController(), Option(null), Option(null), List()))
+    val gameUUID = UUID.randomUUID.toString
+    ActiveGameStore.add(gameUUID, ActiveGame(gameUUID, new GameController(), None, None, List()))
     Redirect(routes.Application.game(gameUUID))
   }
 
   /** Access existing game instance */
   def game(uuid: String) = Action {
-    val playerID = java.util.UUID.randomUUID().toString
+    val playerID = UUID.randomUUID().toString
     if(ActiveGameStore.has(uuid)) {
       Ok(views.html.game(uuid, playerID))
     }else{
@@ -38,8 +36,5 @@ object Application extends Controller {
   }
 
   /** Return a list of all game instances */
-  def gameList() = Action {
-    Ok(views.html.gameList(GameDB.getGameList()))
-  }
-
+  def gameList = Action(Ok(views.html.gameList(GameDB.getGameList())))
 }
