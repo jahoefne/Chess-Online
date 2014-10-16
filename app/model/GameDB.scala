@@ -46,6 +46,8 @@ object GameDB {
     }
   }
 
-  def getGameList() =
-    for (obj <-  collection.find().toList) yield ActiveGame.toActiveGame(new MongoDBObject(obj)).uuid
+  /**
+   * Return a list of all ActiveGame-UUIDs present in the database
+   */
+  def getGameList() = for (obj <- collection.find().toList) yield ActiveGame.toActiveGame(new MongoDBObject(obj)).uuid
 }
