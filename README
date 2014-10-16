@@ -2,3 +2,5 @@ Chess-Online
 ============
 
 WebTec project for AIN.
+
+In order to run the project you need a MongoDB running on the same server as the play project. Each game instance gets a uuid assigned and is stored in the MongoDB.
