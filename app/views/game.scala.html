@@ -5,6 +5,7 @@
     <script src="@routes.Assets.at("javascripts/deps/jquery-2.1.1.min.js")"></script>
     <link rel="stylesheet" href="@routes.Assets.at("javascripts/deps/bootstrap.min.css")" />
     <script src="@routes.Assets.at("javascripts/deps/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/deps/bootbox.min.js")"></script>
 
     <script type="text/javascript">
         window._global_playerID = "@(playerUUID)";
@@ -12,9 +13,12 @@
     </script>
 
     <script src="@routes.Assets.at("javascripts/figures.js")"></script>
-    <script src="@routes.Assets.at("javascripts/game.js")"></script>
+    <script src="@routes.Assets.at("javascripts/board.js")"></script>
+    <script src="@routes.Assets.at("javascripts/websocket.js")"></script>
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
+
+
 
 </head>
 <body class="text-center">
@@ -33,7 +37,7 @@
                     "bright field"
                 }
 
-              onClick="game.clickedField(@x,@y)"></td>
+              onClick="board.clickedField(@x,@y)"></td>
         }
     </tr>
     }
