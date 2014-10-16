@@ -67,8 +67,8 @@ case class ActiveGame(uuid: String,
     val b = black.getOrElse(Player("", null))
 
     pID match {
-      case w.uuid => this.copy(white = Option(null))
-      case b.uuid => this.copy(black = Option(null))
+      case w.uuid => this.copy(white = None)
+      case b.uuid => this.copy(black = None)
       case _ => this // this.copy(users = users.)
     }
   }
@@ -127,6 +127,6 @@ object ActiveGame{
         in.as[Int]("whiteOrBlack").asInstanceOf[Byte]
       )
     )
-    ActiveGame(in.as[String]("uuid"), controller,Option(null),Option(null),List())
+    ActiveGame(in.as[String]("uuid"), controller,None,None,List())
   }
 }
