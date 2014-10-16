@@ -5,6 +5,7 @@ table{
     font-size:30pt;
     border: ridge 2px #222;
     box-shadow: 10px 10px 15px #999;
+    color: #ffff;
 }
 
 body {
