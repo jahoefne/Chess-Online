@@ -51,13 +51,13 @@ var board = {
                  this.myTurn = true;
                  $("#header-bar").text("It's your turn!");
             }else{
-                 this.yourTurn = false;
+                 this.myTurn = false;
                   $("#header-bar").text("Please wait.");
             }
 
             if(msg.gameOver){
                 $("#header-bar").text("Game over");
-                 this.yourTurn = false;
+                 this.myTurn = false;
             }
     },
 
