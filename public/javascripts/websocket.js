@@ -7,6 +7,11 @@ var websocket = {
         this.socket = new WebSocket(this.uri);
         this.socket.onopen = this.onOpen.bind(this);
         this.socket.onmessage = this.onMessage.bind(this);
+
+        window.onbeforeunload = function() {
+             websocket.socket.onclose = $.noop;
+             websocket.socket.close();
+        }
     },
 
     onOpen: function(){
