@@ -40,11 +40,17 @@ case class ActiveGame(uuid: String,
 
   def switchPlayers() = this.copy(white = this.black, black = this.white)
 
-  def setWhite(p: Player) = this.copy(white = Option(p), users = p :: users);
-  broadCastMsg(this.toJson)
+  def setWhite(p: Player) : ActiveGame = {
+     val newGame = this.copy(white = Option(p), users = p :: users)
+     broadCastMsg(this.toJson)
+     newGame
+  }
 
-  def setBlack(p: Player) = this.copy(black = Option(p), users = p :: users);
-  broadCastMsg(this.toJson)
+  def setBlack(p: Player) : ActiveGame = {
+    val newGame = this.copy(black = Option(p), users = p :: users)
+    broadCastMsg(this.toJson)
+    newGame
+  }
 
   def addSpectator(p: Player) = this.copy(users = p :: users)
 
