@@ -1,6 +1,6 @@
 var websocket = {
     socket: null,
-    uri: "ws://" + window.location.host + "/socket/" + window._global_uuid + "/"+ window._global_playerID,
+    uri: "wss://" + window.location.host + "/socket/" + window._global_uuid + "/"+ window._global_playerID,
     playerID: window._global_playerID,
 
     init: function() {
