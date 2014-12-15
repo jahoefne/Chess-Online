@@ -24,6 +24,26 @@
 <h1 id="header-bar">Wait</h1>
 <p id="status"></p>
 
+
+<button type="button" class="btn-small btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose role</button>
+<br><br>
+
+
+<div id="chooseRoleModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">Choose your role:</div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-info" onClick="websocket.becomeSpectator();">Spectator</button>
+        <button type="button" class="btn btn-info" onClick="websocket.becomeWhitePlayer();">White</button>
+        <button type="button" class="btn btn-info" onClick="websocket.becomeBlackPlayer();">Black</button>
+      </div>
+      <div class="modal-footer"></div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <table class="text-center">
     @for(x <- 0 to 7){
     <tr>

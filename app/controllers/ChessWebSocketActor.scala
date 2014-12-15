@@ -2,55 +2,36 @@ package controllers
 
 import java.awt.Point
 import akka.actor.{Actor, Props, ActorRef}
-import model.ActiveGameStore
+import model.{UserRefs, GameDB}
 import play.api.Logger
 import play.api.libs.json._
 
-/**
- * Defines the WebSocketActor + Companion
- */
+/** Defines the WebSocketActor + Companion */
 class ChessWebSocketActor(out: ActorRef,
                           playerID: String,
                           gameID: String) extends Actor {
+
   val log = Logger(this getClass() getName())
 
   def receive = {
     case msg: JsValue => (msg \ "type").as[String] match {
 
-      /** Return current game state */
-      case "GetGame" => out ! ActiveGameStore.getActiveGame(gameID).toJson
+      case "GetGame" =>
+        out ! GameDB.load(gameID).toJson
 
-      /** Return the role of the player: white, black, spectator */
-      case "GetRole" => out ! Json.obj(
-        "type" -> "Role",
-        "role" -> ActiveGameStore.getActiveGame(gameID).getRole(playerID))
-
-      /** Move figure at src to tgt */
       case "Move" =>
-        val srcX = (msg \ "srcX").as[Int]
-        val srcY = (msg \ "srcY").as[Int]
-        val dstX = (msg \ "dstX").as[Int]
-        val dstY = (msg \ "dstY").as[Int]
-        log.info("Move "+srcX +":"+srcY+" -> "+dstX+":"+dstY)
-        ActiveGameStore.getActiveGame(gameID).move(new Point(srcX,srcY), new Point(dstX,dstY))
+        val src = new Point((msg \ "srcX").as[Int], (msg \ "srcY").as[Int])
+        val dst = new Point((msg \ "dstX").as[Int],  (msg \ "dstY").as[Int])
+        GameDB.load(gameID).move(src, dst)
 
-
-      /** Get possible moves for a field x */
       case "PossibleMoves" =>
-        log.info("PossibleMoves")
-        val x = (msg \ "x").as[Int]
-        val y = (msg \ "y").as[Int]
-        println(x+":"+y)
-        val moves =
-          for(p: Point <- ActiveGameStore.getActiveGame(gameID).getPossibleMoves(new Point(x,y)))
-          yield Array[Int](p.x,p.y)
+        val src = new Point((msg \ "x").as[Int], (msg \ "y").as[Int])
+        val moves = for(p: Point <- GameDB.load(gameID).getPossibleMoves(src)) yield Array[Int](p.x,p.y)
+        out ! Json.obj( "type" -> "PossibleMoves", "moves" -> moves)
 
-        println(moves.toString)
-
-        out ! Json.obj(
-          "type" -> "PossibleMoves",
-          "moves" -> moves
-        )
+      case "WhitePlayer" => GameDB.load(gameID).setWhite(Some(playerID))
+      case "BlackPlayer" => GameDB.load(gameID).setBlack(Some(playerID))
+      case "Spectator" => GameDB.load(gameID).joinSpec(Some(playerID))
 
       case _ => out ! "Unknown Json"
     }
@@ -58,19 +39,15 @@ class ChessWebSocketActor(out: ActorRef,
     case _ => out ! "No Message Type supplied!"
   }
 
-
-  /**
-   * Socket was closed from the client
-   */
+  /** Socket was closed from the client */
   override def postStop() = {
-    log.info("Websocket closed from client")
-    ActiveGameStore.add(
-      gameID,
-      ActiveGameStore.getActiveGame(gameID).removePlayer(playerID))
-    ActiveGameStore.getActiveGame(gameID).broadCastMsg(ActiveGameStore.getActiveGame(gameID).toJson)
+   // TODO: REMOVE
+   // ActiveGameStore.add(gameID, ActiveGameStore.getActiveGame(gameID).removePlayer(playerID))
+    UserRefs.broadCastMsg(gameID, GameDB.load(gameID).toJson)
   }
 }
 
+/** WS-Companion - for props */
 object ChessWebSocketActor {
   def props(out: ActorRef, playerID: String, gameID: String) =
     Props(new ChessWebSocketActor(out, playerID, gameID))

@@ -4,7 +4,7 @@ table{
     border-collapse: separate;
     font-size:30pt;
     border: ridge 2px #222;
-    box-shadow: 10px 10px 15px #999;
+    box-shadow: 10px 10px 15px #000;
     color: #ffff;
 }
 
@@ -15,8 +15,6 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    background:#fafafa;
-    font: black;
 }
 
 td {
@@ -37,8 +35,18 @@ td.dark{
 td.highlight{
     border: solid 3px #0000ff;
 }
+
 .jumbotron {height:100%;}
 
 #error{
     color:red;
 }
+
+
+.white{
+    color:#111;
+text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);}
+
+.black{
+    color:#111;
+text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);}

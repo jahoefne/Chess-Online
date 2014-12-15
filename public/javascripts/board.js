@@ -66,7 +66,7 @@ var board = {
         $( ".field" ).each(function(i) {
             var x = Math.floor(i/8);
             var y = i%8;
-            $( this ).text(figures[msg.field[x][y]]);
+            $( this ).html(figures[msg.field[x][y]]);
         });
     }
 };
