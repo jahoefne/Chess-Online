@@ -1,31 +1,36 @@
 package controllers
 
-import model._
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.Play.current
-import java.util.UUID
+import model._
+import securesocial.core._
+import play.api.mvc.{ Action, RequestHeader }
+import scala.util.Random
 
-object Application extends Controller {
+
+object UUID{def uuid = (Random.alphanumeric take  8).mkString}
+
+class Application(override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
 
   /** Landing Page */
-  def index = Action(Ok(views.html.index()))
+  def index = SecuredAction{  Ok(views.html.index()) }
 
   /** Create a new game instance */
-  def newGame = Action {
-    val gameUUID = UUID.randomUUID.toString
+  def newGame =  Action{
+    val gameUUID = UUID.uuid
     GameDB.save(ActiveGame(gameUUID))
     Redirect(routes.Application.game(gameUUID))
   }
 
   /** Delete existing game **/
-  def deleteGame(uuid: String) = Action { Ok(views.html.error("42"))}
+  def deleteGame(uuid: String) =  Action{  Ok(views.html.error("42"))}
 
   /** Access existing game instance */
-  def game(uuid: String) = Action {
+  def game(uuid: String) =  Action{
     GameDB.exists(uuid) match {
-      case true => Ok(views.html.game(uuid, playerUUID = UUID.randomUUID().toString))
-      case false =>Ok(views.html.error("The requested game does not exist, please create a:"))
+      case true => Ok(views.html.game(gameUUID = uuid, playerUUID = UUID.uuid))
+      case false => Ok(views.html.error("The requested game does not exist, please create a:"))
     }
   }
 
@@ -37,5 +42,5 @@ object Application extends Controller {
   }
 
   /** Return a list of all game instances */
-  def gameList = Action { Ok(views.html.gameList(gameList = GameDB.list)) }
+  def gameList =  Action{ Ok(views.html.gameList(gameList = GameDB.list)) }
 }
