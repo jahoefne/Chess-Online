@@ -1,0 +1,8 @@
+02. Responsive, Tabellen weg
+03. Menü, laufende Spiele fortführen/löschen
+01. Polymer, Angular? / Felder als template mit angular, figuren über json
+- Fehler bei Feldmarkierung
+- Feldmarkierung mit angular, über Background, nicht border
+- Darstellung in Firefox
+- Geschwindigkeit?
+- Bei Start Farbe wählen
