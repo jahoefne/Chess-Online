@@ -25,7 +25,7 @@ object GameDB {
   def save(state: ActiveGame) = coll.update(MongoDBObject("uuid" -> state.uuid), state, upsert = true)
 
   /** Return a list of all uuids present in the database */
-  def list: List[String] = for (obj <- coll.find().toList) yield obj.asInstanceOf[ActiveGame].uuid
+  def list: List[String] = for (obj <- coll.find().toList) yield new MongoDBObject(obj).uuid
 
   /**
    * Implicit converters, because neither Lift not Salat convert Pojo-GameController without pain
