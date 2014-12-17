@@ -21,7 +21,9 @@
 
 </head>
 <body class="text-center">
-<h1 id="header-bar">Wait</h1>
+<div class="container">
+            <div class="row">
+            <h1 id="header-bar">Wait</h1>
 <p id="status"></p>
 
 
@@ -43,12 +45,13 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-<table class="text-center">
+</div>
+<div class="row">
+<div class="field-wrapper text-center">
     @for(x <- 0 to 7){
-    <tr>
+    <div class="field-row">
         @for(y <- 0 to 7){
-            <td id="@x@y" class=
+            <div id="@x@y" class=
 
                 @if((x+y) % 2 == 0){
                     "dark field"
@@ -56,11 +59,13 @@
                     "bright field"
                 }
 
-              onClick="board.clickedField(@x,@y)"></td>
+              onClick="board.clickedField(@x,@y)"></div>
         }
-    </tr>
+    </div>
     }
-</table>
+</div>
+            </div>
 
+    </div>
 </body>
 </html>
