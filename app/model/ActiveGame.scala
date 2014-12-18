@@ -9,7 +9,10 @@ import play.api.libs.json.{Json, JsValue}
 case class ActiveGame( uuid: String,
                        cont: Option[GameController] = Some(new GameController()),
                        var players:(Option[String], Option[String]) = (None, None))
-  extends GameController(cont.get.isGameOver, cont.get.getCheck, cont.get.getField.asInstanceOf[Field]) {
+  extends GameController(
+    cont.get.isGameOver,
+    cont.get.getCheck,
+    cont.get.getField.asInstanceOf[Field]) {
 
   /** move figure from src to dst and persist movement in gamedb */
   override def move(src: Point, dst: Point) = super.move(src, dst) && broadCastAndSave
@@ -35,21 +38,22 @@ case class ActiveGame( uuid: String,
     broadCastAndSave
   }
 
+  /** Broadcast the current game state to all users and persist in db */
   def broadCastAndSave = {
-    UserRefs.broadCastMsg(this.uuid, this.toJson)
+    UserRefs.broadCastMsg(this.uuid, this)
     GameDB.save(this)
     true
   }
 
   /** Converts to Json for sending to the users */
-  def toJson: JsValue = Json.obj(
+  implicit def toJson(game: ActiveGame): JsValue = Json.obj(
     "type" -> "ActiveGame",
-    "uuid" -> this.uuid,
-    "field" -> this.getField.getField,
-    "check" -> this.getCheck,
-    "white" -> players._1.getOrElse("").toString,
-    "black" -> players._2.getOrElse("").toString,
-    "whiteOrBlack" -> this.getField.getWhiteOrBlack.toInt,
-    "gameOver" -> this.isGameOver
+    "uuid" -> game.uuid,
+    "field" -> game.getField.getField,
+    "check" -> game.getCheck,
+    "white" -> game.players._1.getOrElse("").toString,
+    "black" -> game.players._2.getOrElse("").toString,
+    "whiteOrBlack" -> game.getField.getWhiteOrBlack.toInt,
+    "gameOver" -> game.isGameOver
   )
 }

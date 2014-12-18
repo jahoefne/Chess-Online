@@ -12,12 +12,11 @@ class ChessWebSocketActor(out: ActorRef,
                           gameID: String) extends Actor {
 
   val log = Logger(this getClass() getName())
-
   def receive = {
     case msg: JsValue => (msg \ "type").as[String] match {
 
       case "GetGame" =>
-        out ! GameDB.load(gameID).toJson
+        out ! GameDB.load(gameID)
 
       case "Move" =>
         val src = new Point((msg \ "srcX").as[Int], (msg \ "srcY").as[Int])
@@ -43,7 +42,7 @@ class ChessWebSocketActor(out: ActorRef,
   override def postStop() = {
    // TODO: REMOVE
    // ActiveGameStore.add(gameID, ActiveGameStore.getActiveGame(gameID).removePlayer(playerID))
-    UserRefs.broadCastMsg(gameID, GameDB.load(gameID).toJson)
+    UserRefs.broadCastMsg(gameID, GameDB.load(gameID).asInstanceOf[JsValue])
   }
 }
 

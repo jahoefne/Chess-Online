@@ -2,6 +2,7 @@ var websocket = {
     socket: null,
     uri: "ws://" + window.location.host + "/socket/" + window._global_uuid + "/"+ window._global_playerID,
     playerID: window._global_playerID,
+    roleChosen: false,
 
     init: function() {
         this.socket = new WebSocket(this.uri);
@@ -15,9 +16,8 @@ var websocket = {
     },
 
     onOpen: function(){
-        var message = { type: "GetGame" }
-        this.sendMessage(message);
-        $('#chooseRoleModal').modal('show');
+        this.becomeSpectator(); // Start as spec
+        this.sendMessage({type: "GetGame"});
     },
 
     becomeBlackPlayer: function(){
@@ -43,7 +43,14 @@ var websocket = {
        switch(msg.type){
 
         case "ActiveGame":
+            console.log("ActiveGameMessage")
             board.gotActiveGameMsg(msg);
+
+            if(!this.roleChosen){
+                $('#chooseRoleModal').modal('show');
+                this.roleChosen=true;
+            }
+
             var role;
             if(msg.white == this.playerID){
                 role = "White";
