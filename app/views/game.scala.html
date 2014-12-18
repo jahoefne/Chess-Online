@@ -1,4 +1,4 @@
-@(gameUUID:String, playerUUID:String)
+@(gameUUID:String, playerUUID:String, user: Option[User])
 
 <html>
 
@@ -15,7 +15,7 @@
 
 
 <body class="text-center">
-@baseNavBar()
+@baseNavBar(user)
 
 <h1 id="header-bar">Wait</h1>
 <p id="status"></p>

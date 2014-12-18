@@ -5,6 +5,7 @@ import com.mongodb.casbah.commons.{MongoDBList, MongoDBObject}
 import com.mongodb.{BasicDBList, DBObject}
 import controller.GameController
 import play.api.Logger
+import play.api.libs.json.JsValue
 
 
 /** Connection to the MongoDB stores ActivaGames Objects **/
@@ -12,6 +13,7 @@ object GameDB {
   val conn = MongoClient("127.0.0.1", 27017)
   val db = conn("Chess-Online")
   val coll = db("Games")
+  val users = db("Users")
 
   val log = Logger(this getClass() getName())
 
@@ -25,7 +27,14 @@ object GameDB {
   def save(state: ActiveGame) = coll.update(MongoDBObject("uuid" -> state.uuid), state, upsert = true)
 
   /** Return a list of all uuids present in the database */
-  def list: List[String] = for (obj <- coll.find().toList) yield new MongoDBObject(obj).uuid
+  def list: List[ActiveGame] = for (obj <- coll.find().toList) yield MongoDBObjectToActiveGame(new MongoDBObject(obj))
+
+  def userInfo(uuid: String)  = {
+    users.findOne(MongoDBObject("uuid" -> uuid)) match {
+      case Some(dbObj) => println("We found a user")
+      case _ => println("No user for uuid: "+uuid)
+    }
+  }
 
   /**
    * Implicit converters, because neither Lift not Salat convert Pojo-GameController without pain

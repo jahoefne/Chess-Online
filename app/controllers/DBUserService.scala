@@ -25,9 +25,9 @@ class DBUserService extends UserService[User] {
 
   override def find(providerId: String, userId: String): Future[Option[BasicProfile]] =  {
     users.find((obj: DBObject) => obj.main.providerId == providerId && obj.main.userId == userId) match {
-      case Some(u) =>   log.error("Find")
+      case Some(u) =>
         Future.successful(Some(u.main))
-      case _ =>   log.error("Find")
+      case _ =>
         Future.successful(None)
     }
   }

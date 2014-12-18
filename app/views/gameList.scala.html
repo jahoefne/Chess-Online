@@ -1,19 +1,19 @@
-@(gameList: List[String])
+@(gameList: List[model.ActiveGame], user: Option[User])
 <html>
     @baseHeader("Game List")
     <body>
-    @baseNavBar()
+    @baseNavBar(user)
 
     <div class="panel panel-default">
         <div class="panel-heading">Existing Games:</div>
         <div class="panel-body">
             <ul class="list-group">
                 @for(game <- gameList){
-                <li class="list-group-item">
-                    <a href="@routes.Application.deleteGame(game)" class="btn-xs btn-warning deleteGame">Delete</a>
-                    <a href="@routes.Application.game(game)" class="btn-xs btn-info">Join</a>
-                    <span class="label label-default">@game</span>
-                </li>
+                    <li class="list-group-item">
+                        <a href="@routes.Application.deleteGame(game.uuid)" class="btn-xs btn-warning deleteGame">Delete</a>
+                        <a href="@routes.Application.game(game.uuid)" class="btn-xs btn-info">Join</a>
+                        <span class="label label-default">@game.uuid</span>
+                    </li>
                 }
             </ul>
         </div>

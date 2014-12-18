@@ -1,9 +1,17 @@
+@(user: Option[User])
 <html>
   @baseHeader("Account")
   <body>
-     @baseNavBar()
+     @baseNavBar(user)
+
+     <script>
+    $(function(){
+      $("#include").load("auth/login");
+    });
+    </script>
+
      <div class="container">
-       <iframe class="loginFrame" src="auth/login"></iframe>
+         <div id="include"></div>
     </div>
   </body>
 </html>

@@ -1,10 +1,10 @@
-@(title:String)
-<head>
+@(title: String)
+<head xmlns="http://www.w3.org/1999/html">
     <title>@title</title>
-    <script src="@routes.Assets.at("javascripts/deps/jquery-2.1.1.min.js")"></script>
-    <link rel="stylesheet" href="@routes.Assets.at("javascripts/deps/bootstrap.min.css")" />
-    <script src="@routes.Assets.at("javascripts/deps/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("/deps/js/jquery-2.1.1.min.js")"></script>
+    <link rel="stylesheet" href="@routes.Assets.at("/deps/css/bootstrap.min.css")" />
+    <script src="@routes.Assets.at("/deps/js/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("/deps/js/rasterizeHTML.allinone.js")"> </script>
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
-    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("javascripts/deps/gh-fork-ribbon.css")" />
-
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("/deps/css/gh-fork-ribbon.css")" />
 </head>
