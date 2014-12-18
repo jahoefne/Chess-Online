@@ -3,14 +3,47 @@
   @baseHeader("Account")
   <body>
      @baseNavBar(user)
+     <style>
+         #spinner-container{
+            margin-top:30%;
+            opacity: 0.5;
+            text-align:center;
+         }
+         #include{
+            text-align:center;
+         }
 
+         .glyphsize{
+             font-size: 5em;
+         }
+         .glyphicon-refresh-animate {
+             -animation: spin .7s infinite linear;
+             -webkit-animation: spin2 .7s infinite linear;
+         }
+
+         @@-webkit-keyframes spin2 {
+             from { -webkit-transform: rotate(0deg);}
+             to { -webkit-transform: rotate(360deg);}
+         }
+
+         @@keyframes spin {
+             from { transform: scale(1) rotate(0deg);}
+             to { transform: scale(1) rotate(360deg);}
+         }
+     </style>
      <script>
     $(function(){
-      $("#include").load("auth/login");
+      $("#include").load("auth/login", function() {
+            $("#spinner-container").hide();
+      });
     });
     </script>
 
      <div class="container">
+         <div id="spinner-container">
+             <span class="glyphsize glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+         </div>
+
          <div id="include"></div>
     </div>
   </body>
