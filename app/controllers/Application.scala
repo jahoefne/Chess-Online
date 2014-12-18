@@ -8,13 +8,12 @@ import securesocial.core._
 import play.api.mvc.Action
 import scala.util.Random
 
-
 object UUID{def uuid = (Random.alphanumeric take  8).mkString}
 
 class Application(override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
 
   /** Landing Page */
-  def index = SecuredAction{  Ok(views.html.index()) }
+  def index = Action{  Ok(views.html.index()) }
 
   /** Create a new game instance */
   def newGame =  Action{
@@ -46,5 +45,10 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   /** Return a list of all game instances */
   def gameList =  Action{
     Ok(views.html.gameList(gameList = GameDB.list))
+  }
+
+  /** Render Login Container */
+  def login = Action {
+    Ok(views.html.loginContainer())
   }
 }

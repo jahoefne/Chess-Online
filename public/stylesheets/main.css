@@ -33,7 +33,7 @@ td.dark{
 }
 
 td.highlight{
-    border: solid 3px #0000ff;
+    border: solid 3px #999;
 }
 
 .jumbotron {height:100%;}
@@ -42,11 +42,29 @@ td.highlight{
     color:red;
 }
 
+.right-bottom .github-fork-ribbon {
+    background-color: #900;
+}
+
+
+#chooseRoleModalDialog{
+    margin-top:30%;
+    border: solid 2px #fff;
+    box-shadow: 10px 10px 15px #000;
+}
 
 .white{
     color:#111;
-text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);}
+    text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);
+    }
 
 .black{
     color:#111;
-text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);}
+    text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);
+}
+
+.loginFrame{
+    width:80%;
+    height:100%;
+    border:0;
+}

@@ -1,13 +1,8 @@
 @(gameList: List[String])
 <html>
-    <head>
-        <script src="@routes.Assets.at("javascripts/deps/jquery-2.1.1.min.js")"></script>
-        <link rel="stylesheet" href="@routes.Assets.at("javascripts/deps/bootstrap.min.css")" />
-        <script src="@routes.Assets.at("javascripts/deps/bootstrap.min.js")"></script>
-
-        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
-    </head>
-
+    @baseHeader("Game List")
+    <body>
+    @baseNavBar()
 
     <div class="panel panel-default">
         <div class="panel-heading">Existing Games:</div>
@@ -34,4 +29,5 @@
             });
         });
     </script>
+    </body>
 </html>
