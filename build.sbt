@@ -24,5 +24,6 @@ libraryDependencies ++= Seq(
   "org.json4s" %% "json4s-native" % "3.2.10",
   "org.mongodb" %% "casbah" % "2.7.3",
   "net.liftweb" %% "lift-json" % "2.5.1",
+  "com.novus" %% "salat" % "1.9.9",
   "ws.securesocial" %% "securesocial" % "master-SNAPSHOT"
 )

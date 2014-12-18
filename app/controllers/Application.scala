@@ -5,7 +5,7 @@ import play.api.mvc._
 import play.api.Play.current
 import model._
 import securesocial.core._
-import play.api.mvc.{ Action, RequestHeader }
+import play.api.mvc.Action
 import scala.util.Random
 
 
@@ -24,7 +24,9 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   }
 
   /** Delete existing game **/
-  def deleteGame(uuid: String) =  Action{  Ok(views.html.error("42"))}
+  def deleteGame(uuid: String) =  Action{
+    Ok(views.html.error("42"))
+  }
 
   /** Access existing game instance */
   def game(uuid: String) =  Action{
@@ -42,5 +44,7 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   }
 
   /** Return a list of all game instances */
-  def gameList =  Action{ Ok(views.html.gameList(gameList = GameDB.list)) }
+  def gameList =  Action{
+    Ok(views.html.gameList(gameList = GameDB.list))
+  }
 }
