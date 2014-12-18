@@ -30,10 +30,10 @@ object GameDB {
   def list: List[ActiveGame] = for (obj <- coll.find().toList) yield MongoDBObjectToActiveGame(new MongoDBObject(obj))
 
   def userInfo(uuid: String)  = {
-    users.findOne(MongoDBObject("uuid" -> uuid)) match {
+   /* users.findOne(MongoDBObject("uuid" -> uuid)) match {
       case Some(dbObj) => println("We found a user")
       case _ => println("No user for uuid: "+uuid)
-    }
+    }*/
   }
 
   /**
