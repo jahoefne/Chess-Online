@@ -32,6 +32,8 @@ class ChessWebSocketActor(out: ActorRef,
       case "BlackPlayer" => GameDB.load(gameID).setBlack(Some(playerID))
       case "Spectator" => GameDB.load(gameID).joinSpec(Some(playerID))
 
+      case "PlayerInfo" =>  GameDB.userInfo((msg \ "uuid").as[String])
+
       case _ => out ! "Unknown Json"
     }
 
