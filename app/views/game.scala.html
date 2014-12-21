@@ -22,53 +22,52 @@
 
  @baseNavBar(user)
 <div class="container">
-
-
-
-<h1 id="header-bar">Wait</h1>
-
-<p id="status"></p>
-
-
-<button type="button" class="btn-small btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose role</button>
-<br><br>
-
-
-<div id="chooseRoleModal" class="modal fade">
-  <div class="modal-dialog">
-    <div  id="chooseRoleModalDialog" class="modal-content">
-      <div class="modal-header">Choose your role:</div>
-      <div class="modal-body">
-        <button type="button" class="btn btn-info" onClick="websocket.becomeSpectator();">Spectator</button>
-        <button type="button" class="btn btn-info" onClick="websocket.becomeWhitePlayer();">White</button>
-        <button type="button" class="btn btn-info" onClick="websocket.becomeBlackPlayer();">Black</button>
-      </div>
-      <div class="modal-footer"></div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-</div>
 <div class="row">
-<div class="field-wrapper text-center">
-    @for(x <- 0 to 7){
-    <div class="field-row">
-        @for(y <- 0 to 7){
-            <div id="@x@y" class=
+    <h1 id="header-bar">Wait</h1>
+    <p id="status"></p>
+    <button type="button" class="btn-small btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose role</button>
+    <br/><br/>
+
+    <div id="chooseRoleModal" class="modal fade">
+        <div class="modal-dialog">
+            <div  id="chooseRoleModalDialog" class="modal-content">
+                <div class="modal-header">Choose your role:</div>
+                    <div class="modal-body">
+                        <button type="button" class="btn btn-info" onClick="websocket.becomeSpectator();">Spectator</button>
+                        <button type="button" class="btn btn-info" onClick="websocket.becomeWhitePlayer();">White</button>
+                        <button type="button" class="btn btn-info" onClick="websocket.becomeBlackPlayer();">Black</button>
+                    </div>
+                <div class="modal-footer"></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col-md-8">
+        <div class="field-wrapper text-center">
+        @for(x <- 0 to 7){
+            <div class="field-row">
+            @for(y <- 0 to 7){
+                <div id="@x@y" class=
 
                 @if((x+y) % 2 == 0){
                     "dark field"
                 }else{
                     "bright field"
                 }
-
-              onClick="board.clickedField(@x,@y)"></div>
-        }
-    </div>
-    }
-</div>
+                onClick="board.clickedField(@x,@y)">
+                </div>
+            }
             </div>
-
+        }
+        </div>
     </div>
+        <!-- CHAT -->
+        @baseChat(user)
+</div>
+
+</div>
 </body>
 </html>
