@@ -9,6 +9,7 @@ angular.module('chatapp.chatcontroller', []).
         /** handle incoming messages: add to messages array */
         $scope.addMsg = function (msg) {
             $scope.$apply(function () { $scope.msgs.push(msg); });
+            $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});
             console.log($scope.msgs);
         };
 

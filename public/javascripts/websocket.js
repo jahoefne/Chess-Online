@@ -40,7 +40,7 @@ var websocket = {
 
     sendChatMessage: function(m){
       console.log("chatMessage");
-        this.sendMessage({type: "chatMessage", txt: m})
+        this.sendMessage({type: "chatMessage", txt: m, time: (new Date()).toUTCString() })
     },
 
     onMessage: function(event){
@@ -76,7 +76,7 @@ var websocket = {
             break;
 
            case "chatMessage":
-               //$('#chattext').append(msg.txt);
+
                angular.element($('#chatwrapper')).scope().addMsg(msg)
                 break;
         default:

@@ -8,11 +8,11 @@
             RECENT CHAT HISTORY
         </div>
         <script src="@routes.Assets.at("/deps/js/bootstrap.min.js")"></script>
-        <div class="panel-body">
-            <ul class="media-list">
+        <div class="panel-body" style="text-align: left;">
+            <ul class="media-list" style="overflow: auto; height: 200px;" id="history">
                 <!-- chat Nachrichten -->
                 <li class="media" ng-repeat="msg in msgs track by $index">
-                    <div class="media-body">
+                    <div>
                         <div class="media">
                             <!-- user Image -->
                             <a class="pull-left" href="#">
@@ -22,7 +22,7 @@
                             <div class="media-body" id="chattext" >
                                 {{msg.txt}}
                                 <br/>
-                                <small class="text-muted" style="color: #aaa;">@user | Date Time</small>
+                                <small class="text-muted" style="color: #aaa;">User | {{msg.time}}</small>
                                 <hr style="border-top: 1px solid #fff;"/>
                             </div>
                         </div>
