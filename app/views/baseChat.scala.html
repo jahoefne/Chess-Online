@@ -2,6 +2,10 @@
 <script src="@routes.Assets.at("/deps/js/angular.min.js")"></script>
 <script src="@routes.Assets.at("/javascripts/chatapp.js")"></script>
 <script src="@routes.Assets.at("/javascripts/chatcontroller.js")"></script>
+<audio id="chat-notify-sound"preload="auto">
+        <source type="audio/mpeg" src="@routes.Assets.at("/sounds/notify.mp3")">
+        <source type="audio/wav" src="@routes.Assets.at("/sounds/notify.wav")">
+</audio>
 <div class="col-md-4" style="margin-top: 20px;" ng-app="chatapp">
     <div class="panel panel-info" id="chatwrapper" ng-controller="ChatCtrl">
         <div class="panel-heading">

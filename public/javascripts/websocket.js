@@ -79,6 +79,9 @@ var websocket = {
            case "chatMessage":
                console.log(this.playerID);
                angular.element($('#chatwrapper')).scope().addMsg(msg);
+               if(msg.role != $("#status").text()){
+                   $("#chat-notify-sound")[0].play();
+               }
                 break;
         default:
             break;
