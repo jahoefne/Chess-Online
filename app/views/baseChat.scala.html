@@ -16,13 +16,18 @@
                         <div class="media">
                             <!-- user Image -->
                             <a class="pull-left" href="#">
-                                <img class="media-object img-circle " src="assets/img/user.png" />
+                                @if(user != None){
+                                <img class="media-object img-circle " style="width: 50px" src="assets/img/user.png" />
+                                }else{
+                                <img class="media-object img-circle " style="width: 50px" src="@routes.Assets.at("/images/{{msg.role}}.png")" />
+                                }
+
                             </a>
                             <!-- Chat Output -->
-                            <div class="media-body" id="chattext" >
+                            <div class="media-body" id="chattext" style="display: inline;">
                                 {{msg.txt}}
                                 <br/>
-                                <small class="text-muted" style="color: #aaa;">User | {{msg.time}}</small>
+                                <small class="text-muted" style="color: #aaa;">{{msg.role}} | {{msg.time}}</small>
                                 <hr style="border-top: 1px solid #fff;"/>
                             </div>
                         </div>

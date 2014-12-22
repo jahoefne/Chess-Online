@@ -40,7 +40,7 @@ var websocket = {
 
     sendChatMessage: function(m){
       console.log("chatMessage");
-        this.sendMessage({type: "chatMessage", txt: m, time: (new Date()).toUTCString() })
+        this.sendMessage({type: "chatMessage", txt: m, time: (new Date()).toUTCString(), role: $("#status").text() })
     },
 
     onMessage: function(event){
@@ -67,6 +67,7 @@ var websocket = {
                 role = "Spectator"
             }
             $("#status").text(role);
+
             break;
 
         case "PossibleMoves":
@@ -76,8 +77,8 @@ var websocket = {
             break;
 
            case "chatMessage":
-
-               angular.element($('#chatwrapper')).scope().addMsg(msg)
+               console.log(this.playerID);
+               angular.element($('#chatwrapper')).scope().addMsg(msg);
                 break;
         default:
             break;

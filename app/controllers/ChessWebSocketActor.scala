@@ -49,7 +49,7 @@ class ChessWebSocketActor(out: ActorRef,
         log.error("This is not implemented yet!")
 
       case "chatMessage" =>
-        //val txt = (msg \ "txt").as[String]
+
         //mediator ! Publish(gameID, msg)
         out ! msg
 
