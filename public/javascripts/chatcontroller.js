@@ -8,7 +8,8 @@ angular.module('chatapp.chatcontroller', []).
 
         /** handle incoming messages: add to messages array */
         $scope.addMsg = function (msg) {
-            $scope.$apply(function () { $scope.msgs.push(JSON.parse(msg.data)); });
+            $scope.$apply(function () { $scope.msgs.push(msg); });
+            console.log($scope.msgs);
         };
 
     });

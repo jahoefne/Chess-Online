@@ -76,7 +76,8 @@ var websocket = {
             break;
 
            case "chatMessage":
-               $('#chattext').append(msg.txt);
+               //$('#chattext').append(msg.txt);
+               angular.element($('#chatwrapper')).scope().addMsg(msg)
                 break;
         default:
             break;

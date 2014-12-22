@@ -1,15 +1,17 @@
 @(user: Option[User])
-
-<div class="col-md-4" style="margin-top: 20px;">
-    <div class="panel panel-info">
+<script src="@routes.Assets.at("/deps/js/angular.min.js")"></script>
+<script src="@routes.Assets.at("/javascripts/chatapp.js")"></script>
+<script src="@routes.Assets.at("/javascripts/chatcontroller.js")"></script>
+<div class="col-md-4" style="margin-top: 20px;" ng-app="chatapp">
+    <div class="panel panel-info" id="chatwrapper" ng-controller="ChatCtrl">
         <div class="panel-heading">
             RECENT CHAT HISTORY
         </div>
-
+        <script src="@routes.Assets.at("/deps/js/bootstrap.min.js")"></script>
         <div class="panel-body">
             <ul class="media-list">
                 <!-- chat Nachrichten -->
-                <li class="media">
+                <li class="media" ng-repeat="msg in msgs track by $index">
                     <div class="media-body">
                         <div class="media">
                             <!-- user Image -->
@@ -18,7 +20,7 @@
                             </a>
                             <!-- Chat Output -->
                             <div class="media-body" id="chattext" >
-
+                                {{msg.txt}}
                                 <br/>
                                 <small class="text-muted" style="color: #aaa;">@user | Date Time</small>
                                 <hr style="border-top: 1px solid #fff;"/>
