@@ -28,8 +28,8 @@ width: 100%;
 
 @media screen and (max-width: 500px) {
     .field-wrapper {
-        width: 300px;
-        height: 300px;
+        width: 290px;
+        height: 290px;
         font-size: 20pt;
     }
 }
