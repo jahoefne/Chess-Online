@@ -13,7 +13,8 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object UUID{def uuid = (Random.alphanumeric take  8).mkString}
 
-class Application(override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
+class Application(override implicit val env: RuntimeEnvironment[User])
+  extends securesocial.core.SecureSocial[User] {
 
   /** Landing Page */
   def index = UserAwareAction{ implicit request =>
@@ -23,7 +24,7 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   /** Create a new game instance */
   def newGame =  UserAwareAction {
     val gameUUID = UUID.uuid
-    GameDB.save(ActiveGame(gameUUID))
+    GameDB.saveGame(ActiveGame(gameUUID))
     Redirect(routes.Application.game(gameUUID))
   }
 
@@ -37,7 +38,7 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
     * it's uuid as playerId, otherwise use a random id */
   def game(uuid: String) = UserAwareAction {
     implicit request =>
-      GameDB.exists(uuid) match {
+      GameDB.doesGameExistWith(uuid) match {
         case true =>
           val playerId = request.user match{
             case Some(user) => user.uuid
@@ -52,7 +53,6 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   /** Create websocket for game: uuid */
   def socket (uuid: String, playerID: String) = WebSocket.acceptWithActor[JsValue, JsValue] {
     request => out =>
-      UserRefs.addPlayer(uuid = uuid, player = new Player(playerID, out))
       ChessWebSocketActor.props(out = out, playerID = playerID , gameID = uuid)
   }
 

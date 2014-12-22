@@ -1,6 +1,7 @@
 package model
 
 import java.awt.Point
+import akka.contrib.pattern.DistributedPubSubExtension
 import controller.GameController
 import play.api.libs.json.{Json, JsValue}
 
@@ -15,45 +16,44 @@ case class ActiveGame( uuid: String,
     cont.get.getField.asInstanceOf[Field]) {
 
   /** move figure from src to dst and persist movement in gamedb */
-  override def move(src: Point, dst: Point) = super.move(src, dst) && broadCastAndSave
+  def moveFromTo(src: Point, dst: Point): ActiveGame = {
+    super.move(src, dst)
+    this
+  }
 
   /** Sets the white player */
-  def setWhite(p: Option[String]) = {
-    joinSpec(p)
-    players = players.copy(_1 = p)
-    broadCastAndSave
+  def setWhitePlayer(player: Option[String]) = {
+    val specd = this movePlayerToSpec player
+    specd copy (players = specd.players.copy(_1 = player))
   }
 
   /** Sets the black player */
-  def setBlack(p: Option[String]) = {
-    joinSpec(p)
-    players = players.copy(_2 = p)
-    broadCastAndSave
+  def setBlackPlayer(player: Option[String]) = {
+    val specd = this movePlayerToSpec player
+    specd copy (players = specd.players.copy(_2 = player))
   }
 
   /** Joins spec */
-  def joinSpec(p: Option[String]) = {
-    if (players._1 == p) players = players.copy(_1 = None)
-    if (players._2 == p) players = players.copy(_2 = None)
-    broadCastAndSave
+  def movePlayerToSpec(p: Option[String]) : ActiveGame = {
+    if (players._1 == p) this.copy(players = players.copy(_1 = None))
+    else if (players._2 == p) this.copy(players = players.copy(_2 = None))
+    else this
   }
 
-  /** Broadcast the current game state to all users and persist in db */
-  def broadCastAndSave = {
-    UserRefs.broadCastMsg(this.uuid, this)
-    GameDB.save(this)
-    true
-  }
+  /** Persist in db */
+  def saveGame = GameDB saveGame this
 
-  /** Converts to Json for sending to the users */
-  implicit def toJson(game: ActiveGame): JsValue = Json.obj(
+
+  /** Converts ActiveGame to Json for sending to the users */
+  def getAsJson : JsValue = Json.obj(
     "type" -> "ActiveGame",
-    "uuid" -> game.uuid,
-    "field" -> game.getField.getField,
-    "check" -> game.getCheck,
-    "white" -> game.players._1.getOrElse("").toString,
-    "black" -> game.players._2.getOrElse("").toString,
-    "whiteOrBlack" -> game.getField.getWhiteOrBlack.toInt,
-    "gameOver" -> game.isGameOver
+    "uuid" -> this.uuid,
+    "field" -> this.getField.getField,
+    "check" -> this.getCheck,
+    "white" -> this.players._1.getOrElse("").toString,
+    "black" -> this.players._2.getOrElse("").toString,
+    "whiteOrBlack" -> this.getField.getWhiteOrBlack.toInt,
+    "gameOver" -> this.isGameOver
   )
+
 }

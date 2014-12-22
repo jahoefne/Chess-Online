@@ -5,7 +5,6 @@ import com.mongodb.casbah.commons.{MongoDBList, MongoDBObject}
 import com.mongodb.{BasicDBList, DBObject}
 import controller.GameController
 import play.api.Logger
-import play.api.libs.json.JsValue
 
 
 /** Connection to the MongoDB stores ActivaGames Objects **/
@@ -18,27 +17,26 @@ object GameDB {
   val log = Logger(this getClass() getName())
 
   /** Loads game with uuid from the Database */
-  def load(uuid: String) : ActiveGame = new MongoDBObject(coll.findOne(MongoDBObject("uuid" -> uuid)).get)
+  def loadGameWith(uuid: String) : ActiveGame =
+    new MongoDBObject(coll.findOne(MongoDBObject("uuid" -> uuid)).get)
 
   /** returns true if a game with uuid exists */
-  def exists(uuid: String) = coll.exists((q: DBObject) => new MongoDBObject(q).uuid equals uuid)
+  def doesGameExistWith(uuid: String) =
+    coll.exists((q: DBObject) => new MongoDBObject(q).uuid equals uuid)
 
   /** Saves an ActiveGame in the Database */
-  def save(state: ActiveGame) = coll.update(MongoDBObject("uuid" -> state.uuid), state, upsert = true)
-
-  /** Return a list of all uuids present in the database */
-  def list: List[ActiveGame] = for (obj <- coll.find().toList) yield MongoDBObjectToActiveGame(new MongoDBObject(obj))
-
-  def userInfo(uuid: String)  = {
-   /* users.findOne(MongoDBObject("uuid" -> uuid)) match {
-      case Some(dbObj) => println("We found a user")
-      case _ => println("No user for uuid: "+uuid)
-    }*/
+  def saveGame(state: ActiveGame) = {
+    coll.update(MongoDBObject("uuid" -> state.uuid), state, upsert = true)
+    state
   }
 
-  /**
-   * Implicit converters, because neither Lift not Salat convert Pojo-GameController without pain
-   */
+  /** Return a list of all uuids present in the database */
+  def list: List[ActiveGame] =
+    for (obj <- coll.find().toList)
+    yield MongoDBObjectToActiveGame(new MongoDBObject(obj))
+
+
+  /** Implicit converters, because neither Lift not Salat convert Pojo-GameController without pain */
   implicit def ActiveGameToMongoDBObject(s: ActiveGame): DBObject =
     MongoDBObject(
       "uuid" -> s.uuid,

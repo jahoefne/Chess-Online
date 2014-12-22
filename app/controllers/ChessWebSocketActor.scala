@@ -2,7 +2,9 @@ package controllers
 
 import java.awt.Point
 import akka.actor.{Actor, Props, ActorRef}
-import model.{UserRefs, GameDB}
+import akka.contrib.pattern.DistributedPubSubExtension
+import akka.contrib.pattern.DistributedPubSubMediator.{Publish, Subscribe}
+import model.{ActiveGame, GameDB}
 import play.api.Logger
 import play.api.libs.json._
 
@@ -10,41 +12,52 @@ import play.api.libs.json._
 class ChessWebSocketActor(out: ActorRef,
                           playerID: String,
                           gameID: String) extends Actor {
-
   val log = Logger(this getClass() getName())
+
+  val mediator = DistributedPubSubExtension(context.system).mediator
+  mediator ! Subscribe(gameID, self)
+
   def receive = {
     case msg: JsValue => (msg \ "type").as[String] match {
 
       case "GetGame" =>
-        out ! GameDB.load(gameID)
-
-      case "Move" =>
-        val src = new Point((msg \ "srcX").as[Int], (msg \ "srcY").as[Int])
-        val dst = new Point((msg \ "dstX").as[Int],  (msg \ "dstY").as[Int])
-        GameDB.load(gameID).move(src, dst)
+        out ! GameDB.loadGameWith(gameID).getAsJson
 
       case "PossibleMoves" =>
         val src = new Point((msg \ "x").as[Int], (msg \ "y").as[Int])
-        val moves = for(p: Point <- GameDB.load(gameID).getPossibleMoves(src)) yield Array[Int](p.x,p.y)
+        val moves = for(p: Point <- GameDB loadGameWith gameID getPossibleMoves src) yield Array[Int](p.x,p.y)
         out ! Json.obj( "type" -> "PossibleMoves", "moves" -> moves)
 
-      case "WhitePlayer" => GameDB.load(gameID).setWhite(Some(playerID))
-      case "BlackPlayer" => GameDB.load(gameID).setBlack(Some(playerID))
-      case "Spectator" => GameDB.load(gameID).joinSpec(Some(playerID))
+      case "ActiveGame" =>  out ! msg
 
-      case "PlayerInfo" =>  GameDB.userInfo((msg \ "uuid").as[String])
+      /** Mediator routed messages below */
+      case "Move" =>
+        val src = new Point((msg \ "srcX").as[Int], (msg \ "srcY").as[Int])
+        val dst = new Point((msg \ "dstX").as[Int],  (msg \ "dstY").as[Int])
+        mediator ! Publish(gameID, GameDB.loadGameWith(gameID).moveFromTo(src, dst).saveGame.getAsJson)
 
-      case _ => out ! "Unknown Json"
+      case "WhitePlayer" =>
+        mediator ! Publish(gameID, GameDB.loadGameWith(gameID).setWhitePlayer(Some(playerID)).saveGame.getAsJson)
+
+      case "BlackPlayer" =>
+        mediator ! Publish(gameID, GameDB.loadGameWith(gameID).setBlackPlayer(Some(playerID)).saveGame.getAsJson)
+
+      case "Spectator" =>
+        mediator ! Publish(gameID, GameDB.loadGameWith(gameID).movePlayerToSpec(Some(playerID)).saveGame.getAsJson)
+
+      case "PlayerInfo" =>
+        log.error("This is not implemented yet!")
+
+
+      case _ => log.error("Unknown Json")
     }
 
-    case _ => out ! "No Message Type supplied!"
+    case _ => log.error("No Message Type supplied!")
   }
 
   /** Socket was closed from the client */
   override def postStop() = {
-   // TODO: REMOVE
-   // ActiveGameStore.add(gameID, ActiveGameStore.getActiveGame(gameID).removePlayer(playerID))
-    UserRefs.broadCastMsg(gameID, GameDB.load(gameID).asInstanceOf[JsValue])
+    mediator ! (gameID, GameDB.loadGameWith(gameID).movePlayerToSpec(Some(playerID)).saveGame.getAsJson)
   }
 }
 

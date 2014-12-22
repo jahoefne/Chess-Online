@@ -41,8 +41,6 @@ var board = {
 
     gotActiveGameMsg: function(msg){
             this.updateField(msg);
-            websocket.sendMessage({type:"PlayerInfo", uuid: msg.white})
-            websocket.sendMessage({type:"PlayerInfo", uuid: msg.black})
 
             if(msg.white == "" || msg.black == ""){
                $("#header-bar").text("Waiting for other player!");
