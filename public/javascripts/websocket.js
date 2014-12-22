@@ -44,11 +44,13 @@ var websocket = {
     },
 
     onMessage: function(event){
+       console.log(event);
        var msg = JSON.parse(event.data);
+
        switch(msg.type){
 
         case "ActiveGame":
-            console.log("ActiveGameMessage")
+            console.log("ActiveGameMessage");
             board.gotActiveGameMsg(msg);
 
             if(!this.roleChosen){
