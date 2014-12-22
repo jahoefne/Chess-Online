@@ -1,5 +1,7 @@
 package controllers
 
+import play.api.libs.EventSource
+import play.api.libs.iteratee.Concurrent
 import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.Play.current
@@ -10,6 +12,8 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import scala.util.Random
 import scala.concurrent.ExecutionContext.Implicits.global
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.iteratee.{Concurrent, Enumeratee}
 
 object UUID{def uuid = (Random.alphanumeric take  8).mkString}
 
@@ -65,4 +69,5 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   def login = UserAwareAction { implicit request =>
     Ok(views.html.loginContainer(request.user))
   }
+
 }

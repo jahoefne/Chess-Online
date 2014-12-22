@@ -38,6 +38,11 @@ var websocket = {
         this.sendMessage({ type: "Spectator" })
     },
 
+    sendChatMessage: function(m){
+      console.log("chatMessage");
+        this.sendMessage({type: "chatMessage", txt: m})
+    },
+
     onMessage: function(event){
        var msg = JSON.parse(event.data);
        switch(msg.type){
@@ -68,6 +73,9 @@ var websocket = {
             }
             break;
 
+           case "chatMessage":
+               $('#chattext').append(msg.txt);
+                break;
         default:
             break;
        };
