@@ -48,6 +48,10 @@ class ChessWebSocketActor(out: ActorRef,
       case "PlayerInfo" =>
         log.error("This is not implemented yet!")
 
+      case "chatMessage" =>
+        val txt = (msg \ "txt").as[String]
+        //mediator ! Publish(gameID, msg)
+        out ! Json.obj( "type" -> "chatMessage", "txt" -> txt)
 
       case _ => log.error("Unknown Json")
     }
