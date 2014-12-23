@@ -40,7 +40,7 @@ var websocket = {
 
     sendChatMessage: function(m){
       console.log("chatMessage");
-        this.sendMessage({type: "chatMessage", txt: m, time: (new Date()).toUTCString(), role: $("#status").text() })
+        this.sendMessage({type: "chatMessageClient", txt: m, time: (new Date()).toUTCString(), role: $("#status").text() })
     },
 
     onMessage: function(event){
