@@ -13,6 +13,7 @@
     border: ridge 2px #222;
     box-shadow: 10px 10px 15px #000;
     color: #fff;
+    cursor: pointer;
 }
 .field-row{
 width: 100%;
