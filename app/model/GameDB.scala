@@ -30,6 +30,9 @@ object GameDB {
     state
   }
 
+  /** Delete the game with uuid from the database */
+  def deleteGame(uuid: String) = coll.remove(MongoDBObject("uuid" -> uuid))
+
   /** Return a list of all uuids present in the database */
   def list: List[ActiveGame] =
     for (obj <- coll.find().toList)

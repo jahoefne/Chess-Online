@@ -3,7 +3,7 @@ package controllers
 import java.awt.Point
 import akka.actor.{Actor, Props, ActorRef}
 import akka.contrib.pattern.DistributedPubSubExtension
-import akka.contrib.pattern.DistributedPubSubMediator.{Publish, Subscribe}
+import akka.contrib.pattern.DistributedPubSubMediator.{SubscribeAck, Publish, Subscribe}
 import model.{ActiveGame, GameDB}
 import play.api.Logger
 import play.api.libs.json._
@@ -53,13 +53,14 @@ class ChessWebSocketActor(out: ActorRef,
 
         mediator ! Publish(gameID, updatedJson)
 
-      case "chatMessage" =>
-        out ! msg
+      case "chatMessage" => out ! msg
 
       case _ => log.error("Unknown Json")
     }
 
-    case _ => log.error("No Message Type supplied!")
+    case mediatorAck: SubscribeAck => log.debug("Subscribed to messages for game instance")
+
+    case _ => log.error("No type supplied")
   }
 
   /** Socket was closed from the client */

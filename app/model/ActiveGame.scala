@@ -3,6 +3,7 @@ package model
 import java.awt.Point
 import akka.contrib.pattern.DistributedPubSubExtension
 import controller.GameController
+import controllers.User
 import play.api.libs.json.{Json, JsValue}
 
 
@@ -42,7 +43,6 @@ case class ActiveGame( uuid: String,
 
   /** Persist in db */
   def saveGame = GameDB saveGame this
-
 
   /** Converts ActiveGame to Json for sending to the users */
   def getAsJson : JsValue = Json.obj(

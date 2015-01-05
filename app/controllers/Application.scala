@@ -1,5 +1,6 @@
 package controllers
 
+import com.mongodb.WriteResult
 import play.api.libs.EventSource
 import play.api.libs.iteratee.Concurrent
 import play.api.libs.json.JsValue
@@ -26,15 +27,16 @@ class Application(override implicit val env: RuntimeEnvironment[User])
   }
 
   /** Create a new game instance */
-  def newGame =  UserAwareAction {
+  def newGame =  UserAwareAction { implicit request =>
     val gameUUID = UUID.uuid
     GameDB.saveGame(ActiveGame(gameUUID))
     Redirect(routes.Application.game(gameUUID))
   }
 
   /** Delete existing game **/
-  def deleteGame(uuid: String) = Action {
-    Ok(views.html.error("42"))
+  def deleteGame(uuid: String) = SecuredAction { implicit request =>
+    GameDB.deleteGame(uuid)
+    Ok
   }
 
   /** Access existing game instance
@@ -69,5 +71,4 @@ class Application(override implicit val env: RuntimeEnvironment[User])
   def login = UserAwareAction { implicit request =>
     Ok(views.html.loginContainer(request.user))
   }
-
 }

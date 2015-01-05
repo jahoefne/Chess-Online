@@ -1,48 +1,42 @@
 @(gameList: List[model.ActiveGame], user: Option[User])
 <html>
 
-    <head>
-        <script src="@routes.Assets.at("javascripts/deps/jquery-2.1.1.min.js")"></script>
-        <link rel="stylesheet" href="@routes.Assets.at("javascripts/deps/bootstrap.min.css")" />
-        <script src="@routes.Assets.at("javascripts/deps/bootstrap.min.js")"></script>
+@baseHeader("Game List")
 
-        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")" />
-    </head>
+<body>
+<script>
+          function deleteGame(uri){
+            $.ajax({
+                url: uri,
+                type: 'DELETE',
+                success: function(result) {
+                    window.location.reload();
+                }
+            });
+          }
+</script>
 
-<div class="container">
-
-    @baseHeader("Game List")
-    <body>
-    @baseNavBar(user)
+@baseNavBar(user)
+    <div class="container">
 
 
-    <div class="panel panel-default">
-        <div class="panel-heading">Existing Games:</div>
-        <div class="panel-body">
-            <ul class="list-group">
-                @for(game <- gameList){
+        <div class="panel panel-default">
+            <div class="panel-heading">Existing Games:</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    @for(game <- gameList){
                     <li class="list-group-item">
-                        <a href="@routes.Application.deleteGame(game.uuid)" class="btn-xs btn-warning deleteGame">Delete</a>
-                        <a href="@routes.Application.game(game.uuid)" class="btn-xs btn-info">Join</a>
+                        <button onclick="deleteGame('@routes.Application.game(game.uuid)')" class="btn-xs btn-warning">Delete</button>
+                        <a href="@routes.Application.game(game.uuid)" class="btn-xs btn-primary">Join</a>
                         <span class="label label-default">@game.uuid</span>
                     </li>
-                }
-            </ul>
+                    }
+                </ul>
+            </div>
         </div>
+        <br/>
+        <p><a class="btn-primary btn-lg" role="button" href="/">Go Back</a></p>
     </div>
-    <br/>
-    <p><a class="btn-primary btn-lg" role="button" href="/">Go Back</a></p>
 
-</div>
-    <script>
-        // Use delete instead of get method
-        $(function() {
-            $(".deleteGame").click(function(event) {
-                    event.preventDefault();
-                    console.log($(this).attr('href'));
-                    $.delete($(this).attr('href'), function(){window.location.reload();});
-            });
-        });
-    </script>
-    </body>
+</body>
 </html>

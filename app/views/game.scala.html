@@ -43,29 +43,30 @@
     </div><!-- /.modal -->
 </div>
 
+<div class="game-container" style="margin-bottom:200px;>
+    <div class="row">
+        <div class="col-md-8" style="margin-top: 20px;">
+            <div class="field-wrapper text-center">
+            @for(x <- 0 to 7){
+                <div class="field-row">
+                @for(y <- 0 to 7){
+                    <div id="@x@y" class=
 
-<div class="row">
-    <div class="col-md-8" style="margin-top: 20px;">
-        <div class="field-wrapper text-center">
-        @for(x <- 0 to 7){
-            <div class="field-row">
-            @for(y <- 0 to 7){
-                <div id="@x@y" class=
-
-                @if((x+y) % 2 == 0){
-                    "dark field"
-                }else{
-                    "bright field"
+                    @if((x+y) % 2 == 0){
+                        "dark field"
+                    }else{
+                        "bright field"
+                    }
+                    onClick="board.clickedField(@x,@y)">
+                    </div>
                 }
-                onClick="board.clickedField(@x,@y)">
                 </div>
             }
             </div>
-        }
         </div>
+            <!-- CHAT -->
+            @baseChat(user)
     </div>
-        <!-- CHAT -->
-        @baseChat(user)
 </div>
 
 </div>
