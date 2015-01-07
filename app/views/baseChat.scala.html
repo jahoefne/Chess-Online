@@ -11,7 +11,7 @@
         <div class="panel-heading">
             RECENT CHAT HISTORY
         </div>
-        <script src="@routes.Assets.at("/deps/js/bootstrap.min.js")"></script>
+
         <div class="panel-body" style="text-align: left;">
             <ul class="media-list" style="overflow: auto; height: 200px;" id="history">
                 <!-- chat Nachrichten -->
@@ -23,7 +23,7 @@
                                 @if(user != None){
                                 <img class="media-object img-circle " style="width: 50px" src="assets/img/user.png" />
                                 }else{
-                                <img class="media-object img-circle " style="width: 50px" src="@routes.Assets.at("/images/{{msg.role}}.png")" />
+                                <img class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
                                 }
 
                             </a>

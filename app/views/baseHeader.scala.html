@@ -1,10 +1,13 @@
 @(title: String)
 <head xmlns="http://www.w3.org/1999/html">
     <title>@title</title>
-    <script src="@routes.Assets.at("/deps/js/jquery-2.1.1.min.js")"></script>
-    <link rel="stylesheet" href="@routes.Assets.at("/deps/css/bootstrap.min.css")" />
-    <script src="@routes.Assets.at("/deps/js/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("deps/js/jquery-2.1.1.min.js")"></script>
+
+    <link rel="stylesheet" href="@routes.Assets.at("deps/css/bootstrap.min.css")" />
+    <script src="@routes.Assets.at("deps/js/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("bower_components/webcomponentsjs/webcomponents.min.js")"></script>
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.css")" />
-    <link rel="stylesheet" href="@routes.Assets.at("/deps/css/gh-fork-ribbon.css")" />
     <meta name="viewport" content="width=device-width, user-scalable=yes">
+    <link rel="import" href="@routes.Assets.at("elements/chess-board.html")">
+
 </head>
