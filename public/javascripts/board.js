@@ -51,6 +51,10 @@ var board = {
                || this.playerID == msg.black && msg.whiteOrBlack < 0 ){  // we are black player and it's our turn
                  this.myTurn = true;
                  $("#header-bar").text("It's your turn!");
+
+
+                   // $("#header-bar").modernBlink('start');
+
             }else{
                  this.myTurn = false;
                   $("#header-bar").text("Please wait.");

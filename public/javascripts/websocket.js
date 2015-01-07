@@ -76,13 +76,13 @@ var websocket = {
             }
             break;
 
-           case "chatMessage":
-               console.log(this.playerID);
-               angular.element($('#chatwrapper')).scope().addMsg(msg);
+        case "chatMessage":
+            console.log(this.playerID);
+            angular.element($('#chatwrapper')).scope().addMsg(msg);
                if(msg.role != $("#status").text()){
                    $("#chat-notify-sound")[0].play();
                }
-                break;
+             break;
         default:
             break;
        };
