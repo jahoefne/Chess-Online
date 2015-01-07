@@ -55,5 +55,4 @@ case class ActiveGame( uuid: String,
     "whiteOrBlack" -> this.getField.getWhiteOrBlack.toInt,
     "gameOver" -> this.isGameOver
   )
-
 }
