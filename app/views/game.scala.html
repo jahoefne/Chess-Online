@@ -17,6 +17,9 @@
 <script src="@routes.Assets.at("javascripts/websocket.js")"></script>
 
 
+<script src="@routes.Assets.at("bower_components/webcomponentsjs/webcomponents.min.js")"></script>
+
+<link rel="import" href="@routes.Assets.at("elements/chess-board.html")">
 
 
 <body class="text-center">
@@ -48,6 +51,7 @@
     <div class="row">
         <div class="col-md-8" style="margin-top: 20px;">
             <div class="field-wrapper text-center">
+                <chess-board></chess-board>
             @for(x <- 0 to 7){
                 <div class="field-row">
                 @for(y <- 0 to 7){
