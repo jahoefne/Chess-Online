@@ -15,7 +15,7 @@ object Global extends play.api.GlobalSettings {
     override lazy val userService: DBUserService = new DBUserService()
 
     override lazy val providers = ListMap(
-      include(new GoogleProvider(routes, cacheService,oauth2ClientFor(GoogleProvider.Google))),
+      include(new GoogleProvider(routes, cacheService, oauth2ClientFor(GoogleProvider.Google))),
       include(new UsernamePasswordProvider[User](userService, avatarService, viewTemplates, passwordHashers))
     )
   }

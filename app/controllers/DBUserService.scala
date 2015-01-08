@@ -25,12 +25,17 @@ class DBUserService extends UserService[User] {
 
   val log = Logger(this getClass() getName())
 
+  def findByUuid(uuid: String): Option[User] = {
+     users.find((obj: DBObject) => obj.uuid == uuid) match {
+       case Some(u) => Some(User(u.uuid, u.main))
+       case _ => None
+     }
+    }
+
   override def find(providerId: String, userId: String): Future[Option[BasicProfile]] = {
     users.find((obj: DBObject) => obj.main.providerId == providerId && obj.main.userId == userId) match {
-      case Some(u) =>
-        Future.successful(Some(u.main))
-      case _ =>
-        Future.successful(None)
+      case Some(u) => Future.successful(Some(u.main))
+      case _ => Future.successful(None)
     }
   }
 

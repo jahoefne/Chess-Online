@@ -4,16 +4,14 @@ import java.awt.Point
 import akka.actor.{Actor, Props, ActorRef}
 import akka.contrib.pattern.DistributedPubSubExtension
 import akka.contrib.pattern.DistributedPubSubMediator.{SubscribeAck, Publish, Subscribe}
-import model.{ActiveGame, GameDB}
+import model.GameDB
 import play.api.Logger
 import play.api.libs.json._
 
 /** Defines the WebSocketActor + Companion */
-class ChessWebSocketActor(out: ActorRef,
-                          playerID: String,
-                          gameID: String) extends Actor {
-  val log = Logger(this getClass() getName())
+class ChessWebSocketActor(out: ActorRef, playerID: String, gameID: String) extends Actor {
 
+  val log = Logger(this getClass() getName())
   val mediator = DistributedPubSubExtension(context.system).mediator
   mediator ! Subscribe(gameID, self)
 

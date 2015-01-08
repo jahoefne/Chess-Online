@@ -1,0 +1,12 @@
+@(user: Option[User])
+@if(user != None){
+  <div>
+    @if(user.get.main.avatarUrl != None){
+      <img src="@user.get.main.avatarUrl">
+    }
+    <b>@user.get.main.fullName</b>
+  </div>
+}else{
+  "Unregisterd User"
+}
+

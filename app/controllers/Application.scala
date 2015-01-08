@@ -8,9 +8,11 @@ import securesocial.core._
 import scala.util.Random
 import scala.concurrent.ExecutionContext.Implicits.global
 
-object UUID{def uuid = (Random.alphanumeric take  8).mkString}
+object UUID{ def uuid = (Random.alphanumeric take  8).mkString }
 
 class Application(override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
+
+  val userService = new DBUserService()
 
   /** Landing Page */
   def index = UserAwareAction{ implicit request =>
@@ -52,6 +54,13 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
     request => out =>
       ChessWebSocketActor.props(out = out, playerID = playerID , gameID = uuid)
   }
+
+  /** Render the Info for a user */
+  def getUserInfo(uuid: String) = Action {
+    println(userService.findByUuid(uuid).get.main.avatarUrl)
+    Ok(views.html.userInfo(userService.findByUuid(uuid)))
+  }
+
   /** Return a list of all game instances */
   def gameList =  SecuredAction { implicit request =>
     Ok(views.html.gameList(gameList = GameDB.list, Some(request.user)))

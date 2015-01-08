@@ -9,6 +9,7 @@ GET     /game/list                  @controllers.Application.gameList
 GET     /game/:uuid                 @controllers.Application.game(uuid: String)
 DELETE  /game/:uuid                 @controllers.Application.deleteGame(uuid: String)
 GET     /socket/:uuid/:playerID     @controllers.Application.socket(uuid: String, playerID: String)
+GET     /game/userInfo/:uuid             @controllers.Application.getUserInfo(uuid: String)
 
 GET     /login                      @controllers.Application.login
 
