@@ -60,21 +60,7 @@
         <div class="col-md-8" style="margin-top: 20px;">
             <div class="field-wrapper text-center">
             <chess-board></chess-board>
-            @for(x <- 0 to 7){
-                <div class="field-row">
-                @for(y <- 0 to 7){
-                    <div id="@x@y" class=
 
-                    @if((x+y) % 2 == 0){
-                        "dark field"
-                    }else{
-                        "bright field"
-                    }
-                    onClick="board.clickedField(@x,@y)">
-                    </div>
-                }
-                </div>
-            }
             </div>
         </div>
             <!-- CHAT -->

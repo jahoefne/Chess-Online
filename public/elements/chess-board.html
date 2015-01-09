@@ -1,6 +1,43 @@
-<link rel="import" href="@routes.Assets.at("bower_components/polymer/polymer.html")">
-<polymer-element name="chess-board" noscript>
+
+<polymer-element name="chess-board">
     <template>
-        <span>Hello from <b>my-element</b>. This is my Shadow DOM.</span>
+
+
+
+            <template repeat="{{field in fields}}">
+
+            <div id="{{field.row}}{{field.col}}" class="{{field.color}}"
+            onClick="board.clickedField({{field.row}},{{field.col}})">
+            </div>
+            </template>
+
+
     </template>
+    <script>
+        Polymer('chess-board', {
+            ready: function(){
+
+                this.fields = new Array(64);
+                x = 0;
+                y= 0;
+                for(i = 0; i < 64; i++){
+                        var color;
+                        if((x+ y) % 2 == 0){
+                            color ="dark field";
+                        }
+                        else{
+                            color ="bright field";
+                        }
+                        this.fields[i] = {row: x, col: y, color: color};
+                        y++;
+
+                    if(y % 8 == 0){
+                            y = 0;
+                            x++;
+                    }
+
+                }
+            }
+        });
+    </script>
 </polymer-element>
