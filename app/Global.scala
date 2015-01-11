@@ -12,7 +12,7 @@ import scala.collection.immutable.ListMap
 object Global extends play.api.GlobalSettings {
 
   object MyRuntimeEnvironment extends RuntimeEnvironment.Default[User] {
-    override lazy val userService: DBUserService = new DBUserService()
+    override lazy val userService =  DBUserService
 
     override lazy val providers = ListMap(
       include(new GoogleProvider(routes, cacheService, oauth2ClientFor(GoogleProvider.Google))),

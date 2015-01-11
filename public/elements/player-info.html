@@ -19,7 +19,7 @@
     </template>
 </polymer-element>
 
-<polymer-element name="player-info" attributes="black, white" noscript>
+<polymer-element name="player-info" attributes="black, white">
     <template>
         <style>
             #box{
@@ -44,4 +44,12 @@
             </span>
         </div>
     </template>
+    <script>
+        Polymer('player-info', {
+            ready: function(){ },
+            whiteChanged: function(){
+                console.log("White changed");
+            },
+        });
+    </script>
 </polymer-element>

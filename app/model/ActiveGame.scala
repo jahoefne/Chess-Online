@@ -2,6 +2,7 @@ package model
 
 import java.awt.Point
 import controller.GameController
+import controllers.DBUserService
 import org.joda.time.DateTime
 import play.api.libs.json.{Json, JsValue}
 
@@ -52,7 +53,9 @@ case class ActiveGame( uuid: String,
     "field" -> this.getField.getField,
     "check" -> this.getCheck,
     "white" -> this.players._1.getOrElse("").toString,
+    "whiteName" -> DBUserService.findByUuid(this.players._1),
     "black" -> this.players._2.getOrElse("").toString,
+    "blackName" -> DBUserService.findByUuid(this.players._2),
     "whiteOrBlack" -> this.getField.getWhiteOrBlack.toInt,
     "gameOver" -> this.isGameOver
   )
