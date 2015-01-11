@@ -60,6 +60,8 @@ var board = {
     },
 
     updateField: function(msg){
+        $("chess-board").data(msg.field);
         $("chess-board").attr("data",msg.field);
+        console.log("Update field", $("chess-board"));
     }
 };

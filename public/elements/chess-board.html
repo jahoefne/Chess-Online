@@ -77,9 +77,11 @@
 
                 }
             },
-
-            attributeChanged: function(attrName, oldVal, newVal) {
-                var parsed = newVal.split(",");
+            data: null,
+            dataChanged: function() {
+            console.error("Attribute changed");
+                if(this.data!=null){
+                var parsed = this.data.split(",");
                 for(i = 0; i < 64; i++){
                     this.fields[i].figure = this.figures[parsed[i]];
                     if( parsed[i] > 0){
@@ -88,6 +90,7 @@
                         this.fields[i].figureColor = 'black';
                     }
                 }
+            }
             }
         });
 
