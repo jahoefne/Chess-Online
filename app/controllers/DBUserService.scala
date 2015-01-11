@@ -25,12 +25,16 @@ class DBUserService extends UserService[User] {
 
   val log = Logger(this getClass() getName())
 
-  def findByUuid(uuid: String): Option[User] = {
-     users.find((obj: DBObject) => obj.uuid == uuid) match {
-       case Some(u) => Some(User(u.uuid, u.main))
-       case _ => None
-     }
+  def findByUuid(uuid: Option[String]): Option[String] = {
+    uuid match {
+      case Some(string) =>
+        users.find ((obj: DBObject) => obj.uuid == string) match {
+          case Some(u) => u.main.email
+          case _ => Some("Unregistered")
+        }
+      case None => None
     }
+  }
 
   override def find(providerId: String, userId: String): Future[Option[BasicProfile]] = {
     users.find((obj: DBObject) => obj.main.providerId == providerId && obj.main.userId == userId) match {
@@ -106,42 +110,42 @@ class DBUserService extends UserService[User] {
     }
   }
 
-    /** Update the password info for user */
-    override def updatePasswordInfo(user: User, info: PasswordInfo): Future[Option[BasicProfile]] = {
-      val found = users.find((obj: DBObject) => obj.main.providerId == user.main.providerId && obj.main.userId == user.main.userId)
-      val updated = found.get.copy(main = found.get.main.copy(passwordInfo = Some(info)))
-      users.update(found.get, updated, upsert = true)
-      Future.successful(Some(updated.main))
-    }
-
-    /** Find Token based on UUID */
-    override def findToken(token: String): Future[Option[MailToken]] = {
-      tokens.findOne(MongoDBObject("uuid" -> token)) match {
-        case Some(t) => Future.successful(Some(tokenFromDbObject(t)))
-        case _ => Future.successful(None)
-      }
-    }
-
-    /** Save a token to the DB */
-    override def saveToken(token: MailToken): Future[MailToken] = {
-      println(tokenToDbObject(token).toString())
-      Future.successful {
-        tokens.save(tokenToDbObject(token))
-        token
-      }
-    }
-
-    /** Conversion Helpers, do the Conversion with Salat */
-    implicit val ctx = new Context {
-      val name = "Custom_Classloader"
-    }
-    ctx.registerClassLoader(Play.classloader(Play.current))
-
-    /** Implicit conversions fro UserObject */
-    implicit def User2MongoDB(u: User): DBObject = grater[User].asDBObject(u)
-    implicit def fromMongoDbObject(o: DBObject): User = grater[User].asObject(o)
-
-    /** Explicit conversion for tokens because implicit methods must be unique per context*/
-    def tokenToDbObject(t: MailToken): DBObject = grater[MailToken].asDBObject(t)
-    def tokenFromDbObject(o: DBObject): MailToken = grater[MailToken].asObject(o)
+  /** Update the password info for user */
+  override def updatePasswordInfo(user: User, info: PasswordInfo): Future[Option[BasicProfile]] = {
+    val found = users.find((obj: DBObject) => obj.main.providerId == user.main.providerId && obj.main.userId == user.main.userId)
+    val updated = found.get.copy(main = found.get.main.copy(passwordInfo = Some(info)))
+    users.update(found.get, updated, upsert = true)
+    Future.successful(Some(updated.main))
   }
+
+  /** Find Token based on UUID */
+  override def findToken(token: String): Future[Option[MailToken]] = {
+    tokens.findOne(MongoDBObject("uuid" -> token)) match {
+      case Some(t) => Future.successful(Some(tokenFromDbObject(t)))
+      case _ => Future.successful(None)
+    }
+  }
+
+  /** Save a token to the DB */
+  override def saveToken(token: MailToken): Future[MailToken] = {
+    println(tokenToDbObject(token).toString())
+    Future.successful {
+      tokens.save(tokenToDbObject(token))
+      token
+    }
+  }
+
+  /** Conversion Helpers, do the Conversion with Salat */
+  implicit val ctx = new Context {
+    val name = "Custom_Classloader"
+  }
+  ctx.registerClassLoader(Play.classloader(Play.current))
+
+  /** Implicit conversions fro UserObject */
+  implicit def User2MongoDB(u: User): DBObject = grater[User].asDBObject(u)
+  implicit def fromMongoDbObject(o: DBObject): User = grater[User].asObject(o)
+
+  /** Explicit conversion for tokens because implicit methods must be unique per context*/
+  def tokenToDbObject(t: MailToken): DBObject = grater[MailToken].asDBObject(t)
+  def tokenFromDbObject(o: DBObject): MailToken = grater[MailToken].asObject(o)
+}
