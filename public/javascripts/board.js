@@ -5,6 +5,8 @@ var board = {
 
     lastClicked:null,
 
+    figure: null,
+
     clickedField: function(x,y){
         if(this.myTurn){
              if(this.lastClicked != null){
@@ -40,6 +42,7 @@ var board = {
     },
 
     gotActiveGameMsg: function(msg){
+            this.figure = msg.field;
             this.updateField(msg);
 
             if(msg.white == "" || msg.black == ""){
@@ -71,7 +74,8 @@ var board = {
         $( ".field" ).each(function(i) {
             var x = Math.floor(i/8);
             var y = i%8;
-            $( this ).html(figures[msg.field[x][y]]);
+            $( this ).html('<div class="' + figures[msg.field[x][y]].color + '">' + figures[msg.field[x][y]].code + '</div>');
+
         });
     }
 };
