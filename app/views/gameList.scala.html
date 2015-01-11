@@ -17,25 +17,50 @@
 </script>
 
 @baseNavBar(user)
-    <div class="container">
-
-
-        <div class="panel panel-default">
-            <div class="panel-heading">Existing Games:</div>
-            <div class="panel-body">
+<div class="row">
+    <div style="text-align: center">
+        <h3><span class="label label-success center">Games created by @user.get.main.email</span></h3>
+    </div>
+</div>
+<br>
+<div class="container">
                 <ul class="list-group">
-                    @for(game <- gameList){
-                    <li class="list-group-item">
-                        <button onclick="deleteGame('@routes.Application.game(game.uuid)')" class="btn-xs btn-warning">Delete</button>
-                        <a href="@routes.Application.game(game.uuid)" class="btn-xs btn-primary">Join</a>
-                        <span class="label label-default">@game.uuid</span>
+                    <li class="list-group-item row">
+                        <div class="col-md-3"><b>Delete Game</b></div>
+                        <div class="col-md-3"><b>Join Game</b></div>
+                        <div class="col-md-3"><b>Game-Id</b></div>
+                        <div class="col-md-3"><b>Created On</b></div>
                     </li>
+
+                    @for(game <- gameList){
+                            <li class="list-group-item row">
+                                <div class="col-md-3">
+                                    <button onclick="deleteGame('@routes.Application.game(game.uuid)')"
+                                        class="btn-xs btn-warning">Delete
+                                    </button>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <a href="@routes.Application.game(game.uuid)"
+                                       class="btn-xs btn-primary">Join
+                                    </a>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <span class="label label-default">
+                                            @game.uuid
+                                    </span>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <span class="label label-default">
+                                            @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")
+                                    </span>
+                                </div>
+                            </li>
                     }
                 </ul>
-            </div>
-        </div>
-        <br/>
-        <p><a class="btn-primary btn-lg" role="button" href="/">Go Back</a></p>
+                <span class="label label-default">@gameList.size games created by you!</span>
     </div>
 
 </body>

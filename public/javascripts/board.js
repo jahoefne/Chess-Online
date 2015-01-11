@@ -1,8 +1,6 @@
 var board = {
     playerID: window._global_playerID,
-
     myTurn: false,
-
     lastClicked:null,
 
     clickedField: function(x,y){
@@ -41,7 +39,6 @@ var board = {
 
     gotActiveGameMsg: function(msg){
             this.updateField(msg);
-
             if(msg.white == "" || msg.black == ""){
                $("#header-bar").text("Waiting for other player!");
                return;
@@ -51,10 +48,6 @@ var board = {
                || this.playerID == msg.black && msg.whiteOrBlack < 0 ){  // we are black player and it's our turn
                  this.myTurn = true;
                  $("#header-bar").text("It's your turn!");
-
-
-                   // $("#header-bar").modernBlink('start');
-
             }else{
                  this.myTurn = false;
                   $("#header-bar").text("Please wait.");
@@ -67,14 +60,6 @@ var board = {
     },
 
     updateField: function(msg){
-        console.log("Update field");
         $("chess-board").attr("data",msg.field);
-      //  $("#test-test-test").html("<chess-board data='" + msg.field +"'></chess-board>");
-      //  $("chess-board").ready();
-       /* $( ".field" ).each(function(i) {
-            var x = Math.floor(i/8);
-            var y = i%8;
-            $( this ).html(figures[msg.field[x][y]]);
-        });  */
     }
 };

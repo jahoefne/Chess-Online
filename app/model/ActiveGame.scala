@@ -1,15 +1,16 @@
 package model
 
 import java.awt.Point
-import akka.contrib.pattern.DistributedPubSubExtension
 import controller.GameController
-import controllers.User
+import org.joda.time.DateTime
 import play.api.libs.json.{Json, JsValue}
 
 
 /** Represents an active game instance */
 case class ActiveGame( uuid: String,
                        cont: Option[GameController] = Some(new GameController()),
+                       createdOn: DateTime = DateTime.now,
+                       createdBy: String,
                        var players:(Option[String], Option[String]) = (None, None))
   extends GameController(
     cont.get.isGameOver,

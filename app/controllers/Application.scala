@@ -22,7 +22,11 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   /** Create a new game instance */
   def newGame =  UserAwareAction { implicit request =>
     val gameUUID = UUID.uuid
-    GameDB.saveGame(ActiveGame(gameUUID))
+    val playerId = request.user match {
+      case Some(user) => user.uuid
+      case None => UUID.uuid
+    }
+    GameDB.saveGame(ActiveGame(uuid = gameUUID, createdBy = playerId))
     Redirect(routes.Application.game(gameUUID))
   }
 
@@ -57,7 +61,7 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
 
   /** Return a list of all game instances */
   def gameList =  SecuredAction { implicit request =>
-    Ok(views.html.gameList(gameList = GameDB.list, Some(request.user)))
+    Ok(views.html.gameList(GameDB.list(request.user.uuid).sortWith(_.createdOn isAfter _.createdOn), Some(request.user)))
   }
 
   /** Render Login Container */

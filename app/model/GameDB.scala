@@ -4,6 +4,8 @@ import com.mongodb.casbah.MongoClient
 import com.mongodb.casbah.commons.{MongoDBList, MongoDBObject}
 import com.mongodb.{BasicDBList, DBObject}
 import controller.GameController
+import org.joda.time.DateTime
+import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import play.api.Logger
 
 
@@ -13,6 +15,7 @@ object GameDB {
   val db = conn("Chess-Online")
   val coll = db("Games")
   val users = db("Users")
+  val formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
 
   val log = Logger(this getClass() getName())
 
@@ -33,9 +36,9 @@ object GameDB {
   /** Delete the game with uuid from the database */
   def deleteGame(uuid: String) = coll.remove(MongoDBObject("uuid" -> uuid))
 
-  /** Return a list of all uuids present in the database */
-  def list: List[ActiveGame] =
-    for (obj <- coll.find().toList)
+  /** Return a list of all games created by uuid */
+  def list(uuid: String): List[ActiveGame] =
+    for (obj <- coll.find(MongoDBObject("createdBy" -> uuid)).toList)
     yield MongoDBObjectToActiveGame(new MongoDBObject(obj))
 
 
@@ -43,6 +46,8 @@ object GameDB {
   implicit def ActiveGameToMongoDBObject(s: ActiveGame): DBObject =
     MongoDBObject(
       "uuid" -> s.uuid,
+      "createdOn" -> s.createdOn.toString("dd/MM/yyyy HH:mm:ss"),
+      "createdBy" -> s.createdBy,
       "whitePlayer" -> s.players._1.getOrElse("None"),
       "blackPlayer" -> s.players._2.getOrElse("None"),
       "field" -> s.getField.getField,
@@ -70,7 +75,12 @@ object GameDB {
         case "None" => None
         case uuid => Some(uuid)
       }
-      )
-    ActiveGame(in.as[String]("uuid"), Some(c), players)
+    )
+    ActiveGame(
+      in.as[String]("uuid"),
+      Some(c),
+      formatter.parseDateTime(in.as[String]("createdOn")),
+      in.as[String]("createdBy"),
+      players)
   }
 }
