@@ -33,7 +33,6 @@
 
             <div  id="{{field.row}}{{field.col}}" class="field {{field.color}}"
                   onClick="board.clickedField({{field.row}},{{field.col}})">
-               <!-- <font>{{figures[data[field.i]]}}</font>   -->
                <font style="color:{{field.figureColor}};"> {{field.figure}} </font>
             </div>
             </template>
@@ -65,11 +64,10 @@
                         var color;
                         if((x + y) % 2 == 0){
                             color = "dark field";
-                        }
-                        else{
+                        }else{
                             color = "bright field";
                         }
-                        this.fields[i] = {i: i, row: x, col: y, color: color, figure:"F"};
+                        this.fields[i] = {i: i, row: x, col: y, color: color, figure:""};
                         y++;
 
                     if(y % 8 == 0){
@@ -84,8 +82,11 @@
                 var parsed = newVal.split(",");
                 for(i = 0; i < 64; i++){
                     this.fields[i].figure = this.figures[parsed[i]];
-                    if( parsed[i] > 0){  this.fields[i].figureColor = 'white'; }
-                    else { this.fields[i].figureColor = 'black'; }
+                    if( parsed[i] > 0){
+                        this.fields[i].figureColor = 'white';
+                    }else {
+                        this.fields[i].figureColor = 'black';
+                    }
                 }
             }
         });
