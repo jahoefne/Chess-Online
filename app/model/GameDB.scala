@@ -43,8 +43,8 @@ object GameDB {
   implicit def ActiveGameToMongoDBObject(s: ActiveGame): DBObject =
     MongoDBObject(
       "uuid" -> s.uuid,
-      "whitePlayer" -> s.players._1.getOrElse(""),
-      "blackPlayer" -> s.players._2.getOrElse(""),
+      "whitePlayer" -> s.players._1.getOrElse("None"),
+      "blackPlayer" -> s.players._2.getOrElse("None"),
       "field" -> s.getField.getField,
       "check" -> s.getCheck,
       "whiteOrBlack" -> s.getField.getWhiteOrBlack,
@@ -61,7 +61,16 @@ object GameDB {
         in.as[Int]("whiteOrBlack").asInstanceOf[Byte]
       )
     )
-    val players = ( Some(in.as[String]("whitePlayer")), Some(in.as[String]("blackPlayer")))
+    val players = (
+      in.as[String]("whitePlayer") match {
+        case "None" => None
+        case uuid => Some(uuid)
+      },
+      in.as[String]("blackPlayer") match {
+        case "None" => None
+        case uuid => Some(uuid)
+      }
+      )
     ActiveGame(in.as[String]("uuid"), Some(c), players)
   }
 }

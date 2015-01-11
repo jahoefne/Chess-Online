@@ -55,12 +55,6 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
       ChessWebSocketActor.props(out = out, playerID = playerID , gameID = uuid)
   }
 
-  /** Render the Info for a user */
-  def getUserInfo(uuid: String) = Action {
-    println(userService.findByUuid(uuid).get.main.avatarUrl)
-    Ok(views.html.userInfo(userService.findByUuid(uuid)))
-  }
-
   /** Return a list of all game instances */
   def gameList =  SecuredAction { implicit request =>
     Ok(views.html.gameList(gameList = GameDB.list, Some(request.user)))
@@ -69,5 +63,11 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   /** Render Login Container */
   def login = UserAwareAction { implicit request =>
     Ok(views.html.loginContainer(request.user))
+  }
+
+  /** Render the User-Info for a given game */
+  def getUserInfo(uuid: String) = Action {
+    val game = GameDB.loadGameWith(uuid)
+    Ok(views.html.userInfo( userService.findByUuid(game.players._1), userService.findByUuid(game.players._2)))
   }
 }
