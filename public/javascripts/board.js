@@ -68,10 +68,13 @@ var board = {
 
     updateField: function(msg){
         console.log("Update field");
-        $( ".field" ).each(function(i) {
+        $("chess-board").attr("data",msg.field);
+      //  $("#test-test-test").html("<chess-board data='" + msg.field +"'></chess-board>");
+      //  $("chess-board").ready();
+       /* $( ".field" ).each(function(i) {
             var x = Math.floor(i/8);
             var y = i%8;
             $( this ).html(figures[msg.field[x][y]]);
-        });
+        });  */
     }
 };

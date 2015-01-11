@@ -1,5 +1,5 @@
 
-<polymer-element name="chess-board">
+<polymer-element name="chess-board" attributes="data">
     <template>
         <style>
             .field{
@@ -8,14 +8,12 @@
                 width: 12.5%;
                 height: 12.5%;
                 float: left;
-
             }
 
             .bright{
                 background-color: #fff2db;
                 background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nNCc+Cgk8ZGVmcyBpZD0nZGVmczQnPgoJCTxmaWx0ZXIgeT0nMCcgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJyBpZD0ndCc+CgkJCTxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScuOCAwJyByZXN1bHQ9J291dDEnIG51bU9jdGF2ZXM9JzEnLz4KCQkJPGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIGluPSdvdXQxJyByZXN1bHQ9J291dDInIHZhbHVlcz0nMCcvPgoJCQk8ZmVDb21wb3NpdGUgb3BlcmF0b3I9J2FyaXRobWV0aWMnIGsxPScwJyBrMj0nMC4xMicgazM9JzAnIGs0PScwJyBpbj0nb3V0MicgaW4yPSdvdXQxJy8+CgkJPC9maWx0ZXI+Cgk8L2RlZnM+Cgk8cmVjdCBmaWxsPScjZmZlNDk5JyBmaWxsLW9wYWNpdHk9JzAuNDU5OTk5OTk5OTk5OTk5OTYnIHg9JzUlJyB5PSctNSUnIHdpZHRoPScxMCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3QgZmlsbD0nI2ZmZTQ5OScgZmlsbC1vcGFjaXR5PScwLjE4NCcgeD0nNiUnIHk9Jy01JScgd2lkdGg9JzEwJScgaGVpZ2h0PScxMTAlJy8+Cgk8cmVjdCBmaWxsPScjZmZlNDk5JyBmaWxsLW9wYWNpdHk9JzAuMTg0JyB4PSc3JScgeT0nLTUlJyB3aWR0aD0nMTQlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNmZmU0OTknIGZpbGwtb3BhY2l0eT0nMC4xODQnIHg9JzklJyB5PSctNSUnIHdpZHRoPScyMCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3QgZmlsbD0nI2ZmZTQ5OScgZmlsbC1vcGFjaXR5PScwLjE4NCcgeD0nMTElJyB5PSctNSUnIHdpZHRoPScxMCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3QgZmlsbD0nI2ZmZTQ5OScgZmlsbC1vcGFjaXR5PScwLjM2OCcgeD0nNTUlJyB5PSctNSUnIHdpZHRoPSc0MCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3QgZmlsbD0nI2ZmZTQ5OScgZmlsbC1vcGFjaXR5PScwLjEzNzk5OTk5OTk5OTk5OTk4JyB4PSc2MiUnIHk9Jy01JScgd2lkdGg9JzM1JScgaGVpZ2h0PScxMTAlJy8+Cgk8cmVjdCBmaWxsPScjZmZlNDk5JyBmaWxsLW9wYWNpdHk9JzAuMzIyJyB4PSczOCUnIHk9Jy01JScgd2lkdGg9JzIwJScgaGVpZ2h0PScxMTAlJy8+Cgk8cmVjdCBmaWxsPScjZmZlNDk5JyBmaWxsLW9wYWNpdHk9JzAuMTM3OTk5OTk5OTk5OTk5OTgnIHg9Jzg1JScgeT0nLTUlJyB3aWR0aD0nNDAlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNmZmU0OTknIGZpbGwtb3BhY2l0eT0nMC4yMjk5OTk5OTk5OTk5OTk5OCcgeD0nNTIlJyB5PSctNSUnIHdpZHRoPSc0MCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3Qgc3R5bGU9J2ZpbHRlcjp1cmwoI3QpJyB4PSctMSUnIHk9Jy0xJScgd2lkdGg9JzEwMiUnIGhlaWdodD0nMTAwJScvPgo8L3N2Zz4=');
             }
-
 
             .dark{
                 background-color:#d46337;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2MDAnIGhlaWdodD0nNCc+Cgk8ZGVmcyBpZD0nZGVmczQnPgoJCTxmaWx0ZXIgeT0nMCcgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSdzUkdCJyBpZD0ndCc+CgkJCTxmZVR1cmJ1bGVuY2UgdHlwZT0nZnJhY3RhbE5vaXNlJyBiYXNlRnJlcXVlbmN5PScuOCAwJyByZXN1bHQ9J291dDEnIG51bU9jdGF2ZXM9JzEnLz4KCQkJPGZlQ29sb3JNYXRyaXggdHlwZT0nc2F0dXJhdGUnIGluPSdvdXQxJyByZXN1bHQ9J291dDInIHZhbHVlcz0nMCcvPgoJCQk8ZmVDb21wb3NpdGUgb3BlcmF0b3I9J2FyaXRobWV0aWMnIGsxPScwJyBrMj0nMC4yMScgazM9JzAnIGs0PScwJyBpbj0nb3V0MicgaW4yPSdvdXQxJy8+CgkJPC9maWx0ZXI+Cgk8L2RlZnM+Cgk8cmVjdCBmaWxsPScjZDQ4OTVkJyBmaWxsLW9wYWNpdHk9JzAuMjU5JyB4PSc1JScgeT0nLTUlJyB3aWR0aD0nMTAlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNkNDg5NWQnIGZpbGwtb3BhY2l0eT0nMC4xMDM2JyB4PSc2JScgeT0nLTUlJyB3aWR0aD0nMTAlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNkNDg5NWQnIGZpbGwtb3BhY2l0eT0nMC4xMDM2JyB4PSc3JScgeT0nLTUlJyB3aWR0aD0nMTQlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNkNDg5NWQnIGZpbGwtb3BhY2l0eT0nMC4xMDM2JyB4PSc5JScgeT0nLTUlJyB3aWR0aD0nMjAlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNkNDg5NWQnIGZpbGwtb3BhY2l0eT0nMC4xMDM2JyB4PScxMSUnIHk9Jy01JScgd2lkdGg9JzEwJScgaGVpZ2h0PScxMTAlJy8+Cgk8cmVjdCBmaWxsPScjZDQ4OTVkJyBmaWxsLW9wYWNpdHk9JzAuMjA3MicgeD0nNTUlJyB5PSctNSUnIHdpZHRoPSc0MCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3QgZmlsbD0nI2Q0ODk1ZCcgZmlsbC1vcGFjaXR5PScwLjA3NzY5OTk5OTk5OTk5OTk5JyB4PSc2MiUnIHk9Jy01JScgd2lkdGg9JzM1JScgaGVpZ2h0PScxMTAlJy8+Cgk8cmVjdCBmaWxsPScjZDQ4OTVkJyBmaWxsLW9wYWNpdHk9JzAuMTgxMzAwMDAwMDAwMDAwMDInIHg9JzM4JScgeT0nLTUlJyB3aWR0aD0nMjAlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IGZpbGw9JyNkNDg5NWQnIGZpbGwtb3BhY2l0eT0nMC4wNzc2OTk5OTk5OTk5OTk5OScgeD0nODUlJyB5PSctNSUnIHdpZHRoPSc0MCUnIGhlaWdodD0nMTEwJScvPgoJPHJlY3QgZmlsbD0nI2Q0ODk1ZCcgZmlsbC1vcGFjaXR5PScwLjEyOTUnIHg9JzUyJScgeT0nLTUlJyB3aWR0aD0nNDAlJyBoZWlnaHQ9JzExMCUnLz4KCTxyZWN0IHN0eWxlPSdmaWx0ZXI6dXJsKCN0KScgeD0nLTElJyB5PSctMSUnIHdpZHRoPScxMDIlJyBoZWlnaHQ9JzEwMCUnLz4KPC9zdmc+');
@@ -25,13 +23,18 @@
                 background-image:none;
                 background-color:#FF2020;
             }
+            font{
+                text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);
+            }
         </style>
 
 
             <template repeat="{{field in fields}}">
 
-            <div  id="{{field.row}}{{field.col}}" class="{{field.color}}"
-            onClick="board.clickedField({{field.row}},{{field.col}})">
+            <div  id="{{field.row}}{{field.col}}" class="field {{field.color}}"
+                  onClick="board.clickedField({{field.row}},{{field.col}})">
+               <!-- <font>{{figures[data[field.i]]}}</font>   -->
+               <font style="color:{{field.figureColor}};"> {{field.figure}} </font>
             </div>
             </template>
 
@@ -40,19 +43,33 @@
     <script>
         Polymer('chess-board', {
             ready: function(){
+                this.figures = new Array();
+                this.figures[-1] = "\u265F";
+                this.figures[-2] = "\u265C";
+                this.figures[-3] = "\u265E";
+                this.figures[-4] = "\u265D";
+                this.figures[-5] = "\u265B";
+                this.figures[-6] = "\u265A";
+                this.figures[0] = "";
+                this.figures[1] = "\u2659";
+                this.figures[2] = "\u2656";
+                this.figures[3] = "\u2658";
+                this.figures[4] = "\u2657";
+                this.figures[5] = "\u2655";
+                this.figures[6] = "\u2654";
 
                 this.fields = new Array(64);
                 x = 0;
-                y= 0;
+                y = 0;
                 for(i = 0; i < 64; i++){
                         var color;
-                        if((x+ y) % 2 == 0){
-                            color ="dark field";
+                        if((x + y) % 2 == 0){
+                            color = "dark field";
                         }
                         else{
-                            color ="bright field";
+                            color = "bright field";
                         }
-                        this.fields[i] = {row: x, col: y, color: color};
+                        this.fields[i] = {i: i, row: x, col: y, color: color, figure:"F"};
                         y++;
 
                     if(y % 8 == 0){
@@ -61,7 +78,17 @@
                     }
 
                 }
+            },
+
+            attributeChanged: function(attrName, oldVal, newVal) {
+                var parsed = newVal.split(",");
+                for(i = 0; i < 64; i++){
+                    this.fields[i].figure = this.figures[parsed[i]];
+                    if( parsed[i] > 0){  this.fields[i].figureColor = 'white'; }
+                    else { this.fields[i].figureColor = 'black'; }
+                }
             }
         });
+
     </script>
 </polymer-element>

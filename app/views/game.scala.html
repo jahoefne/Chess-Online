@@ -9,17 +9,10 @@
     window._global_uuid = "@(gameUUID)";
 </script>
 
-
-
 <script src="@routes.Assets.at("javascripts/modern-blink.js")"></script>
 <script src="@routes.Assets.at("javascripts/figures.js")"></script>
 <script src="@routes.Assets.at("javascripts/board.js")"></script>
 <script src="@routes.Assets.at("javascripts/websocket.js")"></script>
-
-
-
-
-
 
 
 <body class="text-center">
@@ -48,8 +41,9 @@
 <div class="game-container" style="margin-bottom:200px;>
     <div class="row">
         <div class="col-md-8" style="margin-top: 20px;">
-            <div class="field-wrapper text-center">
-            <chess-board></chess-board>
+            <div id="test-test-test" class="field-wrapper text-center">
+
+                <chess-board data=""></chess-board>
 
             </div>
         </div>
@@ -57,6 +51,7 @@
             @baseChat(user)
     </div>
 </div>
+
 <h2 id="header-bar">Wait</h3>
 
     </div>
