@@ -21,7 +21,7 @@
                             <!-- user Image -->
                             <a class="pull-left" href="#">
                                 @if(user != None){
-                                <img class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="@user.get.main.avatarUrl" />
+                                <img class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="{{msg.img}}" />
                                 }else{
                                 <img class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
                                 }
@@ -32,7 +32,7 @@
                                 {{msg.txt}}
                                 <br/>
                                 @if(user != None){
-                                <small class="text-muted" style="color: #aaa;">@user.get.main.email | {{msg.time}}</small>
+                                <small class="text-muted" style="color: #aaa;">{{msg.email}} | {{msg.time}}</small>
 
                                 }else{
                                 <small class="text-muted" style="color: #aaa;">{{msg.role}} | {{msg.time}}</small>
@@ -57,7 +57,14 @@
                 <script>
                     $(function(){
                         $('#chatform').submit(function(){
-                            websocket.sendChatMessage($('#text').val());
+                            @if(user != None){
+                            val img = @user.get.main.avatarUrl;
+                            val email = @user.get.main.email;
+                            }else{
+                            val img = '';
+                            val email = '';
+                            }
+                            websocket.sendChatMessage($('#text').val(), img, email);
                             $('#text').val("").focus();
                             return false;
                         });

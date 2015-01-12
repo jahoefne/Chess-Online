@@ -38,9 +38,9 @@ var websocket = {
         this.sendMessage({ type: "Spectator" })
     },
 
-    sendChatMessage: function(m){
+    sendChatMessage: function(m, i, e){
       console.log("chatMessage");
-        this.sendMessage({type: "chatMessageClient", txt: m, time: (new Date()).toUTCString(), role: $("#status").text() })
+        this.sendMessage({type: "chatMessageClient", txt: m, time: (new Date()).toUTCString(), role: $("#status").text(), img: i, email: e })
     },
 
     onMessage: function(event){
