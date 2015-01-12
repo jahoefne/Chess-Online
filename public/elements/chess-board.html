@@ -1,5 +1,5 @@
 
-<polymer-element name="chess-board" attributes="data light">
+<polymer-element name="chess-board" attributes="data light size">
     <template>
         <style>
             .field{
@@ -42,7 +42,16 @@
             color: #fff;
             cursor: pointer;
             }
-
+            .field-wrapper-small {
+            margin: 0 auto;
+            border: ridge 2px #222;
+            box-shadow: 10px 10px 15px #000;
+            color: #fff;
+            cursor: pointer;
+            width: 200px;
+            height: 200px;
+            font-size: 12pt;
+            }
 
 
 
@@ -54,7 +63,7 @@
             }
             }
         </style>
-        <div class="field-wrapper text-center">
+        <div class="{{wrapper}} text-center">
 
             <template repeat="{{field in fields}}">
 
@@ -83,6 +92,7 @@
                 this.figures[4] = "\u2657";
                 this.figures[5] = "\u2655";
                 this.figures[6] = "\u2654";
+                this.wrapper = "field-wrapper";
 
                 this.fields = new Array(64);
                 x = 0;
@@ -143,7 +153,17 @@
                 }
                 }
                 this.light = '';
+            },
+            size:'',
+            sizeChanged: function(){
+            if(this.size == 'normal'){
+                this.wrapper = "field-wrapper";
             }
+            if(this.size == 'small'){
+                this.wrapper = "field-wrapper-small";
+            }
+            }
+
         });
 
     </script>
