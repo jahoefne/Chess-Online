@@ -58,11 +58,11 @@
                     $(function(){
                         $('#chatform').submit(function(){
                             @if(user != None){
-                            val img = "@user.get.main.avatarUrl";
-                            val email = "@user.get.main.email";
+                            var img = "@user.get.main.avatarUrl";
+                            var email = "@user.get.main.email";
                             }else{
-                            val img = '';
-                            val email = '';
+                            var img = "";
+                            var email = "";
                             }
                             websocket.sendChatMessage($('#text').val(), img, email);
                             $('#text').val("").focus();
