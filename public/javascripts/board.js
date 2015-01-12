@@ -7,11 +7,13 @@ var board = {
         if(this.myTurn){
              if(this.lastClicked != null){
                  this.unhighlightAll();
-                 this.move(this.lastClicked.x, this.lastClicked.y, x, y);
+                 this.move(this.lastClicked[0], this.lastClicked[1], x, y);
                  this.lastClicked = null;
              }else{
-                 this.lastClicked = {el:$("#"+x+""+y), x:x, y:y};
-                 this.highlight(this.lastClicked.el);
+
+                 //this.lastClicked = {el:$("#"+x+""+y), x:x, y:y};
+                 this.lastClicked = [x, y];
+                 //this.highlight(this.lastClicked);
 
                  // query possible moves
                  var message = {type: "PossibleMoves", x: x, y: y};
@@ -22,13 +24,14 @@ var board = {
     },
 
     highlight: function(el){
-        el.addClass("highlight");
+        //el.addClass("highlight");
+        $("chess-board").attr("light", el);
+        console.log("light", $("chess-board"));
     },
 
     unhighlightAll: function(){
-         $( ".field" ).each(function() {
-                $( this ).removeClass("highlight");
-         });
+
+                $("chess-board").attr("light","none");
     },
 
     move: function(srcX, srcY, dstX, dstY){

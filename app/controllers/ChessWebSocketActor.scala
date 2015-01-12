@@ -23,7 +23,7 @@ class ChessWebSocketActor(out: ActorRef, playerID: String, gameID: String) exten
 
       case "PossibleMoves" =>
         val src = new Point((msg \ "x").as[Int], (msg \ "y").as[Int])
-        val moves = for(p: Point <- GameDB loadGameWith gameID getPossibleMoves src) yield Array[Int](p.x,p.y)
+        val moves = Array[Array[Int]](Array[Int](src.x, src.y)).++(for(p: Point <- GameDB loadGameWith gameID getPossibleMoves src) yield Array[Int](p.x,p.y))
         out ! Json.obj( "type" -> "PossibleMoves", "moves" -> moves)
 
       case "ActiveGame" =>  out ! msg

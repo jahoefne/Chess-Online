@@ -74,8 +74,12 @@ var websocket = {
 
         case "PossibleMoves":
             for(var i=0; i < msg.moves.length; i++){
-               $("#"+msg.moves[i][0]+""+msg.moves[i][1]).addClass("highlight");
+               //$("#"+msg.moves[i][0]+""+msg.moves[i][1]).addClass("highlight");
+               var mov =[msg.moves[i][0], msg.moves[i][1]];
+
             }
+
+            board.highlight(msg.moves);
             break;
 
         case "chatMessage":

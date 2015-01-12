@@ -1,5 +1,5 @@
 
-<polymer-element name="chess-board" attributes="data">
+<polymer-element name="chess-board" attributes="data light">
     <template>
         <style>
             .field{
@@ -31,7 +31,7 @@
 
             <template repeat="{{field in fields}}">
 
-            <div  id="{{field.row}}{{field.col}}" class="field {{field.color}}"
+            <div  id="{{field.row}}{{field.col}}" class="field {{field.color}} {{field.highlight}}"
                   onClick="board.clickedField({{field.row}},{{field.col}})">
                <font style="color:{{field.figureColor}};"> {{field.figure}} </font>
             </div>
@@ -67,7 +67,7 @@
                         }else{
                             color = "bright field";
                         }
-                        this.fields[i] = {i: i, row: x, col: y, color: color, figure:""};
+                        this.fields[i] = {i: i, row: x, col: y, color: color, figure:"", highlight:""};
                         y++;
 
                     if(y % 8 == 0){
@@ -91,6 +91,31 @@
                     }
                 }
             }
+            },
+            light:'',
+            lightChanged: function(){
+
+
+                if(this.light == 'none'){
+                for(i = 0; i < 64; i++){
+                    this.fields[i].highlight = '';
+                    }
+                }
+                else{
+                var parsed = this.light.split(",");
+
+                for(i = 0; i < 64; i++){
+                    for (j = 0; j < parsed.length-1; j++){
+                    if(parsed[j] == this.fields[i].row && parsed[j+1] == this.fields[i].col){
+                    this.fields[i].highlight = 'highlight';
+                    }
+                    j++;
+
+                    }
+
+                }
+                }
+                this.light = '';
             }
         });
 
