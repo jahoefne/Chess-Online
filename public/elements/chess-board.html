@@ -26,8 +26,35 @@
             font{
                 text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);
             }
-        </style>
+            @media screen and (min-width: 501px) {
+            .field-wrapper {
+            width: 480px;
+            height: 480px;
+            font-size: 30pt;
+            }
 
+            }
+
+            .field-wrapper {
+            margin: 0 auto;
+            border: ridge 2px #222;
+            box-shadow: 10px 10px 15px #000;
+            color: #fff;
+            cursor: pointer;
+            }
+
+
+
+
+            @media screen and (max-width: 500px) {
+            .field-wrapper {
+            width: 290px;
+            height: 290px;
+            font-size: 20pt;
+            }
+            }
+        </style>
+        <div class="field-wrapper text-center">
 
             <template repeat="{{field in fields}}">
 
@@ -37,7 +64,7 @@
             </div>
             </template>
 
-
+        </div>
     </template>
     <script>
         Polymer('chess-board', {
