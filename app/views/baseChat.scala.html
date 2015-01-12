@@ -21,7 +21,7 @@
                             <!-- user Image -->
                             <a class="pull-left" href="#">
                                 @if(user != None){
-                                <img class="media-object img-circle " style="width: 50px" src="assets/img/user.png" />
+                                <img class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="@user.get.main.avatarUrl" />
                                 }else{
                                 <img class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
                                 }
@@ -31,7 +31,12 @@
                             <div class="media-body" id="chattext" style="display: inline;">
                                 {{msg.txt}}
                                 <br/>
+                                @if(user != None){
+                                <small class="text-muted" style="color: #aaa;">@user.get.main.email | {{msg.time}}</small>
+
+                                }else{
                                 <small class="text-muted" style="color: #aaa;">{{msg.role}} | {{msg.time}}</small>
+                                }
                                 <hr style="border-top: 1px solid #fff;"/>
                             </div>
                         </div>
