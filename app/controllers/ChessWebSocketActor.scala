@@ -48,7 +48,6 @@ class ChessWebSocketActor(out: ActorRef, playerID: String, gameID: String) exten
 
       case "chatMessageClient" =>
         val updatedJson = msg.as[JsObject] ++ Json.obj("type" -> "chatMessage")
-
         mediator ! Publish(gameID, updatedJson)
 
       case "chatMessage" => out ! msg

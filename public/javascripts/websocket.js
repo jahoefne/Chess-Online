@@ -66,8 +66,8 @@ var websocket = {
             } else {
                 role = "Spectator"
             }
-
-            $("#playerInfoContainer").load("userInfo/"+window._global_uuid, function() {});
+            $("player-info").attr("white", msg.whiteName);
+            $("player-info").attr("black", msg.blackName);
             $("#status").text(role);
 
             break;

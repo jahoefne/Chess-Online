@@ -12,8 +12,6 @@ object UUID{ def uuid = (Random.alphanumeric take  8).mkString }
 
 class Application(override implicit val env: RuntimeEnvironment[User]) extends securesocial.core.SecureSocial[User] {
 
-  val userService = new DBUserService()
-
   /** Landing Page */
   def index = UserAwareAction{ implicit request =>
     Ok(views.html.index(request.user))
@@ -67,11 +65,5 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
   /** Render Login Container */
   def login = UserAwareAction { implicit request =>
     Ok(views.html.loginContainer(request.user))
-  }
-
-  /** Render the User-Info for a given game */
-  def getUserInfo(uuid: String) = Action {
-    val game = GameDB.loadGameWith(uuid)
-    Ok(views.html.userInfo( userService.findByUuid(game.players._1), userService.findByUuid(game.players._2)))
   }
 }

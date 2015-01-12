@@ -17,11 +17,17 @@
 <body class="text-center">
 
 @baseNavBar(user)
-<div class="container">
-    <div id="playerInfoContainer"></div>
+<h2><span id="header-bar"></span></h2>
 
-    <button type="button" class="btn-small btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose Side</button>
-    <br>You are: <div id="status"></div>
+<div class="container">
+    <player-info white="loading.." black="loading.."></player-info>
+
+    <h3><span class="label label-default">
+        <button type="button" class="btn-small btn-default" onClick="$('#chooseRoleModal').modal('show');">
+            Choose Side
+        </button>
+    </span></h3>
+    (You are: <span id="status"></span>)
 
     <div id="chooseRoleModal" class="modal fade">
         <div class="modal-dialog">
@@ -49,9 +55,6 @@
             @baseChat(user)
     </div>
 </div>
-
-<h2 id="header-bar">Wait</h3>
-
-    </div>
+</div>
 </body>
 </html>

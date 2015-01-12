@@ -12,7 +12,7 @@ import com.novus.salat._
 
 case class User(uuid: String, main: BasicProfile)
 
-class DBUserService extends UserService[User] {
+object DBUserService extends UserService[User] {
 
   import com.mongodb.casbah.commons.conversions.scala._
 
@@ -25,14 +25,14 @@ class DBUserService extends UserService[User] {
 
   val log = Logger(this getClass() getName())
 
-  def findByUuid(uuid: Option[String]): Option[String] = {
+  def findByUuid(uuid: Option[String]): String = {
     uuid match {
       case Some(string) =>
         users.find ((obj: DBObject) => obj.uuid == string) match {
-          case Some(u) => u.main.email
-          case _ => Some("Unregistered")
+          case Some(u) => u.main.email.get
+          case _ => "Unregistered"
         }
-      case None => None
+      case None => "Waiting for Player"
     }
   }
 
