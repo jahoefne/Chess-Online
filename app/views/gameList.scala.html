@@ -54,7 +54,8 @@
 
                                 <div class="col-md-3">
                                     <span class="label label-default">
-                                            @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")
+                                         <!--   @game.createdOn.toString("dd.MM.yyyy HH:mm:ss") -->
+                                        <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
                                     </span>
                                 </div>
                             </li>

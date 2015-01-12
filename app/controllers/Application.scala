@@ -59,7 +59,8 @@ class Application(override implicit val env: RuntimeEnvironment[User]) extends s
 
   /** Return a list of all game instances */
   def gameList =  SecuredAction { implicit request =>
-    Ok(views.html.gameList(GameDB.list(request.user.uuid).sortWith(_.createdOn isAfter _.createdOn), Some(request.user)))
+    val list = GameDB.list(request.user.uuid).sortWith(_.createdOn isAfter _.createdOn)
+    Ok(views.html.gameList( list, Some(request.user)))
   }
 
   /** Render Login Container */
