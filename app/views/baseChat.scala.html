@@ -20,23 +20,23 @@
                         <div class="media">
                             <!-- user Image -->
                             <a class="pull-left" href="#">
-                                @if(user != None){
-                                <img class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="{{msg.img}}" />
-                                }else{
-                                <img class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
-                                }
+
+                                <img ng-if="msg.img != 'none'" class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="{{msg.img}}" />
+
+                                <img ng-if="msg.img == 'none'class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
+
 
                             </a>
                             <!-- Chat Output -->
                             <div class="media-body" id="chattext" style="display: inline;">
                                 {{msg.txt}}
                                 <br/>
-                                @if(user != None){
-                                <small class="text-muted" style="color: #aaa;">{{msg.email}} | {{msg.time}}</small>
 
-                                }else{
-                                <small class="text-muted" style="color: #aaa;">{{msg.role}} | {{msg.time}}</small>
-                                }
+                                <small ng-if="msg.email != 'none'" class="text-muted" style="color: #aaa;">{{msg.email}} | {{msg.role}} | {{msg.time}}</small>
+
+
+                                <small ng-if="msg.email == 'none'" class="text-muted" style="color: #aaa;">{{msg.role}} | {{msg.time}}</small>
+
                                 <hr style="border-top: 1px solid #fff;"/>
                             </div>
                         </div>
@@ -61,8 +61,8 @@
                             var img = "@user.get.main.avatarUrl";
                             var email = "@user.get.main.email";
                             }else{
-                            var img = "";
-                            var email = "";
+                            var img = "none";
+                            var email = "none";
                             }
                             websocket.sendChatMessage($('#text').val(), img, email);
                             $('#text').val("").focus();
