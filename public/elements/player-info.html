@@ -1,4 +1,4 @@
-<polymer-element name="single-player-info" attributes="name, color, font-color" noscript>
+<polymer-element name="single-player-info" attributes="name, color, font-color, pic" noscript>
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
@@ -14,12 +14,15 @@
         </style>
         <div vertical  center-justified layout>
             <font>&#9819;</font>
+            <template if="{{pic != 'none' }}">
+            <img class="media-object img-circle " style="width: 50px" src="{{msg.img}}" />
+            </template>
             {{name}}
         </div>
     </template>
 </polymer-element>
 
-<polymer-element name="player-info" attributes="black, white">
+<polymer-element name="player-info" attributes="black, white, blackPic, whitePic">
     <template>
         <style>
             #box{
@@ -35,12 +38,14 @@
                 <single-player-info
                        name="{{white}}"
                        color="white"
-                       font-color="black"></single-player-info>
+                       font-color="black"
+                       pic="{{whitePic}}"></single-player-info>
                 <div self-center>vs</div>
                 <single-player-info
                        name="{{black}}"
                        color="black"
-                       font-color="white"></single-player-info>
+                       font-color="white"
+                       pic="{{blackPic}}"></single-player-info>
             </span>
         </div>
     </template>
