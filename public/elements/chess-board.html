@@ -73,7 +73,7 @@
             <template repeat="{{field in fields}}">
 
                 <div  id="{{field.row}}{{field.col}}" class="field {{field.color}} {{field.highlight}}"
-                      onClick="board.clickedField({{field.row}},{{field.col}})">
+                      onClick="clickedField({{field.row}},{{field.col}})">
                     <font> {{field.figure}} </font>
                 </div>
             </template>
@@ -169,6 +169,36 @@
             }
             }
 
+
+
+
+
+
         });
+         lastClicked: null;
+         function clickedField(x,y){
+             if(websocket.myTurn){
+                 if(this.lastClicked != null){
+                     $("chess-board").attr("light","none");
+                     move(this.lastClicked[0], this.lastClicked[1], x, y);
+                     this.lastClicked = null;
+                 }else{
+
+                     //this.lastClicked = {el:$("#"+x+""+y), x:x, y:y};
+                     this.lastClicked = [x, y];
+                     //this.highlight(this.lastClicked);
+
+                     // query possible moves
+                     var message = {type: "PossibleMoves", x: x, y: y};
+
+                     websocket.sendMessage(message);
+                 }
+             }
+         };
+         function move (srcX, srcY, dstX, dstY){
+             console.log($("#"+srcX+""+srcY).offset());
+             var msg = {type:"Move", srcX: srcX, srcY: srcY, dstX:dstX, dstY:dstY}
+             websocket.sendMessage(msg);
+         };
      </script>
 </polymer-element>
