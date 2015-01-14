@@ -38,7 +38,7 @@ Polymer('chess-board', {
             },
             data: null,
             dataChanged: function() {
-            console.error("Attribute changed");
+            
                 if(this.data!=null){
                 var parsed = this.data.split(",");
                 for(i = 0; i < 64; i++){

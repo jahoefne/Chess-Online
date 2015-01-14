@@ -35,6 +35,17 @@ object DBUserService extends UserService[User] {
       case None => "Waiting for Player"
     }
   }
+  
+  def findPicByUuid(uuid: Option[String]): String = {
+    uuid match {
+      case Some(string) =>
+        users.find ((obj: DBObject) => obj.uuid == string) match {
+          case Some(u) => u.main.avatarUrl.get
+          case _ => "none"
+        }
+      case None => "none"
+    }
+  }
 
   override def find(providerId: String, userId: String): Future[Option[BasicProfile]] = {
     users.find((obj: DBObject) => obj.main.providerId == providerId && obj.main.userId == userId) match {
