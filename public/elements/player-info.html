@@ -1,4 +1,4 @@
-<polymer-element name="single-player-info" attributes="name, color, font-color" noscript>
+<polymer-element name="single-player-info" attributes="name, color, font-color, pic" noscript>
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
@@ -8,22 +8,22 @@
                 padding-left: 50px;
                 color: {{font-color}};
             }
-            font{
-                font-size: 600%;
-                color: {{color}};
+            img{
+                width: 150px;
+                border-radius: 50%;
+                border: 0 none;
+                margin: 0 auto;
             }
         </style>
         <div vertical  center-justified layout>
-            <font style="color: {{color}};">&#9819;</font>
-            <template if="{{pic != 'none' }}">
-                <img style="width: 50px; border-radius: 50%; border: 0 none; margin: 0 auto;" src="{{pic}}" />
-            </template>
+           <!-- <font style="color: {{color}};">&#9819;</font>  -->
+            <img src="{{pic}}" />
             {{name}}
         </div>
     </template>
 </polymer-element>
 
-<polymer-element name="player-info" attributes="black, white, blackPic, whitePic">
+<polymer-element name="player-info" attributes="black, white, blackPic, whitePic" noscript>
     <template>
         <style>
             #box{
@@ -50,12 +50,5 @@
             </span>
         </div>
     </template>
-    <script>
-        Polymer('player-info', {
-            ready: function(){ },
-            whiteChanged: function(){
-                console.log("White changed");
-            },
-        });
-    </script>
+
 </polymer-element>
