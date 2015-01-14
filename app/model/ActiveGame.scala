@@ -12,7 +12,7 @@ case class ActiveGame( uuid: String,
                        cont: Option[GameController] = Some(new GameController()),
                        createdOn: DateTime = DateTime.now,
                        createdBy: String,
-                       var players:(Option[String], Option[String]) = (None, None))
+                       players:(Option[String], Option[String]) = (None, None))
   extends GameController(
     cont.get.isGameOver,
     cont.get.getCheck,
@@ -25,13 +25,13 @@ case class ActiveGame( uuid: String,
   }
 
   /** Sets the white player */
-  def setWhitePlayer(player: Option[String]) = {
+  def setWhitePlayer(player: Option[String]) : ActiveGame = {
     val specd = this movePlayerToSpec player
     specd copy (players = specd.players.copy(_1 = player))
   }
 
   /** Sets the black player */
-  def setBlackPlayer(player: Option[String]) = {
+  def setBlackPlayer(player: Option[String]) : ActiveGame = {
     val specd = this movePlayerToSpec player
     specd copy (players = specd.players.copy(_2 = player))
   }
