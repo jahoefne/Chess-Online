@@ -62,7 +62,7 @@ class ChessWebSocketActor(out: ActorRef, playerID: String, gameID: String) exten
 
   /** Socket was closed from the client */
   override def postStop() = {
-    mediator ! (gameID, GameDB.loadGameWith(gameID).movePlayerToSpec(Some(playerID)).saveGame.getAsJson)
+    mediator ! Publish(gameID, GameDB.loadGameWith(gameID).movePlayerToSpec(Some(playerID)).saveGame.getAsJson)
   }
 }
 

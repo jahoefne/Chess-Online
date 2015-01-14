@@ -3,6 +3,7 @@ var websocket = {
     uri: "ws://" + window.location.host + "/socket/" + window._global_uuid + "/"+ window._global_playerID,
     playerID: window._global_playerID,
     roleChosen: false,
+    myTurn: false,
 
     init: function() {
         this.socket = new WebSocket(this.uri);
@@ -51,12 +52,14 @@ var websocket = {
 
         case "ActiveGame":
             console.log("ActiveGameMessage");
-            board.gotActiveGameMsg(msg);
+            //board.gotActiveGameMsg(msg);
+
 
             if(!this.roleChosen){
                 $('#chooseRoleModal').modal('show');
                 this.roleChosen=true;
             }
+
 
             var role;
             if(msg.white == this.playerID){
@@ -66,12 +69,34 @@ var websocket = {
             } else {
                 role = "Spectator"
             }
-            console.log(msg.whiteName,msg.blackName,msg.whitePic,msg.blackPic);
+            if(this.playerID == msg.white && msg.whiteOrBlack > 0  // we are white player and it's our turn
+                || this.playerID == msg.black && msg.whiteOrBlack < 0 ){  // we are black player and it's our turn
+                this.myTurn = true;
+                $("#header-bar").text("It's your turn!");
+                $("#header-bar").addClass("blink_me red");
+            }else{
+                this.myTurn = false;
+                $("#header-bar").text("Please wait.");
+                $("#header-bar").removeClass("blink_me red");
+            }
+
+            if(msg.gameOver){
+                $("#header-bar").text("Game over");
+                $("#header-bar").removeClass("blink_me");
+                this.myTurn = false;
+            }
+            if(msg.white == "" || msg.black == ""){
+                $("#header-bar").text("Waiting for other player!");
+                $("#header-bar").addClass("blink_me");
+                $("#header-bar").removeClass("red");
+
+            }
             $("player-info").attr("white", msg.whiteName);
             $("player-info").attr("black", msg.blackName);
             $("player-info").attr("whitePic", msg.whitePic);
             $("player-info").attr("blackPic", msg.blackPic);
             $("#status").text(role);
+            $("chess-board").attr("data",msg.field);
 
             break;
 
@@ -82,7 +107,8 @@ var websocket = {
 
             }
 
-            board.highlight(msg.moves);
+            //board.highlight(msg.moves);
+            $("chess-board").attr("light", msg.moves);
             break;
 
         case "chatMessage":
