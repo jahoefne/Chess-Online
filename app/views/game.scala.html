@@ -9,7 +9,7 @@
     window._global_uuid = "@(gameUUID)";
 
     @user match{
-        case Some(u) => { window._global_username = @u.main.fullName.get; }
+        case Some(u) => { window._global_username = "@u.main.fullName.get"; }
         case None => { window._global_username = "Unregistered User";}
     }
 </script>
