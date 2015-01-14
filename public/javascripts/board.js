@@ -1,5 +1,5 @@
 Polymer('chess-board', {
-            ready: function(){
+            created: function(){
                 this.figures = new Array();
                 this.figures[-1] = "\u265F";
                 this.figures[-2] = "\u265C";
