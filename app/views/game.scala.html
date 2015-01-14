@@ -7,11 +7,17 @@
 <script type="text/javascript">
     window._global_playerID = "@(playerUUID)";
     window._global_uuid = "@(gameUUID)";
+
+    @user match{
+        case Some(u) => { window._global_username = @u.main.fullName.get; }
+        case None => { window._global_username = "Unregistered User";}
+    }
 </script>
 
 
 
 <script src="@routes.Assets.at("javascripts/websocket.js")"></script>
+<script src="@routes.Assets.at("javascripts/share.js")"></script>
 
 
 <body class="text-center">
@@ -43,7 +49,7 @@
         </div>
     </div>
 
-<div class="game-container" style="margin-bottom:200px;>
+<div class="game-container">
     <div class="row">
         <div class="col-md-8" style="margin-top: 20px;">
 
@@ -54,6 +60,7 @@
             <!-- CHAT -->
             @baseChat(user)
     </div>
+    <div class="share-button"></div>
 </div>
 </div>
 
