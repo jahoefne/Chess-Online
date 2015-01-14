@@ -25,46 +25,46 @@
     </div>
 </div>
 <br>
-<div class="container">
-                <ul class="list-group">
-                    <li class="list-group-item row">
-                        <div class="col-md-3"><b>Delete Game</b></div>
-                        <div class="col-md-3"><b>Join Game</b></div>
-                        <div class="col-md-3"><b>Game-Id</b></div>
-                        <div class="col-md-3"><b>Created On</b></div>
-                    </li>
+    <table align="center">
+        @for(game <- gameList){
+        <tr>
+            <td>
+                <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
+            </td>
+        </tr>
 
-                    @for(game <- gameList){
-                            <li class="list-group-item row">
-                                <div class="col-md-3">
-                                    <button onclick="deleteGame('@routes.Application.game(game.uuid)')"
-                                        class="btn-xs btn-warning">Delete
-                                    </button>
-                                </div>
+        <tr>
+            <td>
+                <div class="col-md-4 text-center">
+                <h5><span class="label label-default text-center">Created on: @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")</span></h5>
+                 </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col-md-4 text-center">
+                    <div class="btn-group text-center">
 
-                                <div class="col-md-3">
-                                    <a href="@routes.Application.game(game.uuid)"
-                                       class="btn-xs btn-primary">Join
-                                    </a>
-                                </div>
+                        <button type="button" class="btn btn-success center">
+                            <a href="@routes.Application.game(game.uuid)">Join</a>
+                        </button>
+                        <button type="button" class="btn btn-danger text-center">
+                            <span onclick="deleteGame('@routes.Application.game(game.uuid)')">Delete</span>
+                        </button>
 
-                                <div class="col-md-3">
-                                    <span class="label label-default">
-                                            @game.uuid
-                                    </span>
-                                </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
 
-                                <div class="col-md-3">
-                                    <span class="label label-default">
-                                         <!--   @game.createdOn.toString("dd.MM.yyyy HH:mm:ss") -->
-                                        <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
-                                    </span>
-                                </div>
-                            </li>
-                    }
-                </ul>
-                <span class="label label-default">@gameList.size games created by you!</span>
-    </div>
+        <tr>
+            <td><hr></td>
+        </tr>
+        }
+    </table>
+</div>
+
+<span class="label label-default">@gameList.size games created by you!</span>
 
 </body>
 </html>
