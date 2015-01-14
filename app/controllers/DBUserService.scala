@@ -36,14 +36,14 @@ object DBUserService extends UserService[User] {
     }
   }
   
-  def findPicByUuid(uuid: Option[String]): String = {
+  def findPicByUuid(uuid: Option[String]): Option[String] = {
     uuid match {
       case Some(string) =>
         users.find ((obj: DBObject) => obj.uuid == string) match {
-          case Some(u) => u.main.avatarUrl.get
-          case _ => "none"
+          case Some(u) => u.main.avatarUrl
+          case _ => None
         }
-      case None => "none"
+      case None => None
     }
   }
 

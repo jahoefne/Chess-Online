@@ -54,10 +54,10 @@ case class ActiveGame( uuid: String,
     "check" -> this.getCheck,
     "white" -> this.players._1.getOrElse("").toString,
     "whiteName" -> DBUserService.findByUuid(this.players._1),
-    "whitePic" -> DBUserService.findPicByUuid(this.players._1),
+    "whitePic" -> DBUserService.findPicByUuid(this.players._1).getOrElse("/assets/images/white.png").toString,
     "black" -> this.players._2.getOrElse("").toString,
     "blackName" -> DBUserService.findByUuid(this.players._2),
-    "blackPic" -> DBUserService.findPicByUuid(this.players._2),
+    "blackPic" -> DBUserService.findPicByUuid(this.players._2).getOrElse("/assets/images/black.png").toString,
     "whiteOrBlack" -> this.getField.getWhiteOrBlack.toInt,
     "gameOver" -> this.isGameOver
   )

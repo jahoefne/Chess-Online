@@ -66,6 +66,7 @@ var websocket = {
             } else {
                 role = "Spectator"
             }
+            console.log(msg.whiteName,msg.blackName,msg.whitePic,msg.blackPic);
             $("player-info").attr("white", msg.whiteName);
             $("player-info").attr("black", msg.blackName);
             $("player-info").attr("whitePic", msg.whitePic);
