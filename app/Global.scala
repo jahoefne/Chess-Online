@@ -1,5 +1,7 @@
 import controllers._
 import java.lang.reflect.Constructor
+import play.api.mvc.WithFilters
+import play.filters.gzip.GzipFilter
 import securesocial.core.RuntimeEnvironment
 import securesocial.core.providers.{UsernamePasswordProvider, GoogleProvider}
 
@@ -9,7 +11,7 @@ import scala.collection.immutable.ListMap
 /**
  * Global Settings used for SecureSocial
  */
-object Global extends play.api.GlobalSettings {
+object Global extends WithFilters(new GzipFilter()) with play.api.GlobalSettings {
 
   object MyRuntimeEnvironment extends RuntimeEnvironment.Default[User] {
     override lazy val userService =  DBUserService
