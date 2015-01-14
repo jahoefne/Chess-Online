@@ -68,6 +68,8 @@ var websocket = {
             }
             $("player-info").attr("white", msg.whiteName);
             $("player-info").attr("black", msg.blackName);
+            $("player-info").attr("whitePic", msg.whitePic);
+            $("player-info").attr("blackPic", msg.blackPic);
             $("#status").text(role);
 
             break;
