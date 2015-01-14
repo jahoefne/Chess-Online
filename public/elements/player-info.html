@@ -1,11 +1,13 @@
-<polymer-element name="single-player-info" attributes="name, color, font-color" noscript>
+<polymer-element name="single-player-info" attributes="name, color, font-color, background-color" noscript>
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
-            div{                padding-right: 50px;
-            padding-bottom: 25px;
-            padding-left: 50px;
+            div{
+                padding-right: 50px;
+                padding-bottom: 25px;
+                padding-left: 50px;
                 color: {{font-color}};
+                background: {{background-color}};
             }
             font{
                 font-size: 600%;
@@ -35,11 +37,13 @@
                 <single-player-info
                        name="{{white}}"
                        color="white"
+                       background-color="#ffffff"
                        font-color="black"></single-player-info>
                 <div self-center>vs</div>
                 <single-player-info
                        name="{{black}}"
                        color="black"
+                       background-color="#000000"
                        font-color="white"></single-player-info>
             </span>
         </div>
