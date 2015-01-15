@@ -10,7 +10,6 @@ angular.module('chatapp.chatcontroller', []).
         $scope.addMsg = function (msg) {
             $scope.$apply(function () { $scope.msgs.push(msg); });
             $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});
-            console.log($scope.msgs);
         };
 
     });
