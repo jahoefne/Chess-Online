@@ -4,6 +4,7 @@ import play.api.libs.json.JsValue
 import play.api.mvc._
 import play.api.Play.current
 import model._
+import play.libs.Json
 import securesocial.core._
 import scala.util.Random
 import scala.concurrent.ExecutionContext.Implicits.global

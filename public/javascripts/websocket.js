@@ -6,6 +6,9 @@ var websocket = {
     myTurn: false,
 
     init: function() {
+
+        console.log(window._global_oldChatMessages);
+
         this.socket = new WebSocket(this.uri);
         this.socket.onopen = this.onOpen.bind(this);
         this.socket.onmessage = this.onMessage.bind(this);
@@ -19,6 +22,7 @@ var websocket = {
     onOpen: function(){
         this.becomeSpectator(); // Start as spec
         this.sendMessage({type: "GetGame"});
+        this.sendMessage({type: "getAllChatMessages"});
     },
 
     becomeBlackPlayer: function(){
@@ -52,14 +56,11 @@ var websocket = {
 
         case "ActiveGame":
             console.log("ActiveGameMessage");
-            //board.gotActiveGameMsg(msg);
-
 
             if(!this.roleChosen){
                 $('#chooseRoleModal').modal('show');
                 this.roleChosen=true;
             }
-
 
             var role;
             if(msg.white == this.playerID){
@@ -101,22 +102,19 @@ var websocket = {
             break;
 
         case "PossibleMoves":
+            console.log("Possible Moves")
             for(var i=0; i < msg.moves.length; i++){
-               //$("#"+msg.moves[i][0]+""+msg.moves[i][1]).addClass("highlight");
                var mov =[msg.moves[i][0], msg.moves[i][1]];
-
             }
-
-            //board.highlight(msg.moves);
             $("chess-board").attr("light", msg.moves);
             break;
 
+        case "getAllChatMessages":
+            angular.element($('#chatwrapper')).scope().addAllMsgs(msg.msgs)
+            break;
+
         case "chatMessage":
-            console.log(this.playerID);
             angular.element($('#chatwrapper')).scope().addMsg(msg);
-               if(msg.role != $("#status").text()){
-                   $("#chat-notify-sound")[0].play();
-               }
              break;
         default:
             break;

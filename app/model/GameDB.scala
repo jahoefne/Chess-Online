@@ -4,9 +4,10 @@ import com.mongodb.casbah.MongoClient
 import com.mongodb.casbah.commons.{MongoDBList, MongoDBObject}
 import com.mongodb.{BasicDBList, DBObject}
 import controller.GameController
-import org.joda.time.DateTime
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import org.joda.time.format.DateTimeFormat
 import play.api.Logger
+import play.api.libs.json.{JsValue, Json}
+
 
 
 /** Connection to the MongoDB stores ActivaGames Objects **/
@@ -15,6 +16,7 @@ object GameDB {
   val db = conn("Chess-Online")
   val coll = db("Games")
   val users = db("Users")
+  val chat = db("Chat")
   val formatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
 
   val log = Logger(this getClass() getName())
@@ -33,6 +35,15 @@ object GameDB {
     state
   }
 
+  /** Appends the chat-msg msg to the chat history */
+  def appendChatMessage(uuid: String, msg: JsValue) = {
+    chat.insert(MongoDBObject("uuid" -> uuid, "msg" -> msg.toString()))
+  }
+
+  def getChatMessages(uuid: String) : Array[JsValue]  = {
+   chat.find(MongoDBObject("uuid" -> uuid)).map(msg => Json.parse( msg.get("msg").toString)).toArray[JsValue]
+  }
+
   /** Delete the game with uuid from the database */
   def deleteGame(uuid: String) = coll.remove(MongoDBObject("uuid" -> uuid))
 
@@ -42,7 +53,7 @@ object GameDB {
     yield MongoDBObjectToActiveGame(new MongoDBObject(obj))
 
 
-  /** Implicit converters, because neither Lift not Salat convert Pojo-GameController without pain */
+  /** Implicit converters, because neither Lift nor Salat convert Pojo-GameController without pain */
   implicit def ActiveGameToMongoDBObject(s: ActiveGame): DBObject =
     MongoDBObject(
       "uuid" -> s.uuid,

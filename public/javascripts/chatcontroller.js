@@ -9,8 +9,16 @@ angular.module('chatapp.chatcontroller', []).
         /** handle incoming messages: add to messages array */
         $scope.addMsg = function (msg) {
             $scope.$apply(function () { $scope.msgs.push(msg); });
+            if(msg.role != $("#status").text()){
+                $("#chat-notify-sound")[0].play();
+            }
             $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});
-            console.log($scope.msgs);
         };
 
+        $scope.addAllMsgs = function (msgs) {
+            for(i=0; i< msgs.length; i++){
+                $scope.$apply(function () { $scope.msgs.push(msgs[i]); });
+            }
+            $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});
+         }
     });
