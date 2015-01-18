@@ -48,8 +48,7 @@ body {
 .share-button{
     margin-left: auto ;
     margin-right: auto ;
-    position: absolute;
-    bottom: 0px;
+    
 }
 
 @font-face {
@@ -79,4 +78,10 @@ body {
     width:80%;
     height:100%;
     border:0;
+}
+
+@media screen and (max-width: 500px) {
+    .github-fork-ribbon-wrapper {
+        display: none;
+    }
 }
