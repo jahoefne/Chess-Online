@@ -2,14 +2,16 @@
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
-            div { margin:0px 25px 10px 25px; }
+            div {
+                margin:0px 25px 10px 25px;
+            }
 
             img {
                 width: 100px;
                 border-radius: 50%;
                 border: 2px solid;
                 margin: auto;
-                background-color:#66C7E2;
+                background-color:#232323;
                 -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
                 -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
                 box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
@@ -25,15 +27,19 @@
     </template>
 </polymer-element>
 
-<polymer-element name="player-info" attributes="black, white, blackPic, whitePic, status, playerRole" noscript>
+<polymer-element name="player-info" attributes="black, white, blackPic, whitePic, status, playerRole">
     <template>
         <style>
             #box{
-                background: #52616f;
+                border-color:3px solid #2D2D2D;
+                border-radius:5px;
+                background-color:rgba(20, 20, 20, 0.7);
+                padding-bottom:10px;
+                color:#ffffff;
             }
         </style>
 
-            <div  horizontal center-justified layout>
+            <div horizontal center-justified layout>
                 <span id="box" vertical layout layout>
                     <h2>{{status}}</h2>
                     <div horizontal layout>
@@ -45,7 +51,7 @@
                         <h2 self-center>VS</h2>
                         <single-player-info
                            name="{{black}}"
-                           color="black"
+                           color="#000000"
                            pic="{{blackPic}}">
                         </single-player-info>
                     </div>
@@ -53,5 +59,11 @@
                 </span>
             </div>
     </template>
+    <script>
+        Polymer('player-info', {
+            statusChanged: function(){
 
+            }
+        });
+    </script>
 </polymer-element>

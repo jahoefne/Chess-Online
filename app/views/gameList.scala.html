@@ -19,14 +19,17 @@
 </script>
 
 @baseNavBar(user)
-<div class="row">
-    <div style="text-align: center">
-        <h3><span class="label label-success center">@gameList.size games created by @user.get.main.email:</span></h3>
+<div>
+    <div class="text-center">
+        <h3><span class="label label-default center">Hi @user.get.main.firstName, there are @gameList.size games created you:</span></h3>
     </div>
 </div>
 <br>
     <table align="center">
         @for(game <- gameList){
+            <tr>
+                <td><hr></td>
+            </tr>
             <tr>
                 <td>
                     <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
@@ -36,24 +39,18 @@
             <tr>
                 <td>
                     <div class="col-md-4 text-center">
-                    <h5><span class="label label-default text-center">Created on: @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")</span></h5>
+                    <h5><span class="label label-default text-center">Started on: @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")</span></h5>
                      </div>
                 </td>
             </tr>
             <tr>
                 <td class="text-center">
-                    <div class="col-md-4 text-center">
-                        <a class="btn btn-success" href="@routes.Application.game(game.uuid)">Join</a>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <span class="btn btn-danger" onclick="deleteGame('@routes.Application.game(game.uuid)')">Delete</span>
-                    </div>
+                   <div class="row center">
+                            <a class="btn btn-success" href="@routes.Application.game(game.uuid)">Join</a>
+                            <span class="btn btn-danger" onclick="deleteGame('@routes.Application.game(game.uuid)')">Delete</span>
+                   </div>
 
                 </td>
-            </tr>
-
-            <tr>
-                <td><hr></td>
             </tr>
         }
     </table>

@@ -5,8 +5,12 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background: url(/assets/images/intro-bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
-
 
 .blink_me {
     -webkit-animation-name: blinker;
@@ -44,9 +48,6 @@ body {
 }
 
 .share-button{
-    margin-left: auto ;
-    margin-right: auto ;
-    position: absolute;
     bottom: 0px;
 }
 
@@ -57,6 +58,7 @@ body {
 
 .jumbotron {
     height:100%;
+    background-color:rgba(20, 20, 20, 0.7)
 }
 
 #error{
@@ -67,6 +69,10 @@ body {
     background-color: #51bec6;
 }
 
+.center {
+   margin: 0 auto !important;
+   float: none !important;
+}
 
 #chooseRoleModalDialog{
     margin-top:30%;
@@ -77,4 +83,17 @@ body {
     width:80%;
     height:100%;
     border:0;
+}
+
+table{
+    background-color:rgba(20, 20, 20, 0.7);
+    border-radius:5px;
+}
+tr{
+    padding:200px;
+}
+
+hr{
+    border: 0;
+    border-top: 2px solid #f0f0f0;
 }

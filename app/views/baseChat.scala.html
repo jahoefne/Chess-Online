@@ -7,7 +7,7 @@
         <source type="audio/wav" src="@routes.Assets.at("/sounds/notify.wav")">
 </audio>
 <div class="col-md-4" style="margin-top: 20px;" ng-app="chatapp">
-    <div class="panel panel-info" id="chatwrapper" ng-controller="ChatCtrl">
+    <div class="panel panel-default" id="chatwrapper" ng-controller="ChatCtrl">
         <div class="panel-heading">
             RECENT CHAT HISTORY
         </div>
@@ -50,9 +50,7 @@
             <div class="input-group">
                 <form id="chatform">
                 <input type="text" class="form-control" placeholder="Enter Message" value="" id="text"/>
-                    <span class="input-group-btn">
-                        <input type="submit" class="btn btn-info" value="SEND"/>
-                    </span>
+                    <input type="submit" class="btn btn-primary pull-left" value="Send"/>
                 </form>
                 <script>
                     $(function(){
