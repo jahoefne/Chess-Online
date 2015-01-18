@@ -21,50 +21,43 @@
 @baseNavBar(user)
 <div class="row">
     <div style="text-align: center">
-        <h3><span class="label label-success center">Games created by @user.get.main.email</span></h3>
+        <h3><span class="label label-success center">@gameList.size games created by @user.get.main.email:</span></h3>
     </div>
 </div>
 <br>
     <table align="center">
         @for(game <- gameList){
-        <tr>
-            <td>
-                <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                <div class="col-md-4 text-center">
-                <h5><span class="label label-default text-center">Created on: @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")</span></h5>
-                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="col-md-4 text-center">
-                    <div class="btn-group text-center">
-
-                        <button type="button" class="btn btn-success center">
-                            <a href="@routes.Application.game(game.uuid)">Join</a>
-                        </button>
-                        <button type="button" class="btn btn-danger text-center">
-                            <span onclick="deleteGame('@routes.Application.game(game.uuid)')">Delete</span>
-                        </button>
-
+            <tr>
+                <td>
+                    <div class="col-md-4 text-center">
+                    <h5><span class="label label-default text-center">Created on: @game.createdOn.toString("dd.MM.yyyy HH:mm:ss")</span></h5>
+                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <div class="col-md-4 text-center">
+                        <a class="btn btn-success" href="@routes.Application.game(game.uuid)">Join</a>
                     </div>
-                </div>
-            </td>
-        </tr>
+                    <div class="col-md-4 text-center">
+                        <span class="btn btn-danger" onclick="deleteGame('@routes.Application.game(game.uuid)')">Delete</span>
+                    </div>
 
-        <tr>
-            <td><hr></td>
-        </tr>
+                </td>
+            </tr>
+
+            <tr>
+                <td><hr></td>
+            </tr>
         }
     </table>
 </div>
-
-<span class="label label-default">@gameList.size games created by you!</span>
 
 </body>
 </html>
