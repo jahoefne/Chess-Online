@@ -19,7 +19,7 @@ angular.module('chatapp.chatcontroller', []).
         };
 
         $scope.addAllMsgs = function (msgs) {
-            for(i=0; i< msgs.length; i++){
+            for(var i=0; i< msgs.length; i++){
                 $scope.$apply(function () { $scope.msgs.push(msgs[i]); });
             }
             $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});

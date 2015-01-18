@@ -19,14 +19,14 @@
                     <div>
                         <div class="media">
                             <!-- user Image -->
-                            <a class="pull-left" href="#">
+                            <div class="pull-left" href="#">
 
                                 <img ng-if="msg.img != 'none'" class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="{{msg.img}}" />
 
                                 <img ng-if="msg.img == 'none'" class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
 
 
-                            </a>
+                            </div>
                             <!-- Chat Output -->
                             <div class="media-body" id="chattext" style="display: inline;">
                                 {{msg.txt}}
