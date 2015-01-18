@@ -64,7 +64,7 @@
                             var img = "none";
                             var email = "none";
                             }
-                            websocket.sendChatMessage($('#text').val(), img, email);
+                            GameController.sendChatMessage($('#text').val(), img, email);
                             $('#text').val("").focus();
                             return false;
                         });

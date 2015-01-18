@@ -2,47 +2,56 @@
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
-            div{                
-                padding:20px
-            }
-            img{
+            div { margin:0px 25px 10px 25px; }
+
+            img {
                 width: 100px;
                 border-radius: 50%;
-                border: 6px solid;
-                margin: 0 auto;
+                border: 2px solid;
+                margin: auto;
+                background-color:#66C7E2;
+                -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
+                box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.75);
             }
+
+            #name-span { margin-top:10px; }
+
         </style>
         <div vertical  center-justified layout>
             <img style="border-color:{{color}};" src="{{pic}}" />
-            {{name}}
+            <span id="name-span">{{name}}</span>
         </div>
     </template>
 </polymer-element>
 
-<polymer-element name="player-info" attributes="black, white, blackPic, whitePic" noscript>
+<polymer-element name="player-info" attributes="black, white, blackPic, whitePic, status, playerRole" noscript>
     <template>
         <style>
             #box{
                 background: #52616f;
-                border-style: solid;
-                border-color: black;
-                border-width: 1px;
             }
         </style>
 
-            <div horizontal center-justified layout>
-                <span id="box" horizontal layout>
-                <single-player-info
-                       name="{{white}}"
-                       color="white"
-                       pic="{{whitePic}}"></single-player-info>
-                <div self-center>vs</div>
-                <single-player-info
-                       name="{{black}}"
-                       color="black"
-                       pic="{{blackPic}}"></single-player-info>
-            </span>
-        </div>
+            <div  horizontal center-justified layout>
+                <span id="box" vertical layout layout>
+                    <h2>{{status}}</h2>
+                    <div horizontal layout>
+                        <single-player-info
+                           name="{{white}}"
+                           color="#EEEEEE"
+                           pic="{{whitePic}}">
+                        </single-player-info>
+                        <h2 self-center>VS</h2>
+                        <single-player-info
+                           name="{{black}}"
+                           color="black"
+                           pic="{{blackPic}}">
+                        </single-player-info>
+                    </div>
+                        {{playerRole}}
+                </span>
+            </div>
     </template>
 
 </polymer-element>

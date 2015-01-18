@@ -16,14 +16,14 @@
 
 
 
-<script src="@routes.Assets.at("javascripts/websocket.js")"></script>
+<script src="@routes.Assets.at("javascripts/GameController.js")"></script>
 <script src="@routes.Assets.at("javascripts/share.js")"></script>
 
 
 <body class="text-center">
 
 @baseNavBar(user)
-<h2><span id="header-bar"></span></h2>
+<!--<h2><span id="header-bar"></span></h2>   -->
 
 <div class="container">
     <player-info white="loading.." black="loading.." whitePic="/assets/images/white.png" blackPic="/assets/images/black.png"></player-info>
@@ -33,16 +33,16 @@
             Choose Side
         </button>
     </span></h3>
-    (You are: <span id="status"></span>)
+   <!-- (You are: <span id="status"></span>)    -->
 
     <div id="chooseRoleModal" class="modal fade">
         <div class="modal-dialog">
             <div  id="chooseRoleModalDialog" class="modal-content">
                 <div class="modal-header">Choose your role:</div>
                     <div class="modal-body">
-                        <button type="button" class="btn btn-info" onClick="websocket.becomeSpectator();">Spectator</button>
-                        <button type="button" class="btn btn-info" onClick="websocket.becomeWhitePlayer();">White</button>
-                        <button type="button" class="btn btn-info" onClick="websocket.becomeBlackPlayer();">Black</button>
+                        <button type="button" class="btn btn-info" onClick="GameController.becomeSpectator();">Spectator</button>
+                        <button type="button" class="btn btn-info" onClick="GameController.becomeWhitePlayer();">White</button>
+                        <button type="button" class="btn btn-info" onClick="GameController.becomeBlackPlayer();">Black</button>
                     </div>
                 <div class="modal-footer"></div>
             </div>

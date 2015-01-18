@@ -8,8 +8,11 @@ angular.module('chatapp.chatcontroller', []).
 
         /** handle incoming messages: add to messages array */
         $scope.addMsg = function (msg) {
-            $scope.$apply(function () { $scope.msgs.push(msg); });
-            if(msg.role != $("#status").text()){
+            $scope.$apply(function () {
+                $scope.msgs.push(msg);
+            });
+
+            if(msg.role != $("player-info").attr("playerRole")){
                 $("#chat-notify-sound")[0].play();
             }
             $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});

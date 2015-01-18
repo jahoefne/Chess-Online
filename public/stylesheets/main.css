@@ -1,6 +1,3 @@
-
-
-
 body {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -30,15 +27,6 @@ body {
 
 }
 
-.share-button{
-    margin-left: auto ;
-    margin-right: auto ;
-}
-
-.red{
-    color: red;
-}
-
 @-moz-keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
@@ -57,37 +45,34 @@ body {
     100% { opacity: 1.0; }
 }
 
-
-@font-face {
-            font-family: ChessFont;
-                src: url('/assets/Chess_Font.ttf') format("truetype");
+.share-button{
+    margin-left: auto ;
+    margin-right: auto ;
+    position: absolute;
+    bottom: 0px;
 }
 
+@font-face {
+    font-family: ChessFont;
+    src: url('/assets/deps/fonts/Chess_Font.ttf') format("truetype");
+}
 
-.jumbotron {height:100%;}
+.jumbotron {
+    height:100%;
+}
 
 #error{
     color:red;
 }
 
 .right-bottom .github-fork-ribbon {
-    background-color: #900;
+    background-color: #51bec6;
 }
 
 
 #chooseRoleModalDialog{
     margin-top:30%;
     box-shadow: 10px 10px 15px #000;
-}
-
-.white{
-    color:#111;
-    text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);
-}
-
-.black{
-    color:#111;
-    text-shadow: 3px 3px 7px rgba(79, 79, 79, 0.52);
 }
 
 .loginFrame{

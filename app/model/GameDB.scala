@@ -36,8 +36,9 @@ object GameDB {
   }
 
   /** Appends the chat-msg msg to the chat history */
-  def appendChatMessage(uuid: String, msg: JsValue) = {
+  def appendChatMessage(uuid: String, msg: JsValue) : JsValue= {
     chat.insert(MongoDBObject("uuid" -> uuid, "msg" -> msg.toString()))
+    msg
   }
 
   def getChatMessages(uuid: String) : Array[JsValue]  = {
