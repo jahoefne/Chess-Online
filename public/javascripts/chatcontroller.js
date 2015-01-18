@@ -12,7 +12,7 @@ angular.module('chatapp.chatcontroller', []).
                 $scope.msgs.push(msg);
             });
 
-            if(msg.role != $("player-info").attr("playerRole")){
+            if(msg.role != $("player-info").attr("playerRole").toLowerCase()){
                 $("#chat-notify-sound")[0].play();
             }
             $('#history').animate({scrollTop: $('#history').prop('scrollHeight')});
