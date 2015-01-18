@@ -23,8 +23,11 @@
                             <div class="pull-left" href="#">
 
                                 <img ng-if="msg.img != 'none'" class="media-object img-circle "  alt="{{msg.role}}" style="width: 50px" src="{{msg.img}}" />
-
-                                <img ng-if="msg.img == 'none'" class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/{{msg.role}}.png")" />
+								<div ng-if="msg.img == 'none'">
+									<img ng-if="msg.role == 'black'" class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/black.png")" />
+									<img ng-if="msg.role == 'white'" class="media-object img-circle " alt="{{msg.role}}" style="width: 50px" src="@routes.Assets.at("images/white.png")" />
+								</div>
+                                
 
 
                             </div>
