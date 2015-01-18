@@ -5,8 +5,12 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    background: url(/assets/images/intro-bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
-
 
 .blink_me {
     -webkit-animation-name: blinker;
@@ -23,8 +27,6 @@ body {
     animation-duration: 10s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-
-
 }
 
 @-moz-keyframes blinker {
@@ -46,9 +48,7 @@ body {
 }
 
 .share-button{
-    margin-left: auto ;
-    margin-right: auto ;
-    
+    bottom: 0px;
 }
 
 @font-face {
@@ -58,6 +58,7 @@ body {
 
 .jumbotron {
     height:100%;
+    background-color:rgba(20, 20, 20, 0.7)
 }
 
 #error{
@@ -65,9 +66,13 @@ body {
 }
 
 .right-bottom .github-fork-ribbon {
-    background-color: #51bec6;
+    background-color: #202020;
 }
 
+.center {
+   margin: 0 auto !important;
+   float: none !important;
+}
 
 #chooseRoleModalDialog{
     margin-top:30%;
@@ -78,6 +83,20 @@ body {
     width:80%;
     height:100%;
     border:0;
+}
+
+table{
+    background-color:rgba(20, 20, 20, 0.7);
+    border-radius:5px;
+}
+
+tr {
+    padding:200px;
+}
+
+hr{
+    border: 0;
+    border-top: 2px solid #f0f0f0;
 }
 
 @media screen and (max-width: 500px) {

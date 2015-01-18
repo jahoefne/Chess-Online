@@ -23,46 +23,36 @@
 <body class="text-center">
 
 @baseNavBar(user)
-<!--<h2><span id="header-bar"></span></h2>   -->
 
 <div class="container">
     <player-info white="loading.." black="loading.." whitePic="/assets/images/white.png" blackPic="/assets/images/black.png"></player-info>
 
-    <h3><span class="label label-default">
-        <button type="button" class="btn-small btn-default" onClick="$('#chooseRoleModal').modal('show');">
-            Choose Side
-        </button>
-    </span></h3>
-   <!-- (You are: <span id="status"></span>)    -->
+    <h3><span class="btn btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose Side</span></h3>
 
     <div id="chooseRoleModal" class="modal fade">
         <div class="modal-dialog">
             <div  id="chooseRoleModalDialog" class="modal-content">
                 <div class="modal-header">Choose your role:</div>
                     <div class="modal-body">
-                        <button type="button" class="btn btn-info" onClick="GameController.becomeSpectator();">Spectator</button>
-                        <button type="button" class="btn btn-info" onClick="GameController.becomeWhitePlayer();">White</button>
-                        <button type="button" class="btn btn-info" onClick="GameController.becomeBlackPlayer();">Black</button>
+                        <button type="button" class="btn btn-primary" onClick="GameController.becomeSpectator();">Spectator</button>
+                        <button type="button" class="btn btn-primary" onClick="GameController.becomeWhitePlayer();">White</button>
+                        <button type="button" class="btn btn-primary" onClick="GameController.becomeBlackPlayer();">Black</button>
                     </div>
                 <div class="modal-footer"></div>
             </div>
         </div>
     </div>
 
-
+<div class="game-container">
     <div class="row">
         <div class="col-md-8" style="margin-top: 20px;">
-
                 <chess-board data="" light="" size="normal"></chess-board>
-
-
         </div>
-            <!-- CHAT -->
-            @baseChat(user)
+        @baseChat(user)
     </div>
 	<div class="row">
 	<div class="col-md-12" style="margin-top: 30px;">
-    <div class="share-button"></div>
+    <div class="share-button center"></div>
 	</div>
 	</div>
 </div>
