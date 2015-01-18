@@ -41,7 +41,7 @@ var GameController = {
        this.sendMessage({type: "chatMessageClient",
                          txt: message,
                          time: (new Date()).toUTCString(),
-                         role: $("player-info").attr("playerRole"),
+                         role: $("player-info").attr("playerRole").toLowerCase(),
                          img: image,
                          email: email });
     },

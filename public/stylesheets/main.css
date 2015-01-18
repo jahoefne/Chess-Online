@@ -97,3 +97,9 @@ hr{
     border: 0;
     border-top: 2px solid #f0f0f0;
 }
+
+@media screen and (max-width: 500px) {
+    .github-fork-ribbon-wrapper {
+        display: none;
+    }
+}
