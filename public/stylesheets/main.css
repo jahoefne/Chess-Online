@@ -85,7 +85,7 @@ body {
     border:0;
 }
 
-table{
+table, .head-box{
     background-color:rgba(20, 20, 20, 0.7);
     border-radius:5px;
 }
