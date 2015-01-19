@@ -69,7 +69,7 @@ body {
     background-color: #202020;
 }
 
-.center {
+.centered {
    margin: 0 auto !important;
    float: none !important;
 }
