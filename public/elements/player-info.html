@@ -21,7 +21,7 @@
             #name-span { margin-top:10px; }
 
         </style>
-        <div class="player" vertical  center-justified layout>
+        <div class="player" flex>
             <img style="border-color:{{color}};" src="{{pic}}" />
             <span id="name-span">{{name}}</span>
         </div>
@@ -41,7 +41,7 @@
         </style>
 
             <div horizontal center-justified layout>
-                <span id="box" vertical layout layout>
+                <div id="box" vertical layout layout>
                     <h2>{{status}}</h2>
                     <div horizontal layout>
                         <single-player-info
