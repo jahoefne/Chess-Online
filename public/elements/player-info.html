@@ -39,21 +39,27 @@
             }
         </style>
 
-            <div  horizontal center-justified layout>
-                <div id="box" vertical layout layout>
-                    <h2>{{status}}</h2>
-                    <div horizontal layout>
+            <div horizontal center-justified layout>
+                <div id="box" class="container" vertical layout layout>
+                    <h2 class"row">{{status}}</h2>
+                    <div class="row" horizontal layout>
+						<div class="col-md-5">
                         <single-player-info
                            name="{{white}}"
                            color="#EEEEEE"
                            pic="{{whitePic}}">
                         </single-player-info>
+						<div>
+						<div class="col-md-2">
                         <h2 self-center>VS</h2>
+						</div>
+						<div class="col-md-5">
                         <single-player-info
                            name="{{black}}"
                            color="#000000"
                            pic="{{blackPic}}">
                         </single-player-info>
+						</div>
                     </div>
                         (You're {{playerRole}})
                 </div>
