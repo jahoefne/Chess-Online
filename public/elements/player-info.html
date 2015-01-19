@@ -2,12 +2,12 @@
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
-            div {
-                margin:0px 25px 10px 25px;
-            }
+            .player{
+			padding: 10px;
+			}
 
             img {
-                width: 100px;
+                width: 100%;
                 border-radius: 50%;
                 border: 2px solid;
                 margin: auto;
@@ -20,7 +20,7 @@
             #name-span { margin-top:10px; }
 
         </style>
-        <div vertical  center-justified layout>
+        <div class="player" vertical  center-justified layout>
             <img style="border-color:{{color}};" src="{{pic}}" />
             <span id="name-span">{{name}}</span>
         </div>
@@ -34,7 +34,7 @@
                 border-color:3px solid #2D2D2D;
                 border-radius:5px;
                 background-color:rgba(20, 20, 20, 0.7);
-                padding-bottom:10px;
+                padding:10px;
                 color:#ffffff;
             }
         </style>
