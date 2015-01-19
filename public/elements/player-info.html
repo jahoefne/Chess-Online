@@ -22,7 +22,7 @@
         </style>
         <div class="player" vertical  center-justified layout>
             <img style="border-color:{{color}};" src="{{pic}}" />
-            <span id="name-span">{{name}}</span>
+            <div id="name-span">{{name}}</div>
         </div>
     </template>
 </polymer-element>
@@ -39,8 +39,8 @@
             }
         </style>
 
-            <div horizontal center-justified layout>
-                <span id="box" vertical layout layout>
+            <div  horizontal center-justified layout>
+                <div id="box" vertical layout layout>
                     <h2>{{status}}</h2>
                     <div horizontal layout>
                         <single-player-info
@@ -56,7 +56,7 @@
                         </single-player-info>
                     </div>
                         (You're {{playerRole}})
-                </span>
+                </div>
             </div>
     </template>
     <script>

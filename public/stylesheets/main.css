@@ -74,7 +74,10 @@ body {
    float: none !important;
 }
 
-
+#chooseRoleModalDialog{
+    margin-top:30%;
+    box-shadow: 10px 10px 15px #000;
+}
 
 .loginFrame{
     width:80%;
