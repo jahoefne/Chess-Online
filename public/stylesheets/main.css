@@ -5,7 +5,11 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    
+    background: url(/assets/images/intro-bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .blink_me {
