@@ -46,7 +46,7 @@ object DBUserService extends UserService[User] {
       case None => None
     }
   }
-   def findNameByUuid(uuid: Option[String]): Option[String] = {
+   def findNameByUuid(uuid: Option[String]): String = {
     uuid match {
       case Some(string) =>
         users.find ((obj: DBObject) => obj.uuid == string) match {
