@@ -7,7 +7,7 @@
 			}
 
             img {
-                width: 100%;
+                width: 30%;
                 border-radius: 50%;
                 border: 2px solid;
                 margin: auto;
@@ -20,7 +20,7 @@
             #name-span { margin-top:10px; }
 
         </style>
-        <div class="player" vertical  center-justified layout>
+        <div class="player">
             <img style="border-color:{{color}};" src="{{pic}}" />
             <div id="name-span">{{name}}</div>
         </div>
@@ -39,10 +39,10 @@
             }
         </style>
 
-            <div horizontal center-justified layout>
-                <div id="box" class="container" vertical layout layout>
+            
+                <div id="box" class="container" >
                     <h2 class"row">{{status}}</h2>
-                    <div class="row" horizontal layout>
+                    <div class="row">
 						<div class="col-md-5">
                         <single-player-info
                            name="{{white}}"
@@ -63,7 +63,7 @@
                     </div>
                         (You're {{playerRole}})
                 </div>
-            </div>
+            
     </template>
     <script>
         Polymer('player-info', {
