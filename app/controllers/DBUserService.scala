@@ -50,7 +50,7 @@ object DBUserService extends UserService[User] {
     uuid match {
       case Some(string) =>
         users.find ((obj: DBObject) => obj.uuid == string) match {
-          case Some(u) => u.main.firstName
+          case Some(u) => u.main.firstName.get
           case _ => "Unregistered"
         }
       case None => "Waiting for Player"
