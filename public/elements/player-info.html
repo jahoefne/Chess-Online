@@ -3,9 +3,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
             .player{
-			max-width: 120px;
-			min-width: 100px;
-			width: auto;
+                max-width: 120px;
+                min-width: 100px;
+                width: auto;
 			}
 
             img {
@@ -21,9 +21,6 @@
             }
 
             #name-span { margin-top:10px; }
-			
-			
-
         </style>
         <div class="player" vertical  center-justified layout>
             <img style="border-color:{{color}};" src="{{pic}}" />
@@ -32,7 +29,7 @@
     </template>
 </polymer-element>
 
-<polymer-element name="player-info" attributes="black, white, blackPic, whitePic, status, playerRole">
+<polymer-element name="player-info" attributes="black, white, blackPic, whitePic, status, playerRole" noscript>
     <template>
         <style>
             #box{
@@ -60,15 +57,8 @@
                            pic="{{blackPic}}">
                         </single-player-info>
                     </div>
-                        (You're {{playerRole}})
+                        (Your role: {{playerRole}})
                 </span>
             </div>
     </template>
-    <script>
-        Polymer('player-info', {
-            statusChanged: function(){
-
-            }
-        });
-    </script>
 </polymer-element>

@@ -14,48 +14,43 @@
     }
 </script>
 
-
-
 <script src="@routes.Assets.at("javascripts/GameController.js")"></script>
 <script src="@routes.Assets.at("javascripts/share.js")"></script>
 
 
 <body class="text-center">
-
 @baseNavBar(user)
+    <div class="container">
+        <player-info white="loading.." black="loading.." whitePic="/assets/images/white.png" blackPic="/assets/images/black.png"></player-info>
 
-<div class="container">
-    <player-info white="loading.." black="loading.." whitePic="/assets/images/white.png" blackPic="/assets/images/black.png"></player-info>
+        <h3><span class="btn btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose Side</span></h3>
 
-    <h3><span class="btn btn-default" onClick="$('#chooseRoleModal').modal('show');">Choose Side</span></h3>
+        <div id="chooseRoleModal" class="modal fade">
+            <div class="modal-dialog">
+                <div  id="chooseRoleModalDialog" class="modal-content">
+                    <div class="modal-header">Choose your role:</div>
+                        <div class="modal-body">
+                            <button type="button" class="btn btn-primary" onClick="GameController.becomeSpectator();">Spectator</button>
+                            <button type="button" class="btn btn-primary" onClick="GameController.becomeWhitePlayer();">White</button>
+                            <button type="button" class="btn btn-primary" onClick="GameController.becomeBlackPlayer();">Black</button>
+                        </div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
 
-    <div id="chooseRoleModal" class="modal fade">
-        <div class="modal-dialog">
-            <div  id="chooseRoleModalDialog" class="modal-content">
-                <div class="modal-header">Choose your role:</div>
-                    <div class="modal-body">
-                        <button type="button" class="btn btn-primary" onClick="GameController.becomeSpectator();">Spectator</button>
-                        <button type="button" class="btn btn-primary" onClick="GameController.becomeWhitePlayer();">White</button>
-                        <button type="button" class="btn btn-primary" onClick="GameController.becomeBlackPlayer();">Black</button>
-                    </div>
-                <div class="modal-footer"></div>
+    <div class="game-container">
+        <div class="row">
+            <div class="col-md-8" style="margin-top: 20px;">
+                    <chess-board data="" light="" size="normal"></chess-board>
+            </div>
+            @baseChat(user)
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 30px; margin-bottom: 30px;">
+                <div class="share-button centered"></div>
             </div>
         </div>
     </div>
-
-<div class="game-container">
-    <div class="row">
-        <div class="col-md-8" style="margin-top: 20px;">
-                <chess-board data="" light="" size="normal"></chess-board>
-        </div>
-        @baseChat(user)
-    </div>
-	<div class="row">
-	<div class="col-md-8 col-md-offset-2 text-center" style="margin-top: 30px; margin-bottom: 30px;">
-    <div class="share-button centered"></div>
-	</div>
-	</div>
-</div>
-
 </body>
 </html>

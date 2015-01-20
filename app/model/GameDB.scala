@@ -9,7 +9,6 @@ import play.api.Logger
 import play.api.libs.json.{JsValue, Json}
 
 
-
 /** Connection to the MongoDB stores ActivaGames Objects **/
 object GameDB {
   val conn = MongoClient("127.0.0.1", 27017)

@@ -5,7 +5,6 @@
 
 <body>
 <script src="@routes.Assets.at("javascripts/board.js")"></script>
-
 <script>
           function deleteGame(uri){
             $.ajax({
@@ -21,7 +20,6 @@
 @baseNavBar(user)
 <div class="container">
 <div class="row">
-	
     <div class="col-md-8 col-md-offset-2 head-box text-center">
         <h3 style="padding: 5px">Hi @user.get.main.firstName, there are @gameList.size games created by you:</h3>
     </div>
@@ -38,7 +36,6 @@
                     <chess-board data="@{game.getField.getField.map(_.mkString(",")).mkString(",")}" light="" size="small"></chess-board>
                 </td>
             </tr>
-
             <tr>
                 <td>
                     <div class="col-md-4 text-center">

@@ -10,8 +10,8 @@ var GameController = {
         this.socket.onmessage = this.onMessage.bind(this);
 
         window.onbeforeunload = function() {
-        GameController.socket.onclose = $.noop;
-        GameController.socket.close();
+            GameController.socket.onclose = $.noop;
+            GameController.socket.close();
         }
     },
 
@@ -82,8 +82,7 @@ var GameController = {
 		return true;
 	},
 
-    /** Update the views to match the current game state
-        uglyness of function caused by bad design in SE-Project */
+    /** Update the views to match the current game state */
 	gotActiveGameMsg: function(msg){
          var role;
          if(msg.white == this.playerID){
@@ -118,7 +117,6 @@ var GameController = {
          $("player-info").attr("blackPic", msg.blackPic);
          $("chess-board").attr("data", msg.field);
 	}
-
 };
 
 // Init the Game-JS after the document is ready
