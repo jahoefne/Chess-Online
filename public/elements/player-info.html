@@ -1,4 +1,4 @@
-<polymer-element name="single-player-info" attributes="name, color, pic" noscript>
+<polymer-element name="single-player-info" attributes="name, color, pic">
     <template>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <style>
@@ -27,6 +27,18 @@
             <span id="name-span">{{name}}</span>
         </div>
     </template>
+    <script>
+        Polymer('single-player-info', {
+           picChanged: function(){
+                // google wants to give us only 50x50px images, just query a bigger size anyway
+                var tmp = this.pic;
+                if(tmp.indexOf("googleusercontent.com") > -1){
+                     tmp = tmp.substring(0, str.length - 2);
+                     this.pic = tmp.concat("100");
+                }
+           }
+        });
+    </script>
 </polymer-element>
 
 <polymer-element name="player-info" attributes="black, white, blackPic, whitePic, status, playerRole" noscript>
