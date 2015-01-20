@@ -29,12 +29,13 @@
     </template>
     <script>
         Polymer('single-player-info', {
+           // google wants to give us only 50x50px images, just query a bigger size anyway
            picChanged: function(){
-                // google wants to give us only 50x50px images, just query a bigger size anyway
                 var tmp = this.pic;
-                console.log(tmp);
-                if(tmp.indexOf("googleusercontent.com") > -1){
-                    console.log("Gooogle Image");
+
+                // img is from google and 50x50px
+                if(tmp.indexOf("googleusercontent.com") > -1 &&
+                   tmp.indexOf("50", tmp.length - tmp.length) !== -1 ){
                      tmp = tmp.substring(0, tmp.length - 2);
                      this.pic = tmp.concat("100");
                 }
