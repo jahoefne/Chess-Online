@@ -32,7 +32,9 @@
            picChanged: function(){
                 // google wants to give us only 50x50px images, just query a bigger size anyway
                 var tmp = this.pic;
+                console.log(tmp);
                 if(tmp.indexOf("googleusercontent.com") > -1){
+                    console.log("Gooogle Image");
                      tmp = tmp.substring(0, str.length - 2);
                      this.pic = tmp.concat("100");
                 }
