@@ -21,7 +21,6 @@ class ChessWebSocketActor(out: ActorRef, playerID: String, gameID: String) exten
       /**
        * Messages that do not have to be routed to other players
        **/
-
       case "GetGame" => out ! GameDB.loadGameWith(gameID).getAsJson
 
       case "PossibleMoves" =>
