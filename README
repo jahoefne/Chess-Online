@@ -1,13 +1,6 @@
-#Welcome to Chess Online
-this Chess-Game was developed by students as part of the Web-Technologies Lecture at [HTWG Konstanz](http://www.htwg-konstanz.de).
-
-Just click on *New Game* to start playing and share the URL to play against others. You can also create an account, or login with your Google Account, by clicking on *Login/Register*. This gives you the advantage to get a list of all your games.
-
-
-
 Chess-Online
 ============
 
 WebTec project for AIN.
 
-In order to run the project you need a MongoDB running on the same server as the play project. Each game instance gets a uuid assigned and is stored in the MongoDB.
+In order to run the project you need a MongoDB running on the same server as the play project (with standard port).
